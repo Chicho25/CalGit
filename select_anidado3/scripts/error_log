@@ -1,0 +1,24 @@
+[11-Apr-2018 00:03:33 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; MySQL has a deprecated constructor in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 2
+[11-Apr-2018 00:03:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php:10
+Stack trace:
+#0 /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/cargar-paises.php(4): MySQL->MySQL()
+#1 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 10
+[11-Apr-2018 00:03:58 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; MySQL has a deprecated constructor in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 2
+[11-Apr-2018 00:03:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php:10
+Stack trace:
+#0 /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/cargar-paises.php(4): MySQL->MySQL()
+#1 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 10
+[11-Apr-2018 00:04:15 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; MySQL has a deprecated constructor in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 2
+[11-Apr-2018 00:04:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php:10
+Stack trace:
+#0 /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/cargar-paises.php(4): MySQL->MySQL()
+#1 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 10
+[11-Apr-2018 00:05:12 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; MySQL has a deprecated constructor in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 2
+[11-Apr-2018 00:05:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php:10
+Stack trace:
+#0 /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/cargar-paises.php(4): MySQL->MySQL()
+#1 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/select_anidado3/scripts/clases/class.mysql.php on line 10

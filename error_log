@@ -1,0 +1,93 @@
+[26-Mar-2018 15:58:37 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:58:37 UTC] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:58:43 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:58:43 UTC] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:58:52 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:58:52 UTC] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:59:01 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 15:59:01 UTC] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[26-Mar-2018 16:02:14 UTC] PHP Notice:  Undefined index: username in /home/ex2prjv5sb9r/public_html/calpe/gc_resulloguin.php on line 3
+[26-Mar-2018 16:02:14 UTC] PHP Notice:  Undefined index: password in /home/ex2prjv5sb9r/public_html/calpe/gc_resulloguin.php on line 4
+[26-Mar-2018 16:02:14 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[26-Mar-2018 16:02:24 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[26-Mar-2018 16:02:34 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[26-Mar-2018 16:03:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:03:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:03:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:04:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:05:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:25:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:28:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:32:50 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:35:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:74
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 74
+[26-Mar-2018 16:41:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php:81
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/ver_estado_cuentas.php on line 81
+[26-Mar-2018 16:55:09 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/reporteExcel.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/reporteExcel.php on line 24
+[26-Mar-2018 16:55:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_result::fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/reporteExcel.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/reporteExcel.php on line 24
+[02-Apr-2018 19:21:09 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[02-Apr-2018 19:46:50 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[03-Apr-2018 03:04:55 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[03-Apr-2018 16:04:43 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[03-Apr-2018 20:47:22 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php on line 19
+[03-Apr-2018 20:48:00 UTC] PHP Notice:  Undefined index: monto in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_documentos.php on line 41
+[03-Apr-2018 20:48:53 UTC] PHP Notice:  Undefined index: monto in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_documentos.php on line 41
+[03-Apr-2018 20:48:56 UTC] PHP Notice:  Undefined index: monto in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_documentos.php on line 41
+[03-Apr-2018 20:49:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php on line 19
+[03-Apr-2018 20:49:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php on line 19
+[03-Apr-2018 21:50:59 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[10-Apr-2018 20:51:29 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[11-Apr-2018 00:05:22 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/ex2prjv5sb9r/public_html/calpe/gc_ver_cuotas_filtro.php on line 19
+[15-Apr-2018 23:10:00 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[16-Apr-2018 16:28:06 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[16-Apr-2018 16:28:23 UTC] PHP Notice:  Undefined index: session_gc in /home/ex2prjv5sb9r/public_html/calpe/gc_principal.php on line 55
+[16-Apr-2018 16:28:23 UTC] PHP Notice:  Undefined index: session_gc in /home/ex2prjv5sb9r/public_html/calpe/inc/views/base_header.php on line 19
+[16-Apr-2018 16:28:36 UTC] PHP Notice:  A session had already been started - ignoring session_start() in /home/ex2prjv5sb9r/public_html/calpe/salir.php on line 13
+[18-Apr-2018 16:23:50 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'calpeu'@'localhost' (using password: YES) in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
+[18-Apr-2018 16:23:50 UTC] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/ex2prjv5sb9r/public_html/calpe/conexion/conexion.php on line 5
