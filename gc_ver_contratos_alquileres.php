@@ -176,7 +176,6 @@
                     <tr>
                         <th class="text-center">ID</th>
                         <th>CODIGO INMUEBLE</th>
-                        <th class="text-center">PROYECTO</th>
                         <th class="text-center">GRUPO</th>
                         <th class="text-center">FECHA</th>
                         <th class="text-center">CLIENTE</th>
@@ -185,6 +184,7 @@
                         <th class="text-center" style="width: 10%;">ELIMINAR</th>
                         <th class="text-center" style="width: 10%;">LIBERAR</th>
                         <th class="text-center" style="width: 10%;">VER CUOTAS</th>
+                        <th class="text-center" style="width: 10%;">SERVICIOS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -226,7 +226,6 @@
                     <tr <?php if ($lista_todos_contratos_ventas['mv_status']==17) { echo "style='Background-color:#FC9387; color:white;'"; } ?>>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id_venta']; ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['mi_codigo_imueble']; ?></td>
-                        <td class="font-w600"><?php echo $lista_todos_contratos_ventas['proy_nombre_proyecto']; ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['gi_nombre_grupo_inmueble']; ?></td>
                         <td class="font-w600"><?php echo date("d-m-Y", strtotime($lista_todos_contratos_ventas['fecha_venta'])); ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['cl_nombre'].' '.$lista_todos_contratos_ventas['cl_apellido']; ?></td>
@@ -329,6 +328,16 @@
                             <?php if(contar_cuotas($conexion2, $lista_todos_contratos_ventas['id_venta']) >= 1){ ?>
                               <form action="gc_ver_documentos_contrato_alquileres.php" method="post">
                                 <button class="btn btn-default" type="submit"><i class="si si-eye"></i></button>
+                                <input type="hidden" name="id_venta_contrato" value="<?php echo $lista_todos_contratos_ventas['id_venta']; ?>" >
+                              </form>
+                            <?php } ?>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                            <?php if(contar_cuotas($conexion2, $lista_todos_contratos_ventas['id_venta']) >= 1){ ?>
+                              <form action="gc_pago_servicios.php" method="post">
+                                <button class="btn btn-default" type="submit"><i class="si si-bulb"></i></button>
                                 <input type="hidden" name="id_venta_contrato" value="<?php echo $lista_todos_contratos_ventas['id_venta']; ?>" >
                               </form>
                             <?php } ?>

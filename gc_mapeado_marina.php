@@ -160,31 +160,325 @@
                                   group by mi_nombre
                                   order by mi_nombre desc"); ?>
 
+<?php /*  Graficas */ ?>
+
+<?php $m1_estadisticas = $conexion2 -> query("select (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 23
+                                                and 
+                                                isnull(mv.id_inmueble)) as total, 
+                                              (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 23
+                                                and 
+                                                mv.id_inmueble <> '') as ocupado"); 
+                                                      
+  while ($grafica_mi = $m1_estadisticas -> fetch_array()) {
+    $disponible = $grafica_mi['total'];
+    $ocupado = $grafica_mi['ocupado'];
+  }  ?>
+
+  <?php $m3_estadisticas = $conexion2 -> query("select (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 25
+                                                and 
+                                                isnull(mv.id_inmueble)) as total, 
+                                              (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 25
+                                                and 
+                                                mv.id_inmueble <> '') as ocupado"); 
+                                                      
+  while ($grafica_m3 = $m3_estadisticas -> fetch_array()) {
+    $disponible3 = $grafica_m3['total'];
+    $ocupado3 = $grafica_m3['ocupado'];
+  }  ?>
+
+    <?php $m4_estadisticas = $conexion2 -> query("select (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 26
+                                                and 
+                                                isnull(mv.id_inmueble)) as total, 
+                                              (SELECT
+                                                count(*)
+                                                FROM
+                                                maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                WHERE
+                                                mi.id_proyecto=13
+                                                and
+                                                mi_status not in(17)
+                                                and 
+                                                mi.id_grupo_inmuebles = 26
+                                                and 
+                                                mv.id_inmueble <> '') as ocupado"); 
+                                                      
+  while ($grafica_m4 = $m4_estadisticas -> fetch_array()) {
+    $disponible4 = $grafica_m4['total'];
+    $ocupado4 = $grafica_m4['ocupado'];
+  }  
+  
+  
+  $ocupado_disponible = $conexion2 -> query("select(
+    select
+    count(*) as contar
+    from
+    maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+    where
+    mi.mi_status not in(17)
+    and
+    mi.id_grupo_inmuebles in(23,25,26)
+    and
+    mi.id_proyecto = 13
+    and
+    mv.mv_status not in(17)) as ocupado,
+    (select
+    count(*) as contar
+    from
+    maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+    where
+    mi.mi_status not in(17)
+    and
+    mi.id_grupo_inmuebles in(23,25,26)
+    and
+    mi.id_proyecto = 13) as total");
+while($list_ocu_disp = $ocupado_disponible -> fetch_array()){
+$ocupadoT = $list_ocu_disp['ocupado'];
+$totalT = $list_ocu_disp['total'];
+}
+$disponibleT = $totalT - $ocupadoT;
+  
+  
+  ?>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+$('#pie').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Slip Disponibles & Ocupados General'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Marina General',
+        data: [
+            ['Ocupados: <?php echo $ocupadoT; ?> Slip ',   <?php echo $ocupadoT; ?>],
+            {
+                name: 'Disponibles: <?php echo $disponibleT; ?> Slip ',
+                y: <?php echo $disponibleT; ?>,
+                sliced: true,
+                selected: true
+            }
+        ]
+    }]
+});
+});
+
+
+</script>
+
+
+<script type="text/javascript">
+$(function () {
+$('#pieM1').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Estadisticas M1'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'M1',
+        data: [
+            ['Ocupados M1: <?php echo $ocupado; ?> Slip ',   <?php echo $ocupado; ?>],
+            {
+                name: 'Disponibles M1: <?php echo $disponible; ?> Slip ',
+                y: <?php echo $disponible; ?>,
+                sliced: true,
+                selected: true
+            }
+        ]
+    }]
+});
+});
+
+
+</script>
+<script type="text/javascript">
+$(function () {
+$('#pieM3').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Estadisticas M3'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'M3',
+        data: [
+            ['Ocupados M3: <?php echo $ocupado3; ?> Slip ',   <?php echo $ocupado3; ?>],
+            {
+                name: 'Disponibles M3: <?php echo $disponible3; ?> Slip ',
+                y: <?php echo $disponible3; ?>,
+                sliced: true,
+                selected: true
+            }
+        ]
+    }]
+});
+});
+
+
+</script>
+
+<script type="text/javascript">
+$(function () {
+$('#pieM4').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Estadisticas M4'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'M4',
+        data: [
+            ['Ocupados M4: <?php echo $ocupado4; ?> Slip ',   <?php echo $ocupado4; ?>],
+            {
+                name: 'Disponibles M4: <?php echo $disponible4; ?> Slip ',
+                y: <?php echo $disponible4; ?>,
+                sliced: true,
+                selected: true
+            }
+        ]
+    }]
+});
+});
+
+
+</script>
+
 <?php require 'inc/views/template_head_end.php'; ?>
 <?php require 'inc/views/base_head.php'; ?>
 
 <div class="content content-narrow">
+<script src="graficas/js/highcharts.js"></script>
+<script src="graficas/js/modules/exporting.js"></script>
     <!-- Forms Row -->
     <div class="row">
-
-            <?php if(isset($sql_insertar)){ ?>
-
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h3 class="font-w300 push-15">Contrato de Alquiler</h3>
-                        <p>El <a class="alert-link" href="javascript:void(0)">Contrato de Alquiler</a> registrado!</p>
-                    </div>
-
-            <?php } ?>
-            <?php if(isset($registrar_cl)){ ?>
-
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h3 class="font-w300 push-15">Registro de Cliente</h3>
-                        <p>El <a class="alert-link" href="javascript:void(0)">Cliente</a> se ha registrado!</p>
-                    </div>
-
-            <?php } ?>
 
         <div class="col-lg-12">
             <!-- Bootstrap Forms Validation -->
@@ -194,9 +488,14 @@
                         <li>
                         </li>
                     </ul>
-                    <h3 class="block-title">Mapeado de la Marina</h3><small> Alquileres
+                    <h3 class="block-title">Mapeado de la Marina</h3>
+                    <div id="pie" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
+                    <div id="pieM1" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
+                    <div id="pieM3" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
+                    <div id="pieM4" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
                 </div>
-                <div class="block-content block-content-narrow">
+                <div class="block-content block-content-narrow" style="background-color:white;">
+                
                   <div class="muelle1">
                     M1 <br>
                     54 Plazas
@@ -310,8 +609,15 @@
             </div>
           </div>
 <?php require 'inc/views/base_footer.php'; ?>
-<?php require 'inc/views/template_footer_start.php'; ?>
-
+<!--<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.min.js"></script>-->
+<script src="<?php echo $one->assets_folder; ?>/js/core/bootstrap.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.slimscroll.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.scrollLock.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.appear.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.countTo.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/jquery.placeholder.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/core/js.cookie.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/app.js"></script>
 <!-- Page JS Plugins -->
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.full.min.js"></script>
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/jquery-validation/jquery.validate.min.js"></script>

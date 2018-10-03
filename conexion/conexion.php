@@ -10,7 +10,7 @@
 
 <?php $host = "localhost"; ?>
 
-<?php $user = "calpeu"; ?>
+<?php $user = "root"; ?>
 
 <?php $pass = ""; ?>
 
