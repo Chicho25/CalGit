@@ -193,6 +193,8 @@ maestro_cuotas.mc_status not in(17))) as monto_restante
 from maestro_inmuebles inner join grupo_inmuebles on grupo_inmuebles.id_grupo_inmuebles =  maestro_inmuebles.id_grupo_inmuebles
 where
 maestro_inmuebles.id_proyecto = $id_proyecto
+and
+maestro_inmuebles.mi_status not in(17)
 group by
 gi_nombre_grupo_inmueble
 order by

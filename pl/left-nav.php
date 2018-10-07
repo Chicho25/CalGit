@@ -39,7 +39,7 @@
                       </li>
                       <li class="divider"></li> -->
                       <li>
-                        <a href="logout.php"  >Salir</a>
+                        <a href="salir.php"  >Salir</a>
                       </li>
                     </ul>
                   </div>
@@ -271,7 +271,7 @@
                         </li>
                       </ul>
                     </li>
-                    
+
                     <li <?php if(isset($transaction)) echo $transaction;?>>
                       <a href="#" class="auto">
                         <span class="pull-right text-muted">
@@ -294,8 +294,8 @@
                         </li>
                       </ul>
                     </li>
-                    
-                    
+
+
               </ul>
             </nav>
           </div>
