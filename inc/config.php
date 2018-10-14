@@ -507,11 +507,11 @@ $one->main_nav                     = array(
                         array(
                             'name'  => 'Ventas de inmuebles',
                             'url'   => 'gc_reporte_2_ventas_inmuebles.php'
-                        ),/*
-                        array(
-                            'name'  => 'Ventas',
-                            'url'   => 'gc_reporte_5_ventas.php'
                         ),
+                        array(
+                            'name'  => 'Facturas y Pagos',
+                            'url'   => 'gc_report_partidas_por_mes.php'
+                        ),/*
                         array(
                             'name'  => 'Contrato y comisione',
                             'url'   => 'gc_reporte_3_contrato_comisiones.php'

@@ -483,4 +483,41 @@ function reporte_4($conexion, $id_proyecto){
 
 	return $sql_reporte_2;
 
-	}	 ?>
+	}
+
+function facturas_abonos($conexon, $id_proy, $fecha_v_ini, $fecha_v_fin, $fecha_a_ini, $fehca_a_fin){
+
+		$where = "where (1=1) ";
+		if ($id_proy != "") {
+			$where .= " and pd.id_proyecto = $id_proy ";
+		}else{ }
+		if ($fecha_v_ini != '') {
+			$where .= " and pd.pd_fecha_vencimiento >= '".$fecha_v_ini."' ";
+		}else{ }
+		if ($fecha_v_fin != '') {
+			$where .= " and pd.pd_fecha_vencimiento <= '".$fecha_v_fin."' ";
+		}else{ }
+		if ($fecha_a_ini != '') {
+			$where .= " and pda.fecha >= '".$fecha_a_ini."' ";
+		}else{ }
+		if ($fehca_a_fin != '') {
+			$where .= " and pda.fecha <= '".$fehca_a_fin."' ";
+		}else{ }
+
+
+
+		$sql_report_fac_abo = $conexon -> query("select
+																						 	  mp.p_nombre as nombre_partida,
+																						 	  pd.pd_fecha_vencimiento as fecha_vencimiento_factura,
+																						 	  pd.pd_descripcion as descripcion_factura,
+																						 	  pda.fecha as fecha_creacion_abono,
+																						 	  pda.monto as monto_abono,
+																						 	  pda.descricion as descripcion_abono,
+																						 	  (select pro_nombre_comercial from maestro_proveedores where id_proveedores = pda.id_proveedor) as nombre_proveedor
+																						 	from partida_documento pd inner join partida_documento_abono pda on pd.id = pda.id_partida_documento
+																													  inner join maestro_partidas mp on pd.id_partida = mp.id
+																								$where");
+
+		return $sql_report_fac_abo;
+}
+		 ?>
