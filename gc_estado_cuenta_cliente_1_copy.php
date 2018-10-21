@@ -53,7 +53,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label class="col-md-2 control-label">Fecha de Creación</label>
                             <div class="col-md-9">
                               <div class="input-group input-daterange gcreacion">
@@ -62,9 +62,9 @@
                                   <input type="text" class="js-datepicker form-control fechas1" autocomplete="off" name="fcreacion_fin" placeholder="Hasta">
                               </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
-                            <label class="col-md-2 control-label">Fecha de Vencimiento</label>
+                            <label class="col-md-2 control-label">Fecha</label>
                             <div class="col-md-9">
                               <div class="input-group input-daterange gcreacion">
                                   <input type="text" class="js-datepicker form-control fechas1" autocomplete="off" name="fvencimiento_inicio" placeholder="Desde">

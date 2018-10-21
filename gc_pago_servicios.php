@@ -42,6 +42,13 @@ if (isset($_POST['update'])) {
                                                                     id = '".$_POST['update']."'");
 }
 
+if (isset($_POST['pagar'])) {
+  $pagar_servicio = $conexion2 -> query("UPDATE servicios SET stat = 3,
+                                                              fecha_pago = '".date("Y-m-d H:i:s")."'
+                                                               WHERE
+                                                              id = '".$_POST['pagar']."'");
+}
+
 ?>
 
 <?php require 'inc/config.php'; ?>
@@ -71,6 +78,15 @@ if (isset($_POST['update'])) {
           <h3 class="font-w300 push-15">Servicio  Eliminado</h3>
           <p><a class="alert-link" href="javascript:void(0)">El Servicio</a> Fue Eliminado!</p>
       </div>
+      <?php } ?>
+      <?php if(isset($pagar_servicio)){ ?>
+              <!-- Success Alert -->
+              <div class="alert alert-success alert-dismissable">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h3 class="font-w300 push-15">Servicio Pagado</h3>
+                  <p><a class="alert-link" href="javascript:void(0)">El Servicio</a> Fue Pagado!</p>
+              </div>
+              <!-- END Success Alert -->
       <?php } ?>
       <?php if(isset($actualizar_servicio)){ ?>
               <!-- Success Alert -->
@@ -162,13 +178,17 @@ if (isset($_POST['update'])) {
                         <th class="text-center">SLIP</th>
                         <th class="hidden-xs" >FECHA PAGO</th>
                         <th class="hidden-xs" >DESCRIPCION</th>
+                        <th class="hidden-xs" >MONTO A PAGAR</th>
                         <th class="hidden-xs" >MONTO PAGADO</th>
+                        <th class="hidden-xs" >STATUS</th>
+                        <th class="text-center" >PAGAR</th>
                         <th class="text-center" >EDITAR</th>
                         <th class="text-center" >ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $total_monto = 0; ?>
+                    <?php $total_monto_a_pagar = 0; ?>
+                    <?php $total_monto_pago = 0; ?>
                     <?php $total_cuotas = 0; ?>
                     <?php $todos_contratos_ventas = $conexion2 -> query("SELECT
                                                                           s.id,
@@ -178,20 +198,73 @@ if (isset($_POST['update'])) {
                                                                           mi.mi_nombre,
                                                                           s.date_time,
                                                                           s.descripcion,
-                                                                          s.monto
+                                                                          s.monto,
+                                                                          s.stat
                                                                           FROM servicios s inner join maestro_ventas mv on s.id_ventas = mv.id_venta
                                                                           				         inner join maestro_inmuebles mi on mv.id_inmueble = mi.id_inmueble
                                                                                            inner join maestro_clientes mc on mv.id_cliente = mc.id_cliente
-                                                                          where s.stat = 1 and s.id_ventas ='".$_SESSION['id_venta_contrato']."'"); ?>
-                    <?php while($lista_todos_contratos_ventas = $todos_contratos_ventas -> fetch_array()){ ?>
+                                                                          where s.stat not in(2) and s.id_ventas ='".$_SESSION['id_venta_contrato']."'"); ?>
+                    <?php while($lista_todos_contratos_ventas = $todos_contratos_ventas -> fetch_array()){
+
+                                if($lista_todos_contratos_ventas['stat']==1){
+                                    $por_pagar=$lista_todos_contratos_ventas['monto'];
+                                    $pagado=0;
+                                    $status = "Por Pagar";
+                                    $total_monto_a_pagar += $lista_todos_contratos_ventas['monto'];
+                                  }else{
+                                    $pagado=$lista_todos_contratos_ventas['monto'];
+                                    $por_pagar=0;
+                                    $status = "Pagado";
+                                    $total_monto_pago += $lista_todos_contratos_ventas['monto'];
+                                   }
+
+                       ?>
                     <tr>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id']; ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['cl_nombre'].' '.$lista_todos_contratos_ventas['cl_apellido']; ?></td>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['mi_nombre']; ?></td>
                         <td class="font-w600"><?php echo date("d-m-Y", strtotime($lista_todos_contratos_ventas['date_time'])); ?></td>
                         <td class="hidden-xs"><?php echo $lista_todos_contratos_ventas['descripcion']; ?></td>
-                        <td class="hidden-xs"><?php echo number_format($lista_todos_contratos_ventas['monto'], 2, '.',','); ?></td>
+                        <td class="hidden-xs"><?php echo number_format($por_pagar, 2, '.',','); ?></td>
+                        <td class="hidden-xs"><?php echo number_format($pagado, 2, '.',','); ?></td>
+                        <td class="hidden-xs"><?php echo $status; ?></td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                              <?php if($lista_todos_contratos_ventas['stat']==1){ ?>
+                              <?php if($_SESSION['session_gc']['roll'] == 1 || $_SESSION['session_gc']['roll'] == 3){ ?>
+                                <button class="btn btn-default" data-toggle="modal" data-target="#modal-popindol<?php echo $lista_todos_contratos_ventas['id']; ?>" type="button"><i class="fa fa-dollar"></i></button>
+                              <?php } ?>
+                              <?php } ?>
+                              <div class="modal fade" id="modal-popindol<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-popin">
+                                      <div class="modal-content">
+                                          <div class="block block-themed block-transparent remove-margin-b">
+                                              <div class="block-header bg-primary-dark">
+                                                  <ul class="block-options">
+                                                      <li>
+                                                          <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                                      </li>
+                                                  </ul>
+                                                  <h3 class="block-title">Pagar la cuota de Servicio</h3>
+                                              </div>
+                                              <div class="block-content">
+                                                  <div style="color:green;">Esta seguro que desea Pagar la cuota de Servicio? <br>
 
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <form class="" action="" method="post">
+                                              <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
+                                              <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> Ok</button>
+                                              <input type="hidden" name="pagar" value="<?php echo $lista_todos_contratos_ventas['id']; ?>">
+                                            </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                            </div>
+                        </td>
                         <td class="text-center">
                             <div class="btn-group">
                               <?php if($_SESSION['session_gc']['roll'] == 1 || $_SESSION['session_gc']['roll'] == 3){ ?>
@@ -280,11 +353,11 @@ if (isset($_POST['update'])) {
                                 </div>
                             </div>
                         <?php $total_cuotas++;
-                              $total_monto +=$lista_todos_contratos_ventas['monto'];
                       } ?>
                         <tr>
                           <td class="text-center font-w600" colspan="3">Total Numero de cuotas: <?php echo $total_cuotas; ?></td>
-                          <td class="text-center font-w600" colspan="3">Total Monto Pagado: <?php echo number_format($total_monto, 2, '.',','); ?> </td>
+                          <td class="text-center font-w600" colspan="2">Total Monto a Pagar: <?php echo number_format($total_monto_a_pagar, 2, '.',','); ?> </td>
+                          <td class="text-center font-w600" colspan="2">Total Monto Pagado: <?php echo number_format($total_monto_pago, 2, '.',','); ?> </td>
                         </tr>
                 </tbody>
             </table>

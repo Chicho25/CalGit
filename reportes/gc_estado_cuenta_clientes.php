@@ -4,8 +4,8 @@
 <?php $mpdf = new mPDF('c', 'A4-L'); ?>
 <?php $css = file_get_contents('css/style.css'); ?>
 <?php $mpdf->writeHTML($css, 1); ?>
-<?php $resultados_madre = estado_cuentas_cliente_cuotas_madre($conexion2, $_POST['id_cliente'], $_POST['fcreacion_inicio'], $_POST['fcreacion_fin'], $_POST['fvencimiento_inicio'], $_POST['fvencimiento_fin']); ?>
-<?php $resultados_hija = estado_cuentas_cliente_cuotas_hija($conexion2, $_POST['id_cliente'], $_POST['fcreacion_inicio'], $_POST['fcreacion_fin']); ?>
+<?php //$resultados_madre = estado_cuentas_cliente_cuotas_madre($conexion2, $_POST['id_cliente'], $_POST['fcreacion_inicio'], $_POST['fcreacion_fin'], $_POST['fvencimiento_inicio'], $_POST['fvencimiento_fin']); ?>
+<?php $reporte_edo_cliente = reporte_edo_cliente($conexion2, $_POST['id_cliente'], $_POST['fvencimiento_inicio'], $_POST['fvencimiento_fin']); ?>
 <?php $nombre_cliente = cliente($conexion2, $_POST['id_cliente']); ?>
 <?php while($cl=$nombre_cliente->fetch_array()){
 
@@ -13,9 +13,9 @@
 
 } ?>
 <?php $valor = 1; ?>
-<?php while($li[] = $resultados_madre->fetch_array()); ?>
+<?php while($li[] = $reporte_edo_cliente->fetch_array()); ?>
 
-<?php while($lih[] = $resultados_hija->fetch_array()); ?>
+<?php //while($lih[] = $resultados_hija->fetch_array()); ?>
 
 <?php $html='
 <header class="clearfix">
@@ -77,7 +77,7 @@
               }
   }
 
-  foreach($lih as $l){
+/*foreach($lih as $l){
       if($l['debito'] == 0 && $l['credito'] == 0 && $l['saldo'] == 0){
       $html .='';
       }else{
@@ -101,7 +101,7 @@
               $total_cuotas_sub += $l['saldo'];
             }
 
-}
+}*/
 
 $debito_tt = $total_debito + $total_debito_sub;
 $credito_tt = $total_credito + $total_credito_sub;
