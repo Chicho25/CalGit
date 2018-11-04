@@ -43,10 +43,47 @@ if (isset($_POST['update'])) {
 }
 
 if (isset($_POST['pagar'])) {
+
   $pagar_servicio = $conexion2 -> query("UPDATE servicios SET stat = 3,
                                                               fecha_pago = '".date("Y-m-d H:i:s")."'
                                                                WHERE
                                                               id = '".$_POST['pagar']."'");
+
+  $datos_servicio = $conexion2 -> query("SELECT * FROM servicios where id = '".$_POST['pagar']."'");
+
+  while($lista_servicios = $datos_servicio -> fetch_array()){
+        $monto_ser = $lista_servicios['monto'];
+        $descripcion_ser = 'Pago: '.$lista_servicios['descripcion'];
+        $id_ventas = $lista_servicios['id_ventas'];
+  }
+
+  $datos_cliente = $conexion2 -> query("SELECT id_cliente FROM maestro_ventas where id_venta = '".$id_ventas."'");
+
+  while ($lista_cliente = $datos_cliente -> fetch_array()) {
+         $id_cliente = $lista_cliente['id_cliente'];
+  }
+
+  $movimiento_bancario = $conexion2 -> query("INSERT INTO movimiento_bancario(id_cuenta,
+                                                                              id_tipo_movimiento,
+                                                                              mb_fecha,
+                                                                              mb_monto,
+                                                                              mb_descripcion,
+                                                                              mb_stat,
+                                                                              id_cliente,
+                                                                              id_proyecto,
+                                                                              id_contrato_venta,
+                                                                              id_cuota
+                                                                              )VALUES(
+                                                                              '".$_POST['cuenta']."',
+                                                                              25,
+                                                                              '".date("Y-m-d")."',
+                                                                              '".$monto_ser."',
+                                                                              '".$descripcion_ser."',
+                                                                              1,
+                                                                              '".$id_cliente."',
+                                                                              13,
+                                                                              '".$id_ventas."',
+                                                                              '".$_POST['pagar']."')");
 }
 
 ?>
@@ -248,12 +285,32 @@ if (isset($_POST['pagar'])) {
                                                   <h3 class="block-title">Pagar la cuota de Servicio</h3>
                                               </div>
                                               <div class="block-content">
-                                                  <div style="color:green;">Esta seguro que desea Pagar la cuota de Servicio? <br>
-
+                                                <div class="form-group">
+                                                  <div style="color:green;">Esta seguro que desea Pagar la cuota de Servicio? <br></div>
+                                                </div>
+                                                <form class="" action="" method="post">
+                                                  <div class="form-group">
+                                                      <label class="col-md-4 control-label">Cuenta Receptora
+                                                        <span class="text-danger">*</span></label>
+                                                      <div class="col-md-7">
+                                                          <select class="form-control" name="cuenta">
+                                                              <option value="">Cuenta Receptora</option>
+                                                              <?php  $sql_cuenta_receptora = cuenta_receptora($conexion2, 13); ?>
+                                                              <?php  while($lista_cuenta_receptora = $sql_cuenta_receptora ->fetch_array()){ ?>
+                                                              <option value="<?php echo $lista_cuenta_receptora['id_cuenta_bancaria']; ?>">
+                                                                <?php echo $lista_cuenta_receptora['proy_nombre_proyecto']. " // " .$lista_cuenta_receptora['banc_nombre_banco']. " // " .$lista_cuenta_receptora['cta_numero_cuenta']; ?></option>
+                                                              <?php } ?>
+                                                              <option value="100">INTERCAMBIO</option>
+                                                              <option value="101">AJUSTE</option>
+                                                          </select>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label class="col-md-12 control-label"><br></label>
+                                                  </div>
                                               </div>
-                                          </div>
                                           <div class="modal-footer">
-                                            <form class="" action="" method="post">
+
                                               <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
                                               <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> Ok</button>
                                               <input type="hidden" name="pagar" value="<?php echo $lista_todos_contratos_ventas['id']; ?>">

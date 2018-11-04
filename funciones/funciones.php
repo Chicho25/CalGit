@@ -1299,6 +1299,7 @@
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 22 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 23 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 24 THEN mbo.mb_monto ELSE 0 END) +
+																										SUM(CASE WHEN mbo.id_tipo_movimiento = 25 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 13 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 16 THEN mbo.mb_monto ELSE 0 END) as total_credito,
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 1 THEN mbo.mb_monto ELSE 0 END) +
@@ -1321,6 +1322,7 @@
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 21 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 22 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 24 THEN mbo.mb_monto ELSE 0 END) +
+																										SUM(CASE WHEN mbo.id_tipo_movimiento = 25 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 23 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 13 THEN mbo.mb_monto ELSE 0 END) +
 																										SUM(CASE WHEN mbo.id_tipo_movimiento = 16 THEN mbo.mb_monto ELSE 0 END)) -
@@ -1392,16 +1394,17 @@
 										when 22 then 'TARJETA DE CREDITO'
 										when 24 then 'MUELLE'
 										when 23 then 'CARTA DE CREDITO(INGRESO)'
+										when 25 then 'SERVICIOS'
 									 end as nombre_tipo,
 								   mbo.mb_descripcion,
 								   mc.cl_nombre,
 								   mc.cl_apellido,
 								   mbo.mb_monto,
-								   IF(mbo.id_tipo_movimiento in (2,3,5,7,14,17,19,20,21,22,23,13,16,24) ,
+								   IF(mbo.id_tipo_movimiento in (2,3,5,7,14,17,19,20,21,22,23,13,16,24,25) ,
 								   	(SELECT mb1.mb_monto FROM movimiento_bancario mb1 WHERE mbo.id_movimiento_bancario = mb1.id_movimiento_bancario), (0)) AS credito,
 								   IF(mbo.id_tipo_movimiento in (1,4,6,8,11,18,9,10,12) ,
 								   	(SELECT mb1.mb_monto FROM movimiento_bancario mb1 WHERE mbo.id_movimiento_bancario = mb1.id_movimiento_bancario and mb1.mb_stat NOT IN(12)), (0)) AS debito,
-    							   (select sum(IF(mb.id_tipo_movimiento in (2,3,5,7,14,17,19,20,21,22,23,13,16,24) , mb.mb_monto ,  -mb.mb_monto ))
+    							   (select sum(IF(mb.id_tipo_movimiento in (2,3,5,7,14,17,19,20,21,22,23,13,16,24,25) , mb.mb_monto ,  -mb.mb_monto ))
      							    from movimiento_bancario mb
      								where mbo.mb_fecha >= mb.mb_fecha
       								and (case when mbo.mb_fecha = mb.mb_fecha then mb.id_movimiento_bancario else mbo.id_movimiento_bancario end) <= mbo.id_movimiento_bancario
