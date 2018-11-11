@@ -1,0 +1,6 @@
+{
+  "name": "Grupo Calpe",
+  "require":{
+    "phpmailer/phpmailer": "6.0.5"
+  }
+}
