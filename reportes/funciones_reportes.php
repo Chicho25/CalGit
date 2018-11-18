@@ -625,4 +625,47 @@ function facturas_abonos($conexon, $id_proy, $fecha_v_ini, $fecha_v_fin, $fecha_
 
 		return $sql_report_fac_abo;
 }
+
+
+function servicios($conexion, $status, $fecha1, $fecha2){
+		$where = "WHERE (1=1) ";
+
+		if ($status == 1) {
+			 $where .= " AND s.stat = 1 ";
+
+			 if($fecha1 != ''){ $where. = " AND s.date_time >= '".$fecha1."'"; }
+			 if($fecha2 != ''){ $where. = " AND s.date_time <= '".$fecha2."'"; }
+
+		}elseif ($status == 3) {
+			 $where .= " AND s.stat = 3 ";
+
+			 if($fecha1 != ''){ $where. = " AND s.fecha_pago >= '".$fecha1."'"; }
+			 if($fecha2 != ''){ $where. = " AND s.fecha_pago <= '".$fecha2."'"; }
+		}
+
+		$mysql_servicios = $conexion -> query("SELECT
+																						s.monto,
+																						s.descripcion,
+																						s.stat,
+																						case
+																							when s.stat = 1 then 'Por Pagar'
+																						  when s.stat = 3 then 'Pagado'
+																						end as status_des,
+																						s.date_time,
+																						s.fecha_pago,
+																						mi.mi_codigo_imueble,
+																						mi.mi_nombre,
+																						mc.cl_nombre,
+																						mc.cl_apellido
+																						FROM servicios s inner join maestro_ventas mv on s.id_ventas = mv.id_venta
+																										 				 inner join maestro_inmuebles mi on mv.id_inmueble = mi.id_inmueble
+																						                 inner join maestro_clientes mc on mv.id_cliente = mc.id_cliente
+																						$where");
+
+		return $mysql_servicios;
+
+}
+
+
+
 		 ?>

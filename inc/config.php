@@ -35,7 +35,7 @@ require 'classes/Template.php';
 $one                               = new Template('Grupo Calpe', '1.0', 'assets'); // Name, version and assets folder's name
 
 // Global Meta Data
-$one->author                       = 'dchain';
+$one->author                       = 'Calpe';
 $one->robots                       = 'noindex, nofollow';
 $one->title                        = 'Grupo Calpe';
 $one->description                  = 'Grupo Calpe';
@@ -387,6 +387,10 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Edo. Cuenta Cliente',
                         'url'   => 'gc_estado_cuenta_cliente_1_copy.php'
+                    ),
+                    array(
+                        'name'  => 'Edo. Servicios',
+                        'url'   => 'gc_estado_servicios.php'
                     )
                 )
             ),
