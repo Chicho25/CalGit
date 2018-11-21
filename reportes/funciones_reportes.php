@@ -633,14 +633,14 @@ function servicios($conexion, $status, $fecha1, $fecha2){
 		if ($status == 1) {
 			 $where .= " AND s.stat = 1 ";
 
-			 if($fecha1 != ''){ $where. = " AND s.date_time >= '".$fecha1."'"; }
-			 if($fecha2 != ''){ $where. = " AND s.date_time <= '".$fecha2."'"; }
+			 if($fecha1 != ''){ $where .= " AND s.date_time >= '".$fecha1."'"; }
+			 if($fecha2 != ''){ $where .= " AND s.date_time <= '".$fecha2."'"; }
 
 		}elseif ($status == 3) {
 			 $where .= " AND s.stat = 3 ";
 
-			 if($fecha1 != ''){ $where. = " AND s.fecha_pago >= '".$fecha1."'"; }
-			 if($fecha2 != ''){ $where. = " AND s.fecha_pago <= '".$fecha2."'"; }
+			 if($fecha1 != ''){ $where .= " AND s.fecha_pago >= '".$fecha1."'"; }
+			 if($fecha2 != ''){ $where .= " AND s.fecha_pago <= '".$fecha2."'"; }
 		}
 
 		$mysql_servicios = $conexion -> query("SELECT
