@@ -102,10 +102,16 @@ function reporte_2($conexion, $id_proyecto, $tipo, $grupo){
 															from maestro_cuotas
 															where
 															maestro_cuotas.id_inmueble = maestro_inmuebles.id_inmueble and maestro_inmuebles.mi_status not in(17) and maestro_cuotas.mc_status not in (17)) as monto_cobrado,
-															(select mv.mv_precio_venta
-															from maestro_ventas mv
-															where
-															maestro_inmuebles.id_inmueble = mv.id_inmueble and maestro_inmuebles.mi_status in(3, 4) and maestro_inmuebles.mi_status not in(17)) as monto_vendido,
+
+																(select sum(mvv.mv_precio_venta)
+																	from maestro_ventas mvv
+																	where
+																	maestro_inmuebles.id_inmueble = mvv.id_inmueble
+																	and
+																	mvv.mv_status in(4, 5, 6, 1)
+																	and
+																	mvv.mv_status not in(17)) as monto_vendido,
+
 															(select mi_precio_real
 															from maestro_inmuebles min
 															where
@@ -151,14 +157,14 @@ from maestro_inmuebles min
 where
 maestro_inmuebles.id_grupo_inmuebles = min.id_grupo_inmuebles and min.mi_status in(3, 4) and maestro_inmuebles.mi_status not in(17)) as monto_vendido,*/
 
-(select sum(mv.mv_precio_venta)
-	from maestro_ventas mv
+(select sum(mvv.mv_precio_venta)
+	from maestro_ventas mvv
 	where
-	maestro_inmuebles.id_grupo_inmuebles = mv.id_grupo_inmueble
+	maestro_inmuebles.id_grupo_inmuebles = mvv.id_grupo_inmueble
 	and
-	mv.mv_status in(1, 4, 5, 6)
+	mvv.mv_status in(4, 5, 6, 1)
 	and
-	mv.mv_status not in(17)) as monto_vendido,
+	mvv.mv_status not in(17)) as monto_vendido,
 
 (select sum(mi_precio_real)
 from maestro_inmuebles min
