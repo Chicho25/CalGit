@@ -1,0 +1,13 @@
+para migrar el programa viejo (bd) en necesario 
+CREAR LOS USUARIOS SOLICITADOS
+
+-grupocal (LOCALHOST)
+-grupocal_root (LOCALHOST)
+-grupocal_root (%)
+
+TAMBIEN cambiar el collamiento de caracteres
+colocar uno mas viejo que el actual 
+
+SENTENCIA PARA CAMBIAR LA BASE DE DATOS: 
+
+-ALTER DATABASE `NOMBRE_BASE_DATO` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
