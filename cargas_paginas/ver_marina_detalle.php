@@ -17,15 +17,16 @@
                                                 mc.cl_apellido,
                                                 mv.id_cliente,
                                                 mv.id_venta,
-                                                mv.fecha_venta
+                                                mv.fecha_venta,
+                                                mv.termino
                                                 from
                                                 maestro_ventas mv inner join maestro_proyectos mp on mv.id_proyecto = mp.id_proyecto
                                                 inner join grupo_inmuebles gi on mv.id_grupo_inmueble = gi.id_grupo_inmuebles
                                                 inner join maestro_inmuebles mi on mv.id_inmueble = mi.id_inmueble
                                                 inner join maestro_clientes mc on mv.id_cliente = mc.id_cliente
                                                 where
-                                                mp.id_proyecto = 13 
-                                                and 
+                                                mp.id_proyecto = 13
+                                                and
                                                 mi.id_inmueble = '".$_GET['id']."' "); ?>
 <?php while($datos_inmueble = $datos_contrato -> fetch_array()){
               $id_contrato = $datos_inmueble['id_venta'];
@@ -35,6 +36,7 @@
               $precio_venta = $datos_inmueble['mv_precio_venta'];
               $descripcion = $datos_inmueble['mv_descripcion'];
               $fecha = $datos_inmueble['fecha_venta'];
+              $termino = $datos_inmueble['termino'];
 } ?>
 
 <form action="gc_ver_documentos_contrato_alquileres.php" method="post" enctype="multipart/form-data">
@@ -68,6 +70,9 @@
                           </div>
                           <label class="col-xs-12" for="register1-username" style="text-align: left;">Descripcion: <?php echo $descripcion; ?></label>
                           <div class="col-xs-12">
+                          </div>
+                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Termino: <?php if($termino ==1){ echo 'Transito';}elseif($termino == 2){ echo 'Largo Termino'; }else{ echo '-'; } ; ?></label>
+                          <div class="col-xs-12">
                             <input type="hidden" name="id_venta_contrato" value="<?php echo $id_contrato; ?>">
                           </div>
                           <!--<hr>
@@ -77,7 +82,7 @@
                          <label class="col-xs-12" for="register1-username" style="text-align: left;">PLAZAS: </label>
                          <hr>-->
                       </div>
-                      
+
             <div class="form-group">
                 <div class="col-xs-12">
                     <table class="table table-bordered table-striped">
@@ -125,7 +130,7 @@
                     </table>
                 </div>
             </div>
-                      
+
                       <div class="modal-footer">
                           <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
                           <button class="btn btn-sm btn-primary" type="submit" >Administrar contrato</button>

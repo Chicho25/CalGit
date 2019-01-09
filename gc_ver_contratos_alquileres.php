@@ -125,7 +125,8 @@
 
 <?php if(isset($_POST['precio'],
                        $_POST['id_venta'])){ ?>
-<?php $sql_update_inmueble = mysqli_query($conexion2, "update maestro_ventas set mv_precio_venta = '".$_POST['precio']."'
+<?php $sql_update_inmueble = mysqli_query($conexion2, "update maestro_ventas set mv_precio_venta = '".$_POST['precio']."',
+                                                                                 termino = '".$_POST['termino']."'
                                                                                  where
                                                                                  id_venta = '".$_POST['id_venta']."'");
                            /*if($_POST['estado'] == 5555){
@@ -179,6 +180,7 @@
                         <th class="text-center">GRUPO</th>
                         <th class="text-center">FECHA</th>
                         <th class="text-center">CLIENTE</th>
+                        <th class="text-center">TERMINO</th>
                         <th class="hidden-xs" style="width: 15%;">MONTO VENTA</th>
                         <th class="text-center" style="width: 10%;">EDITAR</th>
                         <th class="text-center" style="width: 10%;">ELIMINAR</th>
@@ -213,7 +215,8 @@
                                                                       mc.cl_apellido,
                                                                       mv.id_cliente,
                                                                       mv.id_venta,
-                                                                      mv.fecha_venta
+                                                                      mv.fecha_venta,
+                                                                      mv.termino
                                                                     from
                                                                         maestro_ventas mv inner join maestro_proyectos mp on mv.id_proyecto = mp.id_proyecto
                                                                                           inner join grupo_inmuebles gi on mv.id_grupo_inmueble = gi.id_grupo_inmuebles
@@ -229,6 +232,9 @@
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['gi_nombre_grupo_inmueble']; ?></td>
                         <td class="font-w600"><?php echo date("d-m-Y", strtotime($lista_todos_contratos_ventas['fecha_venta'])); ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['cl_nombre'].' '.$lista_todos_contratos_ventas['cl_apellido']; ?></td>
+                        <td class="font-w600"><?php if($lista_todos_contratos_ventas['termino'] == 1){ echo 'Transito'; }
+                                                      elseif($lista_todos_contratos_ventas['termino'] == 2){ echo 'Largo Termino'; }
+                                                        else{ echo '-'; } ?></td>
                         <td class="hidden-xs"><?php echo number_format($lista_todos_contratos_ventas['mv_precio_venta'], 2, '.',','); ?></td>
                         <td class="text-center">
                             <div class="btn-group">
@@ -387,6 +393,16 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
+                                                              <label class="col-xs-12">TERMINO</label>
+                                                              <div class="col-xs-12">
+                                                                <select name="termino" class="js-select2 form-control" required>
+                                                                  <option value="">Seleccionar</option>
+                                                                  <option value="1" <?php if($lista_todos_contratos_ventas['termino'] = 1){ echo 'selected';} ?>> Transito</option>
+                                                                  <option value="2" <?php if($lista_todos_contratos_ventas['termino'] = 2){ echo 'selected';} ?>>Largo termino</option>
+                                                                </select>
+                                                              </div>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label class="col-xs-12" for="register1-username">Precio</label>
                                                                 <div class="col-xs-12">
                                                                      <input class="form-control" type="text" name="precio" placeholder="Precio" required="required" value="<?php echo $lista_todos_contratos_ventas['mv_precio_venta']; ?>"></input>
@@ -416,6 +432,7 @@
                                                                     <input class="form-control" type="text" name="area" placeholder="Area" readonly="readonly" value="<?php echo $lista_todos_contratos_ventas['mi_nombre']; ?>"></input>
                                                                 </div>
                                                             </div>
+
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control-label" >ESTADO</label>
                                                                 <div class="col-md-7">

@@ -68,7 +68,8 @@
                                                                                 id_cliente,
                                                                                 mv_descripcion,
                                                                                 mv_reserva,
-                                                                                mv_status
+                                                                                mv_status,
+                                                                                termino
                                                                                 )values(
                                                                                 '".$_POST['id_proyecto']."',
                                                                                 '".$_POST['id_grupo_inmueble']."',
@@ -77,7 +78,8 @@
                                                                                 '".$_POST['id_cliente']."',
                                                                                 '".$_POST['descripcion']."',
                                                                                 '".$_POST['reserva']."',
-                                                                                1)");
+                                                                                1,
+                                                                                '".$_POST['termino']."')");
 
 
       /* ################ CAMBIO DE PRECIO DE INMUEBLE ############## */
@@ -122,7 +124,8 @@
                                                     'precio_venta'=>$_POST['precio_venta'],
                                                     'id_cliente'=>$_POST['id_cliente'],
                                                     'descripcion'=>$_POST['descripcion'],
-                                                    'reserva'=>$_POST['reserva']);
+                                                    'reserva'=>$_POST['reserva'],
+                                                    'termino'=>$_POST['termino']);
 
                                $_SESSION['session_ventas'] = $session_ventas;
                         }
@@ -310,6 +313,16 @@ function dependencia_ciudad()
                                       value="<?php if(isset($rv_precio_venta)){ echo $rv_precio_venta;}
                                                    elseif(isset($_SESSION['session_ventas_reserva']['precio_venta'])){ echo $_SESSION['session_ventas_reserva']['precio_venta'];}
                                                    elseif(isset($_SESSION['session_ventas']['precio_venta'])){ echo $_SESSION['session_ventas']['precio_venta']; } ?>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-username">Termino <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <select name="termino" class="js-select2 form-control" required>
+                                  <option value="">Seleccionar</option>
+                                  <option value="1" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] = 1){ echo 'selected';} ?>> Transito</option>
+                                  <option value="2" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] = 2){ echo 'selected';} ?>>Largo termino</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

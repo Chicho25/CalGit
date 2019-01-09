@@ -391,6 +391,10 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Edo. Servicios',
                         'url'   => 'gc_estado_servicios.php'
+                    ),
+                    array(
+                        'name'  => 'Rep. Termino',
+                        'url'   => 'gc_reporte_termino.php'
                     )
                 )
             ),
