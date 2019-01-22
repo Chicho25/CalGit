@@ -33,6 +33,33 @@ $eliminar_servicio = $conexion2 -> query("delete from servicios where id = '".$_
                                                                           '".date("Y-m-d H:i:s")."',
                                                                           '".$_SESSION['session_gc']['usua_id']."')");
 
+$datos_cliente0 = $conexion2 -> query("SELECT id_cliente FROM maestro_ventas where id_venta = '".$_POST['id_contrato_venta']."'");
+
+while ($lista_cliente0 = $datos_cliente0 -> fetch_array()) {
+       $id_cliente0 = $lista_cliente0['id_cliente'];
+}
+
+$movimiento_bancario = $conexion2 -> query("INSERT INTO
+                                            movimiento_bancario(id_cuenta,
+                                                                id_tipo_movimiento,
+                                                                mb_fecha,
+                                                                mb_monto,
+                                                                mb_descripcion,
+                                                                mb_stat,
+                                                                id_cliente,
+                                                                id_proyecto,
+                                                                id_contrato_venta
+                                                                )VALUES(
+                                                                13,
+                                                                26,
+                                                                '".date("Y-m-d")."',
+                                                                '".$_POST['monto']."',
+                                                                '".$_POST['descripcion']."',
+                                                                1,
+                                                                '".$id_cliente0."',
+                                                                13,
+                                                                '".$_POST['id_contrato_venta']."')");
+
 }
 
 if (isset($_POST['update'])) {
