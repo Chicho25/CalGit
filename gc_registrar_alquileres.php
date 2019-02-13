@@ -318,10 +318,10 @@ function dependencia_ciudad()
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-username">Termino <span class="text-danger">*</span></label>
                             <div class="col-md-7">
-                                <select name="termino" class="js-select2 form-control" required>
+                                <select name="termino" class="form-control" required>
                                   <option value="">Seleccionar</option>
-                                  <option value="1" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] = 1){ echo 'selected';} ?>> Transito</option>
-                                  <option value="2" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] = 2){ echo 'selected';} ?>>Largo termino</option>
+                                  <option value="1" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] == 1){ echo 'selected';} ?>> Transito</option>
+                                  <option value="2" <?php if(isset($_SESSION['session_ventas']['termino']) && $_SESSION['session_ventas']['termino'] == 2){ echo 'selected';} ?>>Permanente</option>
                                 </select>
                             </div>
                         </div>

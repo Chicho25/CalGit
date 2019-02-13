@@ -71,9 +71,39 @@
                           <label class="col-xs-12" for="register1-username" style="text-align: left;">Descripcion: <?php echo $descripcion; ?></label>
                           <div class="col-xs-12">
                           </div>
-                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Termino: <?php if($termino ==1){ echo 'Transito';}elseif($termino == 2){ echo 'Largo Termino'; }else{ echo '-'; } ; ?></label>
+                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Termino: <?php if($termino ==1){ echo 'Transito';}elseif($termino == 2){ echo 'Permanente'; }else{ echo '-'; } ; ?></label>
                           <div class="col-xs-12">
                             <input type="hidden" name="id_venta_contrato" value="<?php echo $id_contrato; ?>">
+                          </div>
+                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Cambiar Slip:
+
+                            <?php
+
+                            $puestos = $conexion2 -> query("SELECT
+                                                            *,
+                                                            count(*)
+                                                            FROM
+                                                            maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
+                                                            WHERE
+                                                            mi.id_grupo_inmuebles in(23,26,24,25)
+                                                            and
+                                                            mi_status not in(17)
+                                                            group by mi_nombre
+                                                            order by mi_nombre desc");
+
+                             ?>
+                             <form class="" action="" method="post">
+                               <select name="slipt_position" class="form-control" style="width:400px;">
+                                 <option value="">Seleccionar</option>
+                                 <?php while ($lista = $puestos -> fetch_array()) {
+                                   if($lista['id_inmueble'] != ''){ continue; }else{  } ?>
+                                   <option value="<?php echo $lista['id_inmueble']; ?>"><?php echo $lista['mi_nombre'] ?></option>
+                                 <?php } ?>
+                               </select>
+                               <button class="btn btn-sm btn-primary" type="submit" >Cambiar Slip</button>
+                             </form>
+                          </label>
+                          <div class="col-xs-12">
                           </div>
                           <!--<hr>
                          <label class="col-xs-12" for="register1-username" style="text-align: left;">ESLORA (pies): </label>

@@ -233,7 +233,7 @@
                         <td class="font-w600"><?php echo date("d-m-Y", strtotime($lista_todos_contratos_ventas['fecha_venta'])); ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['cl_nombre'].' '.$lista_todos_contratos_ventas['cl_apellido']; ?></td>
                         <td class="font-w600"><?php if($lista_todos_contratos_ventas['termino'] == 1){ echo 'Transito'; }
-                                                      elseif($lista_todos_contratos_ventas['termino'] == 2){ echo 'Largo Termino'; }
+                                                      elseif($lista_todos_contratos_ventas['termino'] == 2){ echo 'Permanente'; }
                                                         else{ echo '-'; } ?></td>
                         <td class="hidden-xs"><?php echo number_format($lista_todos_contratos_ventas['mv_precio_venta'], 2, '.',','); ?></td>
                         <td class="text-center">
@@ -398,7 +398,7 @@
                                                                 <select name="termino" class="js-select2 form-control" required>
                                                                   <option value="">Seleccionar</option>
                                                                   <option value="1" <?php if($lista_todos_contratos_ventas['termino'] = 1){ echo 'selected';} ?>> Transito</option>
-                                                                  <option value="2" <?php if($lista_todos_contratos_ventas['termino'] = 2){ echo 'selected';} ?>>Largo termino</option>
+                                                                  <option value="2" <?php if($lista_todos_contratos_ventas['termino'] = 2){ echo 'selected';} ?>>Permanente</option>
                                                                 </select>
                                                               </div>
                                                             </div>

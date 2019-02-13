@@ -45,7 +45,7 @@
                                 <select class="js-select2 form-control" name="id_termino" style="width: 100%;" data-placeholder="Seleccionar Termino">
                                     <option value="">Selecionar</option>
                                     <option value="1">Transito</option>
-                                    <option value="2">Largo Termino</option>
+                                    <option value="2">Permanente</option>
                                 </select>
                             </div>
                         </div>

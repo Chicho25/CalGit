@@ -28,6 +28,7 @@
                                               sum(mcu.mc_monto_abonado) as cobrado,
                                               (sum(mcu.mc_monto) - sum(mcu.mc_monto_abonado)) as por_cobrar,
                                               mv.fecha_venta,
+                                              mv.termino,
                                               (select sum(mc_monto) from maestro_cuotas where mv.id_venta = id_contrato_venta and mc_fecha_vencimiento > CURDATE() and mc_monto_abonado = 0) as monto_vencido
                                           from
                                           maestro_ventas mv inner join maestro_inmuebles mi on mv.id_inmueble = mi.id_inmueble
@@ -44,6 +45,7 @@
 <?php while($li[] = $resultados->fetch_array()); ?>
 
 
+
 <?php $html='
 <header class="clearfix">
   <div id="logo">
@@ -54,6 +56,13 @@
   <div id="project" style="font-size:18px;">
     MARINA VISTA MAR
   </div>
+  <div id="project" style="font-size:18px;">';
+
+  if($_POST['id_termino'] == 1){  $html .='Transito'; }
+    elseif($_POST['id_termino'] == 2){ $html .='Permanente'; }
+      else{ echo '-'; }
+
+  $html .='</div>
 </header>
 <main><div style="text-align: right"><b>Fecha del Reporte: '.date('d/m/Y').'</b></div>';
 
@@ -72,15 +81,15 @@
         <th>'.(count($li) - 1).'</th>
       </tr>
       <tr>
-        <th  class="service">INMUEBLE</th>
-        <th  class="desc">CODIGO</th>
-        <th  class="desc">NOMBRE DEL CLIENTE</th>
-        <th  class="desc">COSTO DE VENTA</th>
-        <th  class="desc">TOTAL CUOTAS</th>
-        <th  class="desc">COBRADO</th>
-        <th  class="desc">POR COBRAR</th>
-        <th  class="desc">VENCIDO</th>
-        <th  class="desc">FECHA</th>
+        <th class="service">INMUEBLE</th>
+        <th class="desc">CODIGO</th>
+        <th class="desc">NOMBRE DEL CLIENTE</th>
+        <th class="desc">COSTO DE VENTA</th>
+        <th class="desc">TOTAL CUOTAS</th>
+        <th class="desc">COBRADO</th>
+        <th class="desc">POR COBRAR</th>
+        <th class="desc">VENCIDO</th>
+        <th class="desc">FECHA</th>
       </tr>
     </thead>
     <tbody>';
