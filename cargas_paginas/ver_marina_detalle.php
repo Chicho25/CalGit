@@ -30,6 +30,7 @@
                                                 mi.id_inmueble = '".$_GET['id']."' "); ?>
 <?php while($datos_inmueble = $datos_contrato -> fetch_array()){
               $id_contrato = $datos_inmueble['id_venta'];
+              $id_inmueble = $datos_inmueble['id_inmueble'];
               $nombre_inmueble = $datos_inmueble['mi_nombre'];
               $nombre_cliente = $datos_inmueble['cl_nombre'].' '.$datos_inmueble['cl_apellido'];
               $codigo = $datos_inmueble['mi_codigo_imueble'];
@@ -39,7 +40,7 @@
               $termino = $datos_inmueble['termino'];
 } ?>
 
-<form action="gc_ver_documentos_contrato_alquileres.php" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data">
       <div class="block block-themed block-transparent remove-margin-b">
           <div class="block-header bg-primary-dark">
               <ul class="block-options">
@@ -81,27 +82,27 @@
 
                             $puestos = $conexion2 -> query("SELECT
                                                             *,
+                                                            mi.id_inmueble as id_inm,
                                                             count(*)
                                                             FROM
                                                             maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                                             WHERE
                                                             mi.id_grupo_inmuebles in(23,26,24,25)
                                                             and
-                                                            mi_status not in(17)
+                                                            mi.mi_status not in(17)
                                                             group by mi_nombre
                                                             order by mi_nombre desc");
 
                              ?>
-                             <form class="" action="" method="post">
                                <select name="slipt_position" class="form-control" style="width:400px;">
                                  <option value="">Seleccionar</option>
                                  <?php while ($lista = $puestos -> fetch_array()) {
                                    if($lista['id_inmueble'] != ''){ continue; }else{  } ?>
-                                   <option value="<?php echo $lista['id_inmueble']; ?>"><?php echo $lista['mi_nombre'] ?></option>
+                                   <option value="<?php echo $lista['id_inm']; ?>"><?php echo $lista['mi_nombre'] ?></option>
                                  <?php } ?>
                                </select>
-                               <button class="btn btn-sm btn-primary" type="submit" >Cambiar Slip</button>
-                             </form>
+                               <input type="hidden" name="slipt_old" value="<?php echo $id_inmueble; ?>">
+                               <input type="hidden" name="id_ventas" value="<?php echo $id_contrato; ?>">
                           </label>
                           <div class="col-xs-12">
                           </div>
@@ -139,7 +140,7 @@
                                 <td class="hidden-xs" <?php if($lista_todos_contratos_ventas['mc_monto'] == $lista_todos_contratos_ventas['mc_monto_abonado']){?> style="background-color:#00B812"
                                                     <?php }elseif($lista_todos_contratos_ventas['mc_monto'] > $lista_todos_contratos_ventas['mc_monto_abonado'] &&
                                                                     $lista_todos_contratos_ventas['mc_monto_abonado'] > 0 ){?> style="background-color:#FAD401"
-                                                    <?php }elseif($lista_todos_contratos_ventas['mc_monto_abonado'] == 0){?> style="background-color:#FF0000; color:white;" <?php } ?>>
+                                                    <?php }elseif($lista_todos_contratos_ventas['mc_monto_abonado'] == 0){?> style="background-color:#FF0000; color:white;" <?php } ?> >
 
                                     <?php if($lista_todos_contratos_ventas['mc_monto'] == $lista_todos_contratos_ventas['mc_monto_abonado']){?> PAGADA
                                     <?php }elseif($lista_todos_contratos_ventas['mc_monto'] > $lista_todos_contratos_ventas['mc_monto_abonado'] &&
@@ -163,7 +164,7 @@
 
                       <div class="modal-footer">
                           <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
-                          <button class="btn btn-sm btn-primary" type="submit" >Administrar contrato</button>
+                          <button class="btn btn-sm btn-primary" type="submit" >Cambiar Slip</button>
                       </div>
                   </div>
               </div>

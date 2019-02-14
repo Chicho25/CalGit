@@ -10,6 +10,15 @@
 <?php $dispositivo_acceso = obtener_dispositivo(); ?>
 <?php insertar_log_seguimiento($conexion2, ObtenerIP(), $dispositivo_acceso, $lugar_mapa, $_SESSION['session_gc']['usua_id']); ?>
 <?php /* ######################################################## */ ?>
+<?php if (isset($_POST['slipt_position'])) {
+
+      $update_slip = $conexion2 -> query("update maestro_ventas set id_inmueble = '".$_POST['slipt_position']."' where id_venta = '".$_POST['id_ventas']."'");
+      $update_slip1 = $conexion2 -> query("update maestro_cuotas set id_inmueble = '".$_POST['slipt_position']."' where id_contrato_venta = '".$_POST['id_ventas']."'");
+      $update_slip2 = $conexion2 -> query("update maestro_cuota_abono set mca_id_inmueble = '".$_POST['slipt_position']."' where mca_id_documento_venta = '".$_POST['id_ventas']."'");
+      $update_slip3 = $conexion2 -> query("update maestro_inmuebles set mi_status = 3 where id_inmueble = '".$_POST['slipt_position']."'");
+      $update_slip4 = $conexion2 -> query("update maestro_inmuebles set mi_status = 1 where id_inmueble = '".$_POST['slipt_old']."'");
+
+} ?> 
 
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
@@ -481,6 +490,15 @@ $('#pieM4').highcharts({
     <div class="row">
 
         <div class="col-lg-12">
+        <?php if(isset($update_slip)){ ?>
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h3 class="font-w300 push-15">Slip Cambiado</h3>
+                        <p>El <a class="alert-link" href="javascript:void(0)">Slip</a> fue cambiado!</p>
+                    </div>
+
+        <?php } ?>
             <!-- Bootstrap Forms Validation -->
             <div class="block">
                 <div class="block-header">

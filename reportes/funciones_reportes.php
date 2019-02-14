@@ -393,79 +393,79 @@ function reporte_4($conexion, $id_proyecto){
 				if ($fecha2!=''){ $where3 .=" and s.date_time <= '".date('Y-m-d',strtotime($fecha2))."'"; }else{  $where3 .=""; }
 
 				$sql_edo_cuenta_client = $conexion -> query("(select
-																					id_cuota as id,
-																					'DOCUMENTO' as concepto,
-																					tc.tc_nombre_tipo_cuenta as tipo,
-																					mc.mc_numero_cuota as numero,
-																					mi.mi_codigo_imueble as inmueble,
-																					mc.mc_fecha_vencimiento as emision,
-																					mc.mc_fecha_vencimiento as vencimiento,
-																					mc.mc_descripcion as descripcion,
-																					mc.mc_monto as debito,
-																					0 as credito,
-																					(select sum(mc2.mc_monto) from maestro_cuotas mc2 where mc.id_cuota >= mc2.id_cuota and mc.id_contrato_venta = mc2.id_contrato_venta) as saldo
-																					from
-																					maestro_cuotas mc inner join tipo_cuota tc on tc.id_tipo_cuota = mc.id_tipo_cuota
-																					inner join maestro_inmuebles mi on mi.id_inmueble = mc.id_inmueble
-																					inner join maestro_ventas mv on mv.id_venta = mc.id_contrato_venta
-																					$where1
-																					and
-																					mv.id_cliente = '".$id_cliente."'
-																					order by
-																					id_cuota)
+																id_cuota as id,
+																'DOCUMENTO' as concepto,
+																tc.tc_nombre_tipo_cuenta as tipo,
+																mc.mc_numero_cuota as numero,
+																mi.mi_codigo_imueble as inmueble,
+																mc.mc_fecha_vencimiento as emision,
+																mc.mc_fecha_vencimiento as vencimiento,
+																mc.mc_descripcion as descripcion,
+																mc.mc_monto as debito,
+																0 as credito,
+																(select sum(mc2.mc_monto) from maestro_cuotas mc2 where mc.id_cuota >= mc2.id_cuota and mc.id_contrato_venta = mc2.id_contrato_venta) as saldo
+																from
+																maestro_cuotas mc inner join tipo_cuota tc on tc.id_tipo_cuota = mc.id_tipo_cuota
+																inner join maestro_inmuebles mi on mi.id_inmueble = mc.id_inmueble
+																inner join maestro_ventas mv on mv.id_venta = mc.id_contrato_venta
+																$where1
+																and
+																mv.id_cliente = '".$id_cliente."'
+																order by
+																id_cuota)
 
-																					UNION
+																UNION
 
-																					(select
-																					mca.id,
-																					'PAGO' as concepto,
-																					tmb.tmb_nombre as tipo,
-																					mca.mca_numero as numero,
-																					mi.mi_codigo_imueble as inmueble,
-																					mca.fecha as emision,
-																					'-' as vencimiento,
-																					mca.descripcion as descripcion,
-																					0 as debito,
-																					mca.monto_abonado as credito,
-																					(select sum(mca2.monto_abonado) from maestro_cuota_abono mca2 where mca.id >= mca2.id and mca.mca_id_documento_venta =  mca2.mca_id_documento_venta) as saldo
-																					from
-																					maestro_cuota_abono mca inner join tipo_movimiento_bancario tmb on mca.mca_id_tipo_abono = tmb.id_tipo_movimiento_bancario
-																					inner join maestro_inmuebles mi on mi.id_inmueble = mca.mca_id_inmueble
-																					$where2
-																					and
-																					mca.mca_id_cliente = '".$id_cliente."'
-																					order by
-																					mca.id)
+																(select
+																mca.id,
+																'PAGO' as concepto,
+																tmb.tmb_nombre as tipo,
+																mca.mca_numero as numero,
+																mi.mi_codigo_imueble as inmueble,
+																mca.fecha as emision,
+																'-' as vencimiento,
+																mca.descripcion as descripcion,
+																0 as debito,
+																mca.monto_abonado as credito,
+																(select sum(mca2.monto_abonado) from maestro_cuota_abono mca2 where mca.id >= mca2.id and mca.mca_id_documento_venta =  mca2.mca_id_documento_venta) as saldo
+																from
+																maestro_cuota_abono mca inner join tipo_movimiento_bancario tmb on mca.mca_id_tipo_abono = tmb.id_tipo_movimiento_bancario
+																inner join maestro_inmuebles mi on mi.id_inmueble = mca.mca_id_inmueble
+																$where2
+																and
+																mca.mca_id_cliente = '".$id_cliente."'
+																order by
+																mca.id)
 
-																					UNION
+																UNION
 
-																					(select
-																					 s.id,
-																					 'PAGO' as concepto,
-																					 'SERVICIO' as tipo,
-																					 '-' as numero,
-																					 mi.mi_codigo_imueble as inmueble,
-																					 s.date_time as emision,
-																					 '-' as vencimiento,
-																					 s.descripcion as descripcion,
-																					 case
-																					 	when s.stat = 1 then s.monto
-																						else '0'
-																					 end as debito,
-																					 case
-																					 	when s.stat = 3 then s.monto
-																						else '0'
-																					 end as credito,
-																					 s.monto as saldo
-																					from servicios s inner join maestro_ventas mv on mv.id_venta = s.id_ventas
-																													 inner join maestro_inmuebles mi on mi.id_inmueble = mv.id_inmueble
-																					$where3
-																					and
-																					mv.id_cliente = '".$id_cliente."'
-																					and
-																					s.stat not in(2)
-																					)
-																					order by 6 asc");
+																(select
+																	s.id,
+																	'PAGO' as concepto,
+																	'SERVICIO' as tipo,
+																	'-' as numero,
+																	mi.mi_codigo_imueble as inmueble,
+																	s.date_time as emision,
+																	'-' as vencimiento,
+																	s.descripcion as descripcion,
+																	case
+																	when s.stat = 1 then s.monto
+																	else '0'
+																	end as debito,
+																	case
+																	when s.stat = 3 then s.monto
+																	else '0'
+																	end as credito,
+																	s.monto as saldo
+																from servicios s inner join maestro_ventas mv on mv.id_venta = s.id_ventas
+																									inner join maestro_inmuebles mi on mi.id_inmueble = mv.id_inmueble
+																$where3
+																and
+																mv.id_cliente = '".$id_cliente."'
+																and
+																s.stat not in(2)
+																)
+																order by 6 asc");
 				return $sql_edo_cuenta_client;
 
 } ?>
