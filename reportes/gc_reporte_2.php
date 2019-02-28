@@ -51,6 +51,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
       </tr>
       <tr>
         <th  class="service">INMUEBLE</th>
+        <th  class="desc">GRUPO</th>
         <th  class="desc">NOMBRE</th>
         <th  class="desc">NOMBRE DEL CLIENTE</th>
         <th  class="desc">VENDIDO</th>
@@ -70,6 +71,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
     }else{*/
       $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['mi_codigo_imueble'].'</td>
+                  <td style="padding: 0" class="desc">'.$l['gi_nombre_grupo_inmueble'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mi_nombre'].'</td>
                   <td style="padding: 0" class="desc">'.$l['nombre'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['monto_vendido'], 2, ".", ",").'</td>

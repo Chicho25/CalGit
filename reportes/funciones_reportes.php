@@ -136,7 +136,7 @@ function reporte_2($conexion, $id_proyecto, $tipo, $grupo){
 															where
 															maestro_inmuebles.id_proyecto = '.$id_proyecto.$where1.$where2.'
 															and maestro_inmuebles.mi_status not in(17)
-															order by 1');
+															order by 5 desc');
 
 						return $sql_reporte_2;
 
