@@ -128,7 +128,7 @@
     <div class="block">
         <div class="block-header">
             <h2 class="block-title" style="font-size:18px;">
-              Proyecto: 
+              Proyecto:
               <?php
               if(isset($_POST['id_proyecto'],
                               $_POST['id_grupo_inmueble'],
@@ -143,11 +143,11 @@
                     while($lista_todos_inmuebles = $todos_inmuebles -> fetch_array()){
 
                       $nombre_proyecto = $lista_todos_inmuebles['proy_nombre_proyecto'];
-
+                      $_SESSION["proye"] = $nombre_proyecto;
                     }
                 }
 
-                echo $nombre_proyecto; ?>
+                echo $_SESSION["proye"]; ?>
             </h2>
         </div>
         <div class="block-content">
