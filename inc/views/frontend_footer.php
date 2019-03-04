@@ -75,10 +75,10 @@
             <div class="font-s12 push-20 clearfix">
                 <hr class="remove-margin-t">
                 <div class="pull-right">
-                      by <a class="font-w600" href="http://goo.gl/vNS3I" target="_blank">dChain</a>
+                      by <a class="font-w600" href="#" target="_blank">Calpe</a>
                 </div>
                 <div class="pull-left">
-                    <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank"><?php echo $one->name . ' ' . $one->version; ?></a> &copy; <span class="js-year-copy"></span>
+                    <a class="font-w600" href="#" target="_blank"><?php echo $one->name . ' ' . $one->version; ?></a> &copy; <span class="js-year-copy"></span>
                 </div>
             </div>
             <!-- END Copyright Info -->

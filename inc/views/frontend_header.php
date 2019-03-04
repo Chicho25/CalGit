@@ -10,7 +10,7 @@
 ?>
 
 <!-- Header -->
-<header id="header-navbar" class="content-mini content-mini-full hidden-md hidden-lg">
+<header id="header-navbar" class="content-mini content-mini-full hidden-md hidden-lg side-scroll">
     <div class="content-boxed">
         <!-- Header Navigation Right -->
         <ul class="nav-header pull-right">

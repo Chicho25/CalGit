@@ -361,6 +361,10 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Proyecciones',
                         'url'   => 'gc_proyecciones.php'
+                    ),
+                    array(
+                        'name'  => 'Inmuebles/Slips',
+                        'url'   => 'gc_ver_slips.php'
                     )
                 )
             ),

@@ -12,5 +12,11 @@
  *
  */
 ?>
+        <script>
+            $(function () {
+                // Init page helpers (SlimScroll plugin)
+                App.initHelpers('slimscroll');
+            });
+        </script>
     </body>
 </html>

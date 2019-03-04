@@ -77,7 +77,9 @@ $tb_sql = "SELECT mc.id_cuota,
            INNER JOIN maestro_inmuebles mi ON mc.id_inmueble = mi.id_inmueble
            INNER JOIN maestro_proyectos mp ON mp.id_proyecto = mc.id_proyecto
            INNER JOIN grupo_inmuebles gi ON gi.id_grupo_inmuebles = mc.id_grupo
-           WHERE 1 $wh";
+           WHERE 1 $wh
+           and
+           mc.mc_status not in(17)";
 
   $excelPrint = '<table border="1">
                   <thead>

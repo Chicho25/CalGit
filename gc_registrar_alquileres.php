@@ -134,6 +134,7 @@
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
 <!-- Page JS Plugins CSS -->
+<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2-bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/sweetalert/sweetalert.min.css">
@@ -332,6 +333,12 @@ function dependencia_ciudad()
                                                                                                                                          elseif(isset($_SESSION['session_ventas']['descripcion'])){ echo $_SESSION['session_ventas']['descripcion']; }?></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-password">Fecha de Vencimiento <span class="text-danger">*</span></label>
+                            <div class="col-md-7 input-group input-daterange doc">
+                              <input type="text" class="js-datepicker form-control fechas1" name="fecha_vencimiento" placeholder="Fecha de Vencimiento" autocomplete="off">
+                            </div>
+                        </div>
 
                         <?php if(isset($_SESSION['session_ventas_reserva'])){ ?> <input type="hidden" name="confirmacion" value="1"> <?php } ?>
                         <?php if(isset($_SESSION['session_ventas'])){ ?> <input type="hidden" name="confirmacion" value="1"> <?php } ?>
@@ -465,6 +472,7 @@ $(document).ready(function(){
 <?php require 'inc/views/template_footer_start.php'; ?>
 
 <!-- Page JS Plugins -->
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.full.min.js"></script>
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/jquery-validation/additional-methods.min.js"></script>
@@ -486,6 +494,25 @@ $(document).ready(function(){
         // Init page helpers (BS Notify Plugin)
         App.initHelpers('notify');
     });
+</script>
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_forms_pickers_more.js"></script>
+<script>
+    jQuery(function(){
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider',]); // 'masked-inputs',  'tags-inputs'
+    });
+    function init()
+    {
+      $(".doc").datepicker({
+        input: $(".fechas1"),
+        format: 'yyyy-mm-dd'
+      });
+      $(".venc").datepicker({
+        input: $(".fechas2"),
+        format: 'yyyy-mm-dd'
+      });
+    }
+    window.onload = init;
 </script>
 <?php require 'inc/views/template_footer_end.php'; ?>
 <?php }else{ ?>

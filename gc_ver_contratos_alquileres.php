@@ -137,6 +137,7 @@
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
 <!-- Page JS Plugins CSS -->
+<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/datatables/jquery.dataTables.min.css">
 <?php require 'inc/views/template_head_end.php'; ?>
 <?php require 'inc/views/base_head.php'; ?>
@@ -171,6 +172,33 @@
             <h3 class="block-title">Tabla de <?php echo $nombre_pagina; ?> del sistema <small>todos los <?php echo $nombre_pagina; ?></small></h3>
         </div>
         <div class="block-content">
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="val-password">Fecha Creacion</label>
+              <form class="" action="" method="post">
+                <div class="col-md-4">
+                  <div class="input-group input-daterange doc">
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_ini" placeholder="Desde" autocomplete="off">
+                      <div style="min-width: 0px" class="input-group-addon"></div>
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_fin" placeholder="Hasta" autocomplete="off">
+                  </div>
+                </div>
+                <label class="col-md-1 control-label" for="val-password"><button class="btn btn-sm btn-primary" type="submit">Enviar</button></label>
+                <div class="col-md-5"></div>
+              </form>
+            </div>
+            <div class="form-group"><br>
+              <label class="col-md-2 control-label" for="val-password">Fecha Vencimiento</label>
+              <form class="" action="" method="post">
+                <div class="col-md-4">
+                  <div class="input-group input-daterange doc">
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_ini" placeholder="Desde" autocomplete="off">
+                      <div style="min-width: 0px" class="input-group-addon"></div>
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_fin" placeholder="Hasta" autocomplete="off">
+                  </div>
+                </div>
+                <label class="col-md-1 control-label" for="val-password"><button class="btn btn-sm btn-primary" type="submit">Enviar</button></label>
+            </form>
+            </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <table class="table table-bordered table-striped js-dataTable-full">
                 <thead>
@@ -191,7 +219,13 @@
                 </thead>
                 <tbody>
                     <?php
-
+                    $where_fecha = "";
+                    if (isset($_POST['fecha_a_ini']) && $_POST['fecha_a_ini'] != '') {
+                      $where_fecha .= " and mv.fecha_venta >= '".$_POST['fecha_a_ini']."' ";
+                    }
+                    if (isset($_POST['fecha_a_fin']) && $_POST['fecha_a_fin'] != '') {
+                      $where_fecha .= " and mv.fecha_venta <= '".$_POST['fecha_a_fin']."' ";
+                    }
                     if(isset($_GET['id_contrato'])){
                        $where_id_contrato = " and mv.id_venta ='".$_GET['id_contrato']."'";
                     }else{
@@ -224,7 +258,8 @@
                                                                                           inner join maestro_clientes mc on mv.id_cliente = mc.id_cliente
                                                                         where
                                                                         mp.id_proyecto = 13
-                                                                        $where_id_contrato"); ?>
+                                                                        $where_id_contrato
+                                                                        $where_fecha"); ?>
                     <?php while($lista_todos_contratos_ventas = mysqli_fetch_array($todos_contratos_ventas)){ ?>
                     <tr <?php if ($lista_todos_contratos_ventas['mv_status']==17) { echo "style='Background-color:#FC9387; color:white;'"; } ?>>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id_venta']; ?></td>
@@ -473,9 +508,29 @@
 <?php require 'inc/views/template_footer_start.php'; ?>
 <!-- Page JS Plugins -->
 <script type="text/javascript" src="bootstrap-filestyle.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo $one->assets_folder; ?>/js/plugins/datatables/jquery.dataTables.min.js"></script>
 <!-- Page JS Code -->
 <script src="<?php echo $one->assets_folder; ?>/js/pages/base_tables_datatables.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_forms_pickers_more.js"></script>
+<script>
+    jQuery(function(){
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider',]); // 'masked-inputs',  'tags-inputs'
+    });
+    function init()
+    {
+      $(".doc").datepicker({
+        input: $(".fechas1"),
+        format: 'yyyy-mm-dd'
+      });
+      $(".venc").datepicker({
+        input: $(".fechas2"),
+        format: 'yyyy-mm-dd'
+      });
+    }
+    window.onload = init;
+</script>
 <?php require 'inc/views/template_footer_end.php'; ?>
 <?php }else{ ?>
 

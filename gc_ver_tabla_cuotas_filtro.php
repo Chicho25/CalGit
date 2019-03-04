@@ -141,7 +141,9 @@
                    INNER JOIN maestro_inmuebles mi ON mc.id_inmueble = mi.id_inmueble
                    INNER JOIN maestro_proyectos mp ON mp.id_proyecto = mc.id_proyecto
                    INNER JOIN grupo_inmuebles gi ON gi.id_grupo_inmuebles = mc.id_grupo
-                   WHERE 1 $wh";
+                   WHERE 1 $wh
+                   and
+                   mc.mc_status not in(17)";
 
 
 ?>
@@ -216,6 +218,7 @@
                         $res = mysqli_query($conexion2, $tb_sql);
                         while($lista_todos_contratos_ventas = mysqli_fetch_array($res)){
                             $precio = $lista_todos_contratos_ventas['mv_precio_venta'];
+                            
                     ?>
                     <tr>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id_cuota']; ?></td>
