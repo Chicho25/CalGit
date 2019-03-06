@@ -27,9 +27,7 @@
 } ?>
 
 <?php if(isset($_POST['confirmacion'])){
-            echo "Paso 1<br>";
             if($_POST['reserva']==1){
-            echo "Paso 2<br>";
       /* ################ INSERT CUANDO EL INMUEBLE ESTE RESERVADO ############## */
                 $sql_insertar = $conexion2 -> query("insert into maestro_ventas(id_proyecto,
                                                                                 id_grupo_inmueble,
@@ -58,33 +56,32 @@
             }
 
             }elseif($_POST['reserva']==0){
-
-              echo "Paso 3<br>";
       /* ################ INSERT CUANDO EL INMUEBLE NO ESTA RESERVADO ############## */
-                $sql_insertar = $conexion2 -> query("insert into maestro_ventas(id_proyecto,
-                                                                                id_grupo_inmueble,
-                                                                                id_inmueble,
-                                                                                mv_precio_venta,
-                                                                                id_cliente,
-                                                                                mv_descripcion,
-                                                                                mv_reserva,
-                                                                                mv_status,
-                                                                                termino
-                                                                                )values(
-                                                                                '".$_POST['id_proyecto']."',
-                                                                                '".$_POST['id_grupo_inmueble']."',
-                                                                                '".$_POST['id_inmueble']."',
-                                                                                '".$_POST['precio_venta']."',
-                                                                                '".$_POST['id_cliente']."',
-                                                                                '".$_POST['descripcion']."',
-                                                                                '".$_POST['reserva']."',
-                                                                                1,
-                                                                                '".$_POST['termino']."')");
+          $sql_insertar = $conexion2 -> query("insert into maestro_ventas(id_proyecto,
+                                                                          id_grupo_inmueble,
+                                                                          id_inmueble,
+                                                                          mv_precio_venta,
+                                                                          id_cliente,
+                                                                          mv_descripcion,
+                                                                          mv_reserva,
+                                                                          mv_status,
+                                                                          termino,
+                                                                          fecha_vencimiento
+                                                                          )values(
+                                                                          '".$_POST['id_proyecto']."',
+                                                                          '".$_POST['id_grupo_inmueble']."',
+                                                                          '".$_POST['id_inmueble']."',
+                                                                          '".$_POST['precio_venta']."',
+                                                                          '".$_POST['id_cliente']."',
+                                                                          '".$_POST['descripcion']."',
+                                                                          '".$_POST['reserva']."',
+                                                                          1,
+                                                                          '".$_POST['termino']."',
+                                                                          '".$_POST['fecha_vencimiento']."')");
 
 
       /* ################ CAMBIO DE PRECIO DE INMUEBLE ############## */
       if($_POST['id_proyecto'] == 13){
-              echo "Paso 4<br>";
               $sql_update_inmuebles_costo = $conexion2 -> query("update maestro_inmuebles set mi_precio_venta = '".$_POST['precio_venta']."', mi_precio_real = '".$_POST['precio_venta']."' where id_inmueble = '".$_POST['id_inmueble']."'");}
       /* ################ CAMBIO DE ESTATUS DEL INMUEBLE ############## */
               $sql_update_inmuebles = $conexion2 -> query("update maestro_inmuebles set mi_status = 3 where id_inmueble = '".$_POST['id_inmueble']."'");}
@@ -98,11 +95,7 @@
                                               $_POST['descripcion'],
                                                   $_POST['reserva'])){
 
-                  echo "Paso 6<br>";
-
                   if($_POST['reserva']==1){
-
-                  echo "Paso 7<br>";
 
                   $session_ventas_reserva = array('id_proyecto'=>$_POST['id_proyecto'],
                                                   'id_grupo_inmueble'=>$_POST['id_grupo_inmueble'],
@@ -114,23 +107,21 @@
 
                     $_SESSION['session_ventas_reserva'] = $session_ventas_reserva; }
 
-                    elseif($_POST['reserva']==0){
+elseif($_POST['reserva']==0){
 
-                      echo "Paso 0";
+$session_ventas = array('id_proyecto'=>$_POST['id_proyecto'],
+                        'id_grupo_inmueble'=>$_POST['id_grupo_inmueble'],
+                        'id_inmueble'=>$_POST['id_inmueble'],
+                        'precio_venta'=>$_POST['precio_venta'],
+                        'id_cliente'=>$_POST['id_cliente'],
+                        'descripcion'=>$_POST['descripcion'],
+                        'reserva'=>$_POST['reserva'],
+                        'termino'=>$_POST['termino'],
+                        'fecha_vencimiento'=>$_POST['fecha_vencimiento']);
 
-                            $session_ventas = array('id_proyecto'=>$_POST['id_proyecto'],
-                                                    'id_grupo_inmueble'=>$_POST['id_grupo_inmueble'],
-                                                    'id_inmueble'=>$_POST['id_inmueble'],
-                                                    'precio_venta'=>$_POST['precio_venta'],
-                                                    'id_cliente'=>$_POST['id_cliente'],
-                                                    'descripcion'=>$_POST['descripcion'],
-                                                    'reserva'=>$_POST['reserva'],
-                                                    'termino'=>$_POST['termino']);
-
-                               $_SESSION['session_ventas'] = $session_ventas;
-                        }
-
-                    } ?>
+ $_SESSION['session_ventas'] = $session_ventas;
+    }
+} ?>
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
 <!-- Page JS Plugins CSS -->
@@ -140,7 +131,6 @@
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/sweetalert/sweetalert.min.css">
 <script type="text/javascript" src="select_anidado3/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript">
-
 $(document).ready(function(){
   cargar_paises();
   $("#pais").change(function(){dependencia_estado();});
@@ -148,7 +138,6 @@ $(document).ready(function(){
   $("#estado").attr("disabled",false);
   $("#ciudad").attr("disabled",true);
 });
-
 function cargar_paises()
 {
   $.get("select_anidado3/scripts/cargar-paises.php", function(resultado){
@@ -335,7 +324,7 @@ function dependencia_ciudad()
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-password">Fecha de Vencimiento <span class="text-danger">*</span></label>
-                            <div class="col-md-7 input-group input-daterange doc">
+                            <div class="col-md-3 input-daterange doc">
                               <input type="text" class="js-datepicker form-control fechas1" name="fecha_vencimiento" placeholder="Fecha de Vencimiento" autocomplete="off">
                             </div>
                         </div>

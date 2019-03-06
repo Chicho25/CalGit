@@ -126,7 +126,8 @@
 <?php if(isset($_POST['precio'],
                        $_POST['id_venta'])){ ?>
 <?php $sql_update_inmueble = mysqli_query($conexion2, "update maestro_ventas set mv_precio_venta = '".$_POST['precio']."',
-                                                                                 termino = '".$_POST['termino']."'
+                                                                                 termino = '".$_POST['termino']."',
+                                                                                 fecha_vencimiento = '".$_POST['fecha_vencimiento']."'
                                                                                  where
                                                                                  id_venta = '".$_POST['id_venta']."'");
                            /*if($_POST['estado'] == 5555){
@@ -191,9 +192,9 @@
               <form class="" action="" method="post">
                 <div class="col-md-4">
                   <div class="input-group input-daterange doc">
-                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_ini" placeholder="Desde" autocomplete="off">
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_v_ini" placeholder="Desde" autocomplete="off">
                       <div style="min-width: 0px" class="input-group-addon"></div>
-                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_a_fin" placeholder="Hasta" autocomplete="off">
+                      <input type="text" class="js-datepicker form-control fechas1" name="fecha_v_fin" placeholder="Hasta" autocomplete="off">
                   </div>
                 </div>
                 <label class="col-md-1 control-label" for="val-password"><button class="btn btn-sm btn-primary" type="submit">Enviar</button></label>
@@ -226,6 +227,12 @@
                     if (isset($_POST['fecha_a_fin']) && $_POST['fecha_a_fin'] != '') {
                       $where_fecha .= " and mv.fecha_venta <= '".$_POST['fecha_a_fin']."' ";
                     }
+                    if (isset($_POST['fecha_v_ini']) && $_POST['fecha_v_ini'] != '') {
+                      $where_fecha .= " and mv.fecha_vencimiento >= '".$_POST['fecha_v_ini']."' ";
+                    }
+                    if (isset($_POST['fecha_v_fin']) && $_POST['fecha_v_fin'] != '') {
+                      $where_fecha .= " and mv.fecha_vencimiento <= '".$_POST['fecha_v_fin']."' ";
+                    }
                     if(isset($_GET['id_contrato'])){
                        $where_id_contrato = " and mv.id_venta ='".$_GET['id_contrato']."'";
                     }else{
@@ -250,7 +257,8 @@
                                                                       mv.id_cliente,
                                                                       mv.id_venta,
                                                                       mv.fecha_venta,
-                                                                      mv.termino
+                                                                      mv.termino,
+                                                                      mv.fecha_vencimiento
                                                                     from
                                                                         maestro_ventas mv inner join maestro_proyectos mp on mv.id_proyecto = mp.id_proyecto
                                                                                           inner join grupo_inmuebles gi on mv.id_grupo_inmueble = gi.id_grupo_inmuebles
@@ -409,16 +417,22 @@
                                                                     <input class="form-control" type="text" id="register1-username" name="id_venta" readonly="readonly" value="<?php echo $lista_todos_contratos_ventas['id_venta']; ?>"></input>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
+                                                            <!--<div class="form-group">
                                                                 <label class="col-xs-12" for="register1-username">Reservado ?</label>
-                                                                <div class="col-xs-12">
-                                                                    <input class="form-control" type="text" id="register1-username" readonly="readonly" value="<?php echo $lista_todos_contratos_ventas['mv_reserva']; ?>"></input>
-                                                                </div>
-                                                            </div>
+                                                                <div class="col-xs-12">-->
+                                                                    <input class="form-control" type="hidden" id="register1-username" readonly="readonly" value="<?php echo $lista_todos_contratos_ventas['mv_reserva']; ?>"></input>
+                                                                <!--</div>
+                                                            </div>-->
                                                             <div class="form-group">
                                                                 <label class="col-xs-12" for="register1-username">Fecha de creacion del contrato</label>
                                                                 <div class="col-xs-12">
                                                                      <input class="form-control" type="text" id="register1-username" name="fecha_contrato" readonly="readonly" value="<?php echo $lista_todos_contratos_ventas['fecha_venta']; ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-xs-12" for="register1-username">Fecha de Vencimiento <span class="text-danger">*</span></label>
+                                                                <div class="col-xs-12 input-daterange doc">
+                                                                  <input type="text" class="js-datepicker form-control fechas1" name="fecha_vencimiento" placeholder="Fecha de Vencimiento" autocomplete="off" value="<?php echo $lista_todos_contratos_ventas['fecha_vencimiento']; ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">

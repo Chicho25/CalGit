@@ -18,7 +18,7 @@
       $update_slip3 = $conexion2 -> query("update maestro_inmuebles set mi_status = 3 where id_inmueble = '".$_POST['slipt_position']."'");
       $update_slip4 = $conexion2 -> query("update maestro_inmuebles set mi_status = 1 where id_inmueble = '".$_POST['slipt_old']."'");
 
-} ?> 
+} ?>
 
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
@@ -179,10 +179,10 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 23
-                                                and 
-                                                isnull(mv.id_inmueble)) as total, 
+                                                and
+                                                isnull(mv.id_inmueble)) as total,
                                               (SELECT
                                                 count(*)
                                                 FROM
@@ -191,11 +191,11 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 23
-                                                and 
-                                                mv.id_inmueble <> '') as ocupado"); 
-                                                      
+                                                and
+                                                mv.id_inmueble <> '') as ocupado");
+
   while ($grafica_mi = $m1_estadisticas -> fetch_array()) {
     $disponible = $grafica_mi['total'];
     $ocupado = $grafica_mi['ocupado'];
@@ -209,10 +209,10 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 25
-                                                and 
-                                                isnull(mv.id_inmueble)) as total, 
+                                                and
+                                                isnull(mv.id_inmueble)) as total,
                                               (SELECT
                                                 count(*)
                                                 FROM
@@ -221,11 +221,11 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 25
-                                                and 
-                                                mv.id_inmueble <> '') as ocupado"); 
-                                                      
+                                                and
+                                                mv.id_inmueble <> '') as ocupado");
+
   while ($grafica_m3 = $m3_estadisticas -> fetch_array()) {
     $disponible3 = $grafica_m3['total'];
     $ocupado3 = $grafica_m3['ocupado'];
@@ -239,10 +239,10 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 26
-                                                and 
-                                                isnull(mv.id_inmueble)) as total, 
+                                                and
+                                                isnull(mv.id_inmueble)) as total,
                                               (SELECT
                                                 count(*)
                                                 FROM
@@ -251,17 +251,17 @@
                                                 mi.id_proyecto=13
                                                 and
                                                 mi_status not in(17)
-                                                and 
+                                                and
                                                 mi.id_grupo_inmuebles = 26
-                                                and 
-                                                mv.id_inmueble <> '') as ocupado"); 
-                                                      
+                                                and
+                                                mv.id_inmueble <> '') as ocupado");
+
   while ($grafica_m4 = $m4_estadisticas -> fetch_array()) {
     $disponible4 = $grafica_m4['total'];
     $ocupado4 = $grafica_m4['ocupado'];
-  }  
-  
-  
+  }
+
+
   $ocupado_disponible = $conexion2 -> query("select(
     select
     count(*) as contar
@@ -290,8 +290,8 @@ $ocupadoT = $list_ocu_disp['ocupado'];
 $totalT = $list_ocu_disp['total'];
 }
 $disponibleT = $totalT - $ocupadoT;
-  
-  
+
+
   ?>
 
 
@@ -513,7 +513,7 @@ $('#pieM4').highcharts({
                     <div id="pieM4" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
                 </div>
                 <div class="block-content block-content-narrow" style="background-color:white;">
-                
+
                   <div class="muelle1">
                     M1 <br>
                     54 Plazas
@@ -607,8 +607,14 @@ $('#pieM4').highcharts({
                         });
                       </script>
 
-                    <div class="slipM4" <?php if($slips4['id_inmueble'] != ''){ echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
-                      <a <?php if($slips4['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips4['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips4['id_inmueble']; ?>" <?php } ?> > <?php echo $slips4['mi_nombre']; ?></a>
+                    <div class="slipM4" <?php if($slips4['id_inmueble'] != '' &&
+                                                 $slips4['fecha_vencimiento'] <= date("Y-m-d") &&
+                                                 $slips4['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                 echo 'style="background-color:red;"';
+                                                 }elseif($slips4['id_inmueble'] != '')
+                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?>>
+                      <a <?php if($slips4['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips4['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips4['id_inmueble']; ?>" <?php } ?> >
+                      <?php echo $slips4['mi_nombre']; ?></a>
                     </div>
 
                     <div class="modal fade" id="modal-popin<?php echo $slips4['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
