@@ -69,17 +69,18 @@
         <div class="block-content">
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="table-responsive">
+              <?php $total = 0; ?>
             <table class="table table-bordered table-striped js-dataTable-full block">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">ID</th>
-                        <th class="text-center" style="width: 10%;">PROYECTO</th>
+                        <!--<th class="text-center" style="width: 10%;">PROYECTO</th>
                         <th class="text-center" style="width: 10%;">BANCO</th>
                         <th class="hidden-xs" style="width: 10%;">CUENTA</th>
-                        <th class="hidden-xs" style="width: 10%;">NUMERO</th>
-                        <th class="hidden-xs" style="width: 10%;">MONTO</th>
+                        <th class="hidden-xs" style="width: 10%;">NUMERO</th>-->
                         <th class="hidden-xs" style="width: 10%;">TIPO DE MOVIMIENTO</th>
                         <th class="hidden-xs" style="width: 10%;">FECHA</th>
+                        <th class="hidden-xs" style="width: 10%;">MONTO</th>
                         <th class="text-center" style="width: 10%;">EDITAR</th>
                         <th class="text-center" style="width: 10%;">ELIMINAR</th>
                     </tr>
@@ -117,18 +118,19 @@
                                                                                                   $anulado,
                                                                                                     $cheque_directo,
                                                                                                       $_POST['referencia']);
-                                                }else{ ?>
+                          }else{ ?>
                     <?php $todos_movimeintos = ver_movimientos_bancarios($conexion2);} ?>
                     <?php while($lista_movimiento = $todos_movimeintos -> fetch_array()){ ?>
                     <tr>
                         <td class="text-center"><?php echo $lista_movimiento['id_movimiento_bancario']; ?></td>
-                        <td class="font-w600"><?php echo $lista_movimiento['proy_nombre_proyecto']; ?></td>
+                      <?php /* ?>  <td class="font-w600"><?php echo $lista_movimiento['proy_nombre_proyecto']; ?></td>
                         <td class="text-center"><?php echo $lista_movimiento['banc_nombre_banco']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td>
-                        <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td>
-                        <td class="hidden-xs"><?php echo number_format($lista_movimiento['mb_monto'], 2, ',','.'); ?></td>
+                        <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td> <?php */ ?>
+
                         <td class="hidden-xs"><?php echo $lista_movimiento['tmb_nombre']; ?></td>
                         <td class="hidden-xs"><?php echo date("d-m-Y", strtotime($lista_movimiento['mb_fecha'])); ?></td>
+                        <td class="hidden-xs"><?php echo number_format($lista_movimiento['mb_monto'], 2, ',','.'); ?></td>
                         <script type="text/javascript">
                           $(document).ready(function() {
                             $("#boton<?php echo $lista_movimiento['id_movimiento_bancario']; ?>").click(function(event) {
@@ -185,13 +187,23 @@
                                          </div>
                                      </div>
                                  </div>
-                                 <?php } ?>
+                                 <?php
+                                 $total += $lista_movimiento['mb_monto'];
+                               } ?>
                             </div>
                           <?php  ?>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><b>Total</b></td>
+                  <td><?php echo number_format($total, 2, ',','.');; ?></td>
+                  <td></td>
+                  <td></td>
+                </tr>
             </table>
           </div>
         </div>
