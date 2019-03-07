@@ -18,7 +18,8 @@
                                                 mv.id_cliente,
                                                 mv.id_venta,
                                                 mv.fecha_venta,
-                                                mv.termino
+                                                mv.termino,
+                                                mv.fecha_vencimiento
                                                 from
                                                 maestro_ventas mv inner join maestro_proyectos mp on mv.id_proyecto = mp.id_proyecto
                                                 inner join grupo_inmuebles gi on mv.id_grupo_inmueble = gi.id_grupo_inmuebles
@@ -38,6 +39,7 @@
               $descripcion = $datos_inmueble['mv_descripcion'];
               $fecha = $datos_inmueble['fecha_venta'];
               $termino = $datos_inmueble['termino'];
+              $fecha_vencimiento = $datos_inmueble['fecha_vencimiento'];
 } ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -66,7 +68,10 @@
                           <label class="col-xs-12" for="register1-username" style="text-align: left;">Precio de venta: <?php echo number_format($precio_venta, 2, '.',','); ?></label>
                           <div class="col-xs-12">
                           </div>
-                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Fecha: <?php echo $fecha; ?></label>
+                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Fecha Inicio: <?php echo $fecha; ?></label>
+                          <div class="col-xs-12">
+                          </div>
+                          <label class="col-xs-12" for="register1-username" style="text-align: left;">Fecha Vencimiento: <?php echo $fecha_vencimiento; ?></label>
                           <div class="col-xs-12">
                           </div>
                           <label class="col-xs-12" for="register1-username" style="text-align: left;">Descripcion: <?php echo $descripcion; ?></label>

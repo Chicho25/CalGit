@@ -525,7 +525,12 @@ $('#pieM4').highcharts({
                           });
                         });
                       </script>
-                    <div class="slipM1" <?php if($slips['id_inmueble'] != ''){ echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                    <div class="slipM1" <?php if($slips['id_inmueble'] != '' &&
+                                                 $slips['fecha_vencimiento'] <= date("Y-m-d") &&
+                                                 $slips['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                 echo 'style="background-color:red;"';
+                                                 }elseif($slips['id_inmueble'] != '')
+                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
                       <a <?php if($slips['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips['id_inmueble']; ?>" <?php } ?> > <?php echo $slips['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -561,7 +566,12 @@ $('#pieM4').highcharts({
                           });
                         });
                       </script>
-                    <div class="slipM3" <?php if($slips3['id_inmueble'] != ''){ echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                    <div class="slipM3" <?php if($slips3['id_inmueble'] != '' &&
+                                                 $slips3['fecha_vencimiento'] <= date("Y-m-d") &&
+                                                 $slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                 echo 'style="background-color:red;"';
+                                                 }elseif($slips3['id_inmueble'] != '')
+                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
                       <a <?php if($slips3['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips3['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips3['id_inmueble']; ?>" <?php } ?> > <?php echo $slips3['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips3['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -582,7 +592,12 @@ $('#pieM4').highcharts({
                           });
                         });
                       </script>
-                    <div class="slipM3" <?php if($slips3['id_inmueble'] != ''){ echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                    <div class="slipM3" <?php if($slips3['id_inmueble'] != '' &&
+                                                 $slips3['fecha_vencimiento'] <= date("Y-m-d") &&
+                                                 $slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                 echo 'style="background-color:red;"';
+                                                 }elseif($slips3['id_inmueble'] != '')
+                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
                       <a <?php if($slips3['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips3['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips3['id_inmueble']; ?>" <?php } ?> > <?php echo $slips3['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips3['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
