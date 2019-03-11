@@ -399,6 +399,10 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Rep. Termino',
                         'url'   => 'gc_reporte_termino.php'
+                    ),
+                    array(
+                        'name'  => 'Rep. Ingresos',
+                        'url'   => 'gc_reporte_ingresos.php'
                     )
                 )
             ),
