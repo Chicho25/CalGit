@@ -2104,7 +2104,7 @@ function reporte_2($conexion, $id_proyecto){
 																												mp.proy_nombre_proyecto,
 																												mb.banc_nombre_banco,
 																												cb.cta_numero_cuenta
-																												FROM `cuentas_bancarias` cb
+																												FROM cuentas_bancarias cb
 																												inner join maestro_bancos mb on cb.cta_id_banco = mb.id_bancos
 																												inner join maestro_empresa me on me.id_empresa = cb.cta_id_empresa
 																												inner join maestro_proyectos mp on mp.id_empresa = me.id_empresa

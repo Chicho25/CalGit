@@ -95,6 +95,7 @@
                         <th class="hidden-xs" >MONTO DOCUMENTO</th>
                         <th class="hidden-xs" >MONTO PAGADO</th>
                         <th class="text-center" >PAGAR</th>
+                        <th class="text-center" >RECIBO</th>
                         <th class="text-center" >VER PAGOS</th>
                         <th class="text-center" >EDITAR</th>
                         <th class="text-center" >ELIMINAR</th>
@@ -131,6 +132,103 @@
                                 <button class="btn btn-default" type="submit"><i class="fa fa-dollar"></i></button>
                                 <input type="hidden" name="id_cuota" value="<?php echo $lista_todos_contratos_ventas['id_cuota']; ?>">
                               </form>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-default" data-toggle="modal" data-target="#modal-popinaRec<?php echo $lista_todos_contratos_ventas['id_cuota']; ?>" type="submit"><i class="glyphicon glyphicon-folder-open"></i></button>
+                                <div class="modal fade" id="modal-popinaRec<?php echo $lista_todos_contratos_ventas['id_cuota']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-popin" style="width:90%">
+                                        <div class="modal-content">
+                                            <div class="block block-themed block-transparent remove-margin-b">
+                                                <div class="block-header bg-primary-dark">
+                                                    <ul class="block-options">
+                                                        <li>
+                                                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                                        </li>
+                                                    </ul>
+                                                    <h3 class="block-title">Recibo</h3>
+                                                </div>
+                                                <div class="block-content">
+                                                <?php  /* ****************************************************** */ ?>
+                                                <?php $sql = cuota_id_cuota($conexion2, $lista_todos_contratos_ventas['id_cuota']); ?>
+                                                <?php while($lc=$sql->fetch_array()){ ?>
+                                                  <table class="table table-bordered">
+                                                      <thead>
+                                                          <tr>
+                                                              <th class="text-center">ID DOCUMENTO</th>
+                                                              <th class="text-center">PROYECTO</th>
+                                                              <th>GRUPO</th>
+                                                              <th class="hidden-xs">NOMBRE</th>
+                                                              <th class="text-center">CODIGO</th>
+                                                              <th class="text-center">CLIENTE</th>
+                                                              <th class="text-center">TIPO</th>
+                                                              <th class="text-center">NUMERO</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr>
+                                                            <th class="text-center"><?php echo $lc['id_cuota']; ?></th>
+                                                            <th class="text-center"><?php echo $lc['proy_nombre_proyecto']; ?></th>
+                                                            <th><?php echo $lc['gi_nombre_grupo_inmueble']; ?></th>
+                                                            <th class="hidden-xs"><?php echo $lc['mi_nombre']; ?></th>
+                                                            <th class="text-center"><?php echo $lc['mi_codigo_imueble']; ?></th>
+                                                            <th class="text-center"><?php echo $lc['cl_nombre'].' '.$lc['cl_apellido']; ?></th>
+                                                            <th class="text-center"><?php echo $lc['tc_nombre_tipo_cuenta']; ?></th>
+                                                            <th class="text-center"><?php echo $lc['mc_numero_cuota']; ?></th>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                              <?php } ?>
+                                            </div>
+                                            <div class="block-content block-content-narrow">
+                                                <h5 class="block-title">Detalles de pago de cuota madre</h5>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">ID</th>
+                                                            <th class="text-center">NUMERO</th>
+                                                            <th class="text-center">REFERENCIA</th>
+                                                            <th class="text-center">TIPO DE PAGO</th>
+                                                            <th class="text-center">CUENTA RECEPTOTA</th>
+                                                            <th class="hidden-xs">FECHA</th>
+                                                            <th class="text-center">DESCRIPCION</th>
+                                                            <th class="text-center">MONTO TOTAL</th>
+                                                            <th class="text-center">MONTO ABONADO</th>
+                                                            <th class="text-center">RECIBO</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <?php $sql =  cuotas_abonadas_documento_venta($conexion2,$lista_todos_contratos_ventas['id_cuota']); ?>
+                                                      <?php while($lc=$sql->fetch_array()){ ?>
+                                                      <tr>
+                                                          <th class="text-center"><?php echo $lc['id']; ?></th>
+                                                          <th class="text-center"><?php echo $lc['mca_numero']; ?></th>
+                                                          <th class="text-center"><?php echo $lc['referencia_abono_cuota']; ?></th>
+                                                          <th class="text-center"><?php echo $lc['tmb_nombre']; ?></th>
+                                                          <th class="text-center"><?php echo $lc['cuenta_banco']; ?></th>
+                                                          <th class="hidden-xs"><?php echo date("d-m-Y", strtotime($lc['fecha'])); ?></th>
+                                                          <th class="text-center"><?php echo $lc['descripcion']; ?></th>
+                                                          <th class="text-center"><?php echo number_format($lc['monto_documento'], 2, ',','.'); ?></th>
+                                                          <th class="text-center"><?php echo number_format($lc['monto_abonado'], 2, ',','.'); ?></th>
+                                                          <th class="text-center">
+                                                            <a href="reportes/gc_recibo.php?id=<?php echo $lc['id']; ?>" target="_blank" class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></a>
+                                                          </th>
+                                                      </tr>
+                                                      <?php } ?>
+                                                    </tbody>
+                                                  </table>
+                                                <?php /* *************************************************************** */  ?>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <form class="" action="" method="post">
+                                                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cerrar</button>
+                                              </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                         <td class="text-center">
