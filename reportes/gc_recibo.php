@@ -38,6 +38,8 @@ mca.id = ".$_GET['id']);?>
         $imagen = '8.jpg';
       }elseif ($id_proyecto == 11) {
         $imagen = '11.jpg';
+      }elseif ($id_proyecto == 14) {
+        $imagen = '14.jpg';
       }elseif ($id_proyecto == 22) {
         $imagen = '22.jpg';
       }elseif ($id_proyecto == 23) {
@@ -46,6 +48,8 @@ mca.id = ".$_GET['id']);?>
         $imagen = '24.jpg';
       }elseif ($id_proyecto == 27) {
         $imagen = '27.jpg';
+      }elseif ($id_proyecto == 28) {
+        $imagen = '28.jpg';
       }elseif ($id_proyecto == 29) {
         $imagen = '29.jpg';
       }elseif ($id_proyecto == 30) {
