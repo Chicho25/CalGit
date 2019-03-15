@@ -167,7 +167,7 @@ if(isset($_SESSION['session_gc'])){
                                           <option></option>
                                             <?php
                                                 foreach($gin as $g)
-                                                {
+                                                { if($g['id_grupo_inmuebles'] == 81){ continue; }
                                                     ?><option value="<?php echo $g['id_grupo_inmuebles'] ?>"><?php echo $g['gi_nombre_grupo_inmueble']?></option><?php
                                                 }
                                             ?>

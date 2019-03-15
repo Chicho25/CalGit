@@ -17,13 +17,13 @@
     $contar_dias = dias_pasados($_POST['fvencimiento_inicio'],$_POST['fvencimiento_fin']);
 
     if (isset($_POST['fvencimiento_inicio']) && $_POST['fvencimiento_inicio'] != '') {
-        $where .= " and mc.mc_fecha_vencimiento >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
-        $whereCombus .= " and mb.mb_fecha >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
+        $where .= " and mca.fecha >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
+        //$whereCombus .= " and mb.mb_fecha >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
         $whereServi .= " and fecha_pago >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
     }else{}
     if (isset($_POST['fvencimiento_fin']) && $_POST['fvencimiento_fin'] != '') {
-        $where .= " and mc.mc_fecha_vencimiento <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
-        $whereCombus .= " and mb.mb_fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
+        $where .= " and  and mca.fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
+        //$whereCombus .= " and mb.mb_fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
         $whereServi .= " and fecha_pago <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
     }else{}?>
 <?php
@@ -45,7 +45,7 @@ $resultados = $conexion2 -> query('select
                                     group by
                                     gi.gi_nombre_grupo_inmueble');
 
-$combustibles = $conexion2 -> query('select
+/*$combustibles = $conexion2 -> query('select
                                       tmb.tmb_nombre,
                                       sum(mb.mb_monto) as total
                                       from movimiento_bancario mb inner join tipo_movimiento_bancario tmb on mb.id_tipo_movimiento = tmb.id_tipo_movimiento_bancario
@@ -56,7 +56,7 @@ $combustibles = $conexion2 -> query('select
                                       mb.mb_stat in(1)
                                       group by
                                       tmb.tmb_nombre
-                                      order by 1');
+                                      order by 1');*/
 
 $servicios = $conexion2 -> query('select
                                   "Electricidad" as nombre,
@@ -85,7 +85,7 @@ $resultados = $conexion2 -> query('select
                                     mi.mi_nombre
                                     order by 1,2 desc');
 
-$combustibles = $conexion2 -> query('select
+/*$combustibles = $conexion2 -> query('select
                                       tmb.tmb_nombre,
                                       mb.mb_fecha,
                                       mb.mb_monto,
@@ -97,7 +97,7 @@ $combustibles = $conexion2 -> query('select
                                       tmb.id_tipo_movimiento_bancario in(19, 20, 21, 24)
                                       and
                                       mb.mb_stat in(1)
-                                      order by 1');
+                                      order by 1');*/
 
 $servicios = $conexion2 -> query('select
                                   *
@@ -108,7 +108,7 @@ $servicios = $conexion2 -> query('select
 
 } ?>
 <?php while($li[] = $resultados->fetch_array()); ?>
-<?php while($co[] = $combustibles->fetch_array()); ?>
+<?php //while($co[] = $combustibles->fetch_array()); ?>
 <?php while($se[] = $servicios->fetch_array()); ?>
 
 <?php $html='
@@ -181,7 +181,7 @@ $servicios = $conexion2 -> query('select
     </tbody>
   </table>';
 
-  $html .= '<h2>Combustibles</h2>
+  /*$html .= '<h2>Combustibles</h2>
             <table >
               <thead>
                 <tr>
@@ -213,7 +213,7 @@ $servicios = $conexion2 -> query('select
                 </tr>';
       $html .= '
     </tbody>
-  </table>';
+  </table>';*/
 
   $html .= '<br><br><br><br><h2>Servicios</h2>
             <table >
@@ -249,8 +249,8 @@ $servicios = $conexion2 -> query('select
     </tbody>
   </table>';
 
-  $total_global = $t_servi + $t_combus + $t_abonado;
-  $total_global_diario = $t_diario_s + $t_diario_combus + $t_diario;
+  $total_global = $t_servi + $t_abonado;
+  $total_global_diario = $t_diario_s + $t_diario;
 
   $html .= '<h2>Total Global</h2>
             <table >
@@ -321,7 +321,7 @@ $servicios = $conexion2 -> query('select
     </tbody>
   </table>';
 
-  $html .= '<h2>Combustibles</h2>
+/*  $html .= '<h2>Combustibles</h2>
             <table >
               <thead>
                 <tr>
@@ -360,7 +360,7 @@ $servicios = $conexion2 -> query('select
                 </tr>';
       $html .= '
     </tbody>
-  </table>';
+  </table>';*/
 
   $html .= '<h2>Servicios</h2>
             <table >
@@ -402,8 +402,8 @@ $servicios = $conexion2 -> query('select
     </tbody>
   </table>';
 
-  $total_global = $t_servi + $t_combus + $t_abonado;
-  $total_global_diario = $t_diario_s + $t_diario_combus + $t_diario;
+  $total_global = $t_servi + $t_abonado;
+  $total_global_diario = $t_diario_s + $t_diario;
 
   $html .= '<h2>Total Global</h2>
             <table >

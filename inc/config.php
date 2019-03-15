@@ -403,6 +403,14 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Rep. Ingresos',
                         'url'   => 'gc_reporte_ingresos.php'
+                    ),
+                    array(
+                        'name'  => 'Rep. Ingresos Excel',
+                        'url'   => 'gc_reporte_ingresos_excel.php'
+                    ),
+                    array(
+                        'name'  => 'Rep. Combustible',
+                        'url'   => 'gc_reporte_combustible.php'
                     )
                 )
             ),
