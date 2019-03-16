@@ -34,8 +34,6 @@
                                           '.$where.'
                                           and
                                           mc.id_proyecto = 13
-                                          and
-                                          mi.mi_status not in(17)
                                           group by
                                           gi.gi_nombre_grupo_inmueble');
 
@@ -60,8 +58,6 @@
                                           '.$where.'
                                           and
                                           mc.id_proyecto = 13
-                                          and
-                                          mi.mi_status not in(17)
                                           group by
                                           mi.mi_nombre
                                           order by 1,2 desc');
