@@ -7,6 +7,8 @@
     $dias = abs($dias); $dias = floor($dias);
     return $dias;
     }
+    $where = "where (1=1) ";
+    $whereServi = "where (1=1) ";
 
     $contar_dias = dias_pasados($_POST['fvencimiento_inicio'],$_POST['fvencimiento_fin']);
 
@@ -15,7 +17,7 @@
         $whereServi .= " and fecha_pago >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
     }else{}
     if (isset($_POST['fvencimiento_fin']) && $_POST['fvencimiento_fin'] != '') {
-        $where .= " and  and mca.fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
+        $where .= " and mca.fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
         $whereServi .= " and fecha_pago <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
     }else{}
 
@@ -76,10 +78,12 @@ while($li[] = $resultados->fetch_array());
 //while($co[] = $combustibles->fetch_array());
 while($se[] = $servicios->fetch_array());
 
+if(isset($_POST['id_termino']) && $_POST['id_termino'] == 1){
+
   $excelPrint = '<table border="1">
                   <thead>
                       <tr>
-                        <th colspan="8">Reporte Ingresos</th>
+                        <th colspan="5">Reporte Marina</th>
                       </tr>
                       <tr>
                       <th class="service">GRUPO INMUEBLE</th>
@@ -122,7 +126,7 @@ while($se[] = $servicios->fetch_array());
               <table border="1">
                   <thead>
                       <tr>
-                        <th colspan="8">Reporte Ingresos</th>
+                        <th colspan="3">Reporte Electricidad</th>
                       </tr>
                       <tr>
                       <th class="service">GRUPO</th>
@@ -132,10 +136,8 @@ while($se[] = $servicios->fetch_array());
                   </thead>
                   <tbody>';
 
-                  $t_cuotas = 0;
-                  $t_abonado = 0;
-                  $t_por_cobrar = 0;
-                  $t_diario = 0;
+                  $t_servi = 0;
+                  $t_diario_s = 0;
 
                   foreach($se as $l){
   $excelPrint .='<td style="padding: 0" class="desc">'.$l['nombre'].'</td>
@@ -152,6 +154,88 @@ while($se[] = $servicios->fetch_array());
                   </tr>
               </tbody>
           </table>';
+        }else{
+
+          $excelPrint = '<h2>Marina</h2>
+          <table border="1">
+            <thead>
+              <tr>
+                <th class="service">GRUPO INMUEBLE</th>
+                <th class="desc">INMUEBLE</th>
+                <th class="desc">TOTAL CUOTAS</th>
+                <th class="desc">TOTAL COBRADO</th>
+                <th class="desc">POR COBRAR</th>
+                <th class="desc">DIARIO</th>
+              </tr>
+            </thead>
+            <tbody>';
+
+            $t_cuotas = 0;
+            $t_abonado = 0;
+            $t_por_cobrar = 0;
+            $t_diario = 0;
+
+            foreach($li as $l){
+              $excelPrint .='<tr>
+                          <td style="padding: 0" class="desc">'.$l['gi_nombre_grupo_inmueble'].'</td>
+                          <td style="padding: 0" class="desc">'.$l['mi_nombre'].'</td>
+                          <td style="padding: 0" class="desc">'.number_format($l['total_cuota'], 2, ".", ",").'</td>
+                          <td style="padding: 0" class="desc">'.number_format($l['total_abonado'], 2, ".", ",").'</td>
+                          <td style="padding: 0" class="desc">'.number_format($l['total_por_cobrar'], 2, ".", ",").'</td>
+                          <td style="padding: 0" class="desc">'.number_format(($l['total_abonado']/$contar_dias), 2, ".", ",").'</td>
+                        </tr>';
+                        $t_cuotas += $l['total_cuota'];
+                        $t_abonado += $l['total_abonado'];
+                        $t_por_cobrar += $l['total_por_cobrar'];
+                        $t_diario += $l['total_abonado']/$contar_dias;
+                      }
+              $excelPrint .='<tr>
+                          <td style="padding: 0" class="desc"></td>
+                          <td style="padding: 0" class="desc"><b>Totales</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_cuotas, 2, ".", ",").'</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_abonado, 2, ".", ",").'</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_por_cobrar, 2, ".", ",").'</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_diario, 2, ".", ",").'</b></td>
+                        </tr>
+            </tbody>
+          </table>
+          <h2>Servicios</h2>
+                    <table border="1">
+                      <thead>
+                        <tr>
+                          <th class="service">GRUPO</th>
+                          <th class="desc">DESCRIPCION</th>
+                          <th class="desc">FECHA</th>
+                          <th class="desc">TOTAL</th>
+                          <th class="desc">DIARIO</th>
+                        </tr>
+                      </thead>
+                      <tbody>';
+
+            $t_servi = 0;
+            $t_diario_s = 0;
+            foreach($se as $l){
+              $excelPrint .='<tr>
+                          <td style="padding: 0" class="desc">Electricidad</td>
+                          <td style="padding: 0" class="desc">'.$l['descripcion'].'</td>
+                          <td style="padding: 0" class="desc">'.$l['date_time'].'</td>
+                          <td style="padding: 0" class="desc">'.number_format($l['monto'], 2, ".", ",").'</td>
+                          <td style="padding: 0" class="desc">'.number_format($l['monto'], 2, ".", ",").'</td>
+                        </tr>';
+                        $t_servi += $l['monto'];
+                        $t_diario_s += $l['monto']/$contar_dias;
+                      }
+              $excelPrint .='<tr>
+                          <td style="padding: 0" class="desc"></td>
+                          <td style="padding: 0" class="desc"></td>
+                          <td style="padding: 0" class="desc"><b>Totales</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_servi, 2, ".", ",").'</b></td>
+                          <td style="padding: 0" class="desc"><b>'.number_format($t_diario_s, 2, ".", ",").'</b></td>
+                        </tr>
+            </tbody>
+          </table>';
+
+        }
   header('Content-Type: application/xls');
-  header('Content-Disposition: attachment; filename='.date('d-m-Y')].'-ReporteIngreso.xls');
+  header('Content-Disposition: attachment; filename='.date('d-m-Y').'-ReporteIngreso.xls');
   echo $excelPrint;

@@ -4,7 +4,7 @@
 <?php $css = file_get_contents('css/style.css'); ?>
 <?php $mpdf->writeHTML($css, 1); ?>
 <?php $where =" where (1=1) "; ?>
-<?php $whereCombus =" where (1=1) "; ?>
+<?php //$whereCombus =" where (1=1) "; ?>
 <?php $whereServi  =" where (1=1) ";?>
 <?php
     function dias_pasados($fecha_inicial,$fecha_final)
@@ -22,7 +22,7 @@
         $whereServi .= " and fecha_pago >= '".date('Y-m-d',strtotime($_POST['fvencimiento_inicio']))."'";
     }else{}
     if (isset($_POST['fvencimiento_fin']) && $_POST['fvencimiento_fin'] != '') {
-        $where .= " and  and mca.fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
+        $where .= " and mca.fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
         //$whereCombus .= " and mb.mb_fecha <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
         $whereServi .= " and fecha_pago <= '".date('Y-m-d',strtotime($_POST['fvencimiento_fin']))."'";
     }else{}?>
