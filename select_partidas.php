@@ -27,6 +27,7 @@ while($l2=$sql_inter->fetch_array()){
 
 } ?>
 <option>Seleccionar Partida</option>
+<option value="todos">TODAS</option>
 <?php while($l=$sql->fetch_array()){
      $var = inter2($conexion2, $l['id']);
      if($var==true){ ?>

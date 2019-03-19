@@ -61,6 +61,7 @@ $(document).ready(function(){
                                         <?php $sql = $conexion2 -> query("select * from maestro_proyectos"); ?>
                                           <select class="form-control" style="width: 100%;" name="id_proyecto" id="marca">
                                               <option value="">Seleccionar Proyecto</option>
+                                              
                                               <?php while($q=$sql->fetch_array()){ ?>
                                               <option value="<?php echo $q['id_proyecto']; ?>"><?php echo $q['proy_nombre_proyecto']; ?></option>
                                               <?php } ?>

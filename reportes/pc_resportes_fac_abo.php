@@ -26,7 +26,9 @@
       if ($_POST['fecha_a_fin'] != '') {
         $where .= " and pda.fecha <= '".$_POST['fecha_a_fin']."' ";
       }else{ }
-      if ($_POST['id_partida'] != '') {
+      if ($_POST['id_partida'] == 'todos') {
+        
+      }elseif($_POST['id_partida'] != ''){
         $where .= " and pda.id_partida = '".$_POST['id_partida']."' ";
       }
 

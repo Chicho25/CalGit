@@ -91,12 +91,12 @@ function reporte_2($conexion, $id_proyecto, $tipo, $grupo){
 															mi_codigo_imueble,
 															mi_nombre,
 															mi_precio_real,
-															(select
-															CONCAT(cl_nombre," ",cl_apellido)
-															from
-															maestro_clientes mc inner join maestro_ventas mv on mc.id_cliente = mv.id_cliente
-															where
-															mv.id_inmueble = maestro_inmuebles.id_inmueble and maestro_inmuebles.mi_status not in(17) and mv.mv_status not in(17)) as nombre,
+																(select
+																CONCAT(cl_nombre," ",cl_apellido)
+																from
+																maestro_clientes mc inner join maestro_ventas mv on mc.id_cliente = mv.id_cliente
+																where
+																mv.id_inmueble = maestro_inmuebles.id_inmueble and maestro_inmuebles.mi_status not in(17) and mv.mv_status not in(17)) as nombre,
 															gi_nombre_grupo_inmueble,
 															(select SUM(mc_monto_abonado)
 															from maestro_cuotas
@@ -136,7 +136,7 @@ function reporte_2($conexion, $id_proyecto, $tipo, $grupo){
 															where
 															maestro_inmuebles.id_proyecto = '.$id_proyecto.$where1.$where2.'
 															and maestro_inmuebles.mi_status not in(17)
-															order by 5 desc');
+															order by 5, 1 asc');
 
 						return $sql_reporte_2;
 
