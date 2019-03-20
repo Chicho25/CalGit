@@ -1,7 +1,7 @@
 <?php require('conexion/conexion.php'); ?>
 <?php //require("funciones/funciones.php"); ?>
 <?php $select_id = $conexion2 -> query("select
-                                        partida_documento.id
+                                        partida_documento.*
                                         from partida_documento_abono right join partida_documento
                                         on partida_documento.id = partida_documento_abono.id_partida_documento
                                         where
