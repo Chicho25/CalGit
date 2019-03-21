@@ -1,55 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2019 a las 05:48:26
--- Versión del servidor: 10.1.28-MariaDB
--- Versión de PHP: 5.6.32
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `admin_1`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `maestro_cuotas`
---
-
-CREATE TABLE `maestro_cuotas` (
-  `id_cuota` int(11) NOT NULL,
-  `id_contrato_venta` int(11) NOT NULL,
-  `id_proyecto` int(11) NOT NULL,
-  `id_grupo` int(11) NOT NULL,
-  `id_inmueble` int(11) NOT NULL,
-  `mc_precio_cerrado` decimal(10,2) NOT NULL,
-  `mc_fecha_creacion_contrato` datetime NOT NULL,
-  `mc_fecha_vencimiento` datetime NOT NULL,
-  `mc_descripcion` text NOT NULL,
-  `id_tipo_cuota` int(11) NOT NULL,
-  `id_banco` int(11) NOT NULL,
-  `mc_aprobada` tinyint(1) NOT NULL,
-  `mc_numero_cuota` int(11) NOT NULL,
-  `mc_monto` decimal(10,2) NOT NULL,
-  `mc_status` int(11) NOT NULL,
-  `mc_monto_abonado` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `maestro_cuotas`
---
 
 INSERT INTO `maestro_cuotas` (`id_cuota`, `id_contrato_venta`, `id_proyecto`, `id_grupo`, `id_inmueble`, `mc_precio_cerrado`, `mc_fecha_creacion_contrato`, `mc_fecha_vencimiento`, `mc_descripcion`, `id_tipo_cuota`, `id_banco`, `mc_aprobada`, `mc_numero_cuota`, `mc_monto`, `mc_status`, `mc_monto_abonado`) VALUES
 (1103, 66, 8, 44, 463, '6000.00', '2017-12-28 00:00:00', '2018-01-15 00:00:00', 'ALQUILER ENERO 2018', 1, 0, 0, 1, '1200.00', 17, '1200.00'),
@@ -553,28 +502,3 @@ INSERT INTO `maestro_cuotas` (`id_cuota`, `id_contrato_venta`, `id_proyecto`, `i
 (3632, 389, 8, 59, 1312, '11700.00', '2018-11-12 00:00:00', '2019-09-15 00:00:00', 'CUOTA MES DE SEPTIEMBRE', 1, 0, 0, 10, '900.00', 1, '0.00'),
 (3633, 389, 8, 59, 1312, '11700.00', '2018-11-12 00:00:00', '2019-10-15 00:00:00', 'CUOTA MES DE OCTUBRE', 1, 0, 0, 11, '900.00', 1, '0.00'),
 (3634, 389, 8, 59, 1312, '11700.00', '2018-11-12 00:00:00', '2019-11-15 00:00:00', 'CUOTA MES NOVIEMBRE', 1, 0, 0, 12, '900.00', 1, '0.00');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `maestro_cuotas`
---
-ALTER TABLE `maestro_cuotas`
-  ADD PRIMARY KEY (`id_cuota`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `maestro_cuotas`
---
-ALTER TABLE `maestro_cuotas`
-  MODIFY `id_cuota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6548;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -7,10 +7,6 @@
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 5.6.32
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,27 +24,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `maestro_cuota_abono`
 --
 
-CREATE TABLE `maestro_cuota_abono` (
-  `id` int(11) NOT NULL,
-  `mca_id_proyecto` int(11) NOT NULL,
-  `mca_id_grupo_inmueble` int(11) NOT NULL,
-  `mca_id_inmueble` int(11) NOT NULL,
-  `mca_codigo` int(11) NOT NULL,
-  `mca_id_cliente` int(11) NOT NULL,
-  `mca_id_tipo_abono` int(11) NOT NULL,
-  `mca_numero` int(11) NOT NULL,
-  `monto_abonado` decimal(11,2) NOT NULL,
-  `mca_id_documento_venta` int(11) NOT NULL,
-  `mca_id_cuota_madre` int(11) NOT NULL,
-  `monto_pendiente` decimal(11,2) NOT NULL,
-  `monto_pagado` decimal(11,2) NOT NULL,
-  `monto_documento` decimal(11,2) NOT NULL,
-  `descripcion` varchar(225) NOT NULL,
-  `fecha` date NOT NULL,
-  `cuenta_receptora` int(11) NOT NULL,
-  `fecha_background` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `referencia_abono_cuota` varchar(225) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 --
 -- Volcado de datos para la tabla `maestro_cuota_abono`

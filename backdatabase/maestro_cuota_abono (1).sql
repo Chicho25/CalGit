@@ -1,58 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2019 a las 05:46:47
--- Versión del servidor: 10.1.28-MariaDB
--- Versión de PHP: 5.6.32
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `admin_1`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `maestro_cuota_abono`
---
-
-CREATE TABLE `maestro_cuota_abono` (
-  `id` int(11) NOT NULL,
-  `mca_id_proyecto` int(11) NOT NULL,
-  `mca_id_grupo_inmueble` int(11) NOT NULL,
-  `mca_id_inmueble` int(11) NOT NULL,
-  `mca_codigo` int(11) NOT NULL,
-  `mca_id_cliente` int(11) NOT NULL,
-  `mca_id_tipo_abono` int(11) NOT NULL,
-  `mca_numero` int(11) NOT NULL,
-  `monto_abonado` decimal(11,2) NOT NULL,
-  `mca_id_documento_venta` int(11) NOT NULL,
-  `mca_id_cuota_madre` int(11) NOT NULL,
-  `monto_pendiente` decimal(11,2) NOT NULL,
-  `monto_pagado` decimal(11,2) NOT NULL,
-  `monto_documento` decimal(11,2) NOT NULL,
-  `descripcion` varchar(225) NOT NULL,
-  `fecha` date NOT NULL,
-  `cuenta_receptora` int(11) NOT NULL,
-  `fecha_background` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `referencia_abono_cuota` varchar(225) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `maestro_cuota_abono`
---
 
 INSERT INTO `maestro_cuota_abono` (`id`, `mca_id_proyecto`, `mca_id_grupo_inmueble`, `mca_id_inmueble`, `mca_codigo`, `mca_id_cliente`, `mca_id_tipo_abono`, `mca_numero`, `monto_abonado`, `mca_id_documento_venta`, `mca_id_cuota_madre`, `monto_pendiente`, `monto_pagado`, `monto_documento`, `descripcion`, `fecha`, `cuenta_receptora`, `fecha_background`, `referencia_abono_cuota`) VALUES
 (1467, 8, 60, 592, 0, 32, 17, 1, '5866.00', 93, 1463, '5866.00', '0.00', '5866.00', 'pago noviembre', '2018-12-06', 8, '2018-12-06 15:59:00', '5015'),
@@ -211,28 +157,3 @@ INSERT INTO `maestro_cuota_abono` (`id`, `mca_id_proyecto`, `mca_id_grupo_inmueb
 (1931, 8, 60, 593, 0, 577, 16, 1, '800.00', 616, 5575, '800.00', '0.00', '800.00', 'INGRESO POR CUOTA FEBRERO 2019', '2019-02-28', 8, '2019-03-02 01:25:00', '282019'),
 (1965, 8, 57, 515, 0, 57, 16, 1, '489.00', 79, 1208, '489.00', '0.00', '489.00', 'PAGO CUOTA MANTENIMIENTO FEBRERO 2019', '2019-02-26', 8, '2019-03-08 00:58:25', '260219'),
 (2041, 8, 62, 548, 0, 87, 13, 2, '500.00', 193, 2193, '2630.00', '1000.00', '3630.00', 'DEPOSITO EFECTIVO ABONO 500 DÃ“LARES A ALQUILER MES DE ENERO 2019', '2019-03-09', 8, '2019-03-11 16:48:17', '55561');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `maestro_cuota_abono`
---
-ALTER TABLE `maestro_cuota_abono`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `maestro_cuota_abono`
---
-ALTER TABLE `maestro_cuota_abono`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2086;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

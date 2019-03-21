@@ -33,12 +33,12 @@
 
                         </li>
                     </ul>
-                    <h3 class="block-title">Reporte de Ingresos Combustible</h3><small> Los campos con <span class="text-danger">*</span> son obligatorios</small>
+                    <h3 class="block-title">Reporte de Ingresos Combustible Excel</h3><small> Los campos con <span class="text-danger">*</span> son obligatorios</small>
                 </div>
                 <div class="block-content block-content-narrow">
                     <!-- jQuery Validation (.js-validation-bootstrap class is initialized in js/pages/base_forms_validation.js) -->
                     <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                    <form class="form-horizontal" action="reportes/gc_reporete_combustible.php" method="post" target="_blank">
+                    <form class="form-horizontal" action="gc_report_combustible_excel.php" method="post" target="_blank">
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="val-username">Tipo<span class="text-danger">*</span></label>
                             <div class="col-md-9">

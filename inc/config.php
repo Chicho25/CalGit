@@ -399,18 +399,6 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Rep. Termino',
                         'url'   => 'gc_reporte_termino.php'
-                    ),
-                    array(
-                        'name'  => 'Rep. Ingresos',
-                        'url'   => 'gc_reporte_ingresos.php'
-                    ),
-                    array(
-                        'name'  => 'Rep. Ingresos Excel',
-                        'url'   => 'gc_reporte_ingresos_excel.php'
-                    ),
-                    array(
-                        'name'  => 'Rep. Combustible',
-                        'url'   => 'gc_reporte_combustible.php'
                     )
                 )
             ),
@@ -533,17 +521,25 @@ $one->main_nav                     = array(
                             'url'   => 'gc_reporte_2_ventas_inmuebles.php'
                         ),
                         array(
-                            'name'  => 'Facturas y Pagos',
+                            'name'  => 'Reporte de Egresos',
                             'url'   => 'gc_report_partidas_por_mes.php'
-                        ),/*
-                        array(
-                            'name'  => 'Contrato y comisione',
-                            'url'   => 'gc_reporte_3_contrato_comisiones.php'
                         ),
                         array(
-                            'name'  => 'Cobranza',
-                            'url'   => 'gc_reporte_4_cobranza.php'
-                        ),*/
+                            'name'  => 'Rep. Ingresos',
+                            'url'   => 'gc_reporte_ingresos.php'
+                        ),
+                        array(
+                            'name'  => 'Rep. Ingresos Excel',
+                            'url'   => 'gc_reporte_ingresos_excel.php'
+                        ),
+                        array(
+                            'name'  => 'Rep. Combustible',
+                            'url'   => 'gc_reporte_combustible.php'
+                        ),
+                        array(
+                            'name'  => 'Rep. Combustible Excel',
+                            'url'   => 'gc_report_combustible_excel_busqueda.php'
+                        ),
                         array(
                             'name'  => 'Historial de Alquileres',
                             'url'   => 'gc_reporte_alquileres.php'
