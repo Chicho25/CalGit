@@ -525,6 +525,10 @@ $one->main_nav                     = array(
                             'url'   => 'gc_report_partidas_por_mes.php'
                         ),
                         array(
+                            'name'  => 'Reporte de Egresos Excel',
+                            'url'   => 'gc_report_partidas_por_mes_excel.php'
+                        ),
+                        array(
                             'name'  => 'Rep. Ingresos',
                             'url'   => 'gc_reporte_ingresos.php'
                         ),

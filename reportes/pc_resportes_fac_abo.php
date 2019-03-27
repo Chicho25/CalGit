@@ -27,7 +27,7 @@
         $where .= " and pda.fecha <= '".$_POST['fecha_a_fin']."' ";
       }else{ }
       if ($_POST['id_partida'] == 'todos') {
-        
+
       }elseif($_POST['id_partida'] != ''){
         $where .= " and pda.id_partida = '".$_POST['id_partida']."' ";
       }
@@ -78,13 +78,11 @@ $html='
         <th>'.(count($li) - 1).'</th>
       </tr>
       <tr>
-        <th class="service">NOMBRE PARTIDA</th>
-        <th class="desc">PROVEEDOR</th>
-        <th class="desc">FECHA VENCIMIENTO</th>
-        <th class="desc">DESC. FACTURA</th>
-        <th class="desc">FECHA ABONO</th>
-        <th class="desc">MONOTO ABONO</th>
-        <th class="desc">DESC. ABONO</th>
+        <th class="service"><b>NOMBRE PARTIDA</b></th>
+        <th class="desc"><b>PROVEEDOR</b></th>
+        <th class="desc"><b>FECHA ABONO</b></th>
+        <th class="desc"><b>MONOTO ABONO</b></th>
+        <th class="desc"><b>DESCRIPCION ABONO</b></th>
       </tr>
     </thead>
     <tbody>';
@@ -97,8 +95,6 @@ $html='
                   <td style="padding: 0" class="desc">'.utf8_encode($l['nombre_partida']).'</td>
                   <td style="padding: 0" class="desc">'.utf8_encode($l['nombre_proveedor']).'</td>
                   <td style="padding: 0" class="desc">'.$l['fecha_vencimiento_factura'].'</td>
-                  <td style="padding: 0" class="desc">'.utf8_encode($l['descripcion_factura']).'</td>
-                  <td style="padding: 0" class="desc">'.$l['fecha_creacion_abono'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['monto_abono'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.utf8_encode($l['descripcion_abono']).'</td>
                 </tr>';
@@ -107,7 +103,7 @@ $html='
               }
 
       $html .='<tr>
-                  <td style="padding: 0" colspan="5" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" colspan="3" class="desc"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($monto_abono, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b></b></td>
                 </tr>';

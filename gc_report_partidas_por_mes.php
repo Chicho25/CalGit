@@ -37,7 +37,7 @@ $(document).ready(function(){
           <div class="col-lg-12">
               <div class="block">
                   <div class="block-header">
-                      <h3 class="block-title">Reporte de Partidas Por fechas</h3>
+                      <h3 class="block-title">Reporte de Egresos Excel</h3>
                   </div>
                   <div class="block-content block-content-narrow">
                       <form class="js-validation-bootstrap form-horizontal" action="reportes/pc_resportes_fac_abo.php" method="post" target="_blank">
@@ -61,7 +61,7 @@ $(document).ready(function(){
                                         <?php $sql = $conexion2 -> query("select * from maestro_proyectos"); ?>
                                           <select class="form-control" style="width: 100%;" name="id_proyecto" id="marca">
                                               <option value="">Seleccionar Proyecto</option>
-                                              
+
                                               <?php while($q=$sql->fetch_array()){ ?>
                                               <option value="<?php echo $q['id_proyecto']; ?>"><?php echo $q['proy_nombre_proyecto']; ?></option>
                                               <?php } ?>
@@ -132,6 +132,7 @@ $(document).ready(function(){
                                         <!--<input class="js-datepicker form-control" autocomplete="off" type="text" name="fecha_emision" id="example-datepicker1"  placeholder="Desde" value="">-->
                                       </div>
                                   </div>
+                                  <?php /* ?>
                                   <div class="form-group">
                                       <label class="col-md-4 control-label" for="val-password">Fecha Vencimiento</label>
                                       <div class="col-md-7">
@@ -143,7 +144,7 @@ $(document).ready(function(){
                                         <!--<input class="js-datepicker form-control" autocomplete="off" type="text" name="fecha_vencimiento" id="example-datepicker1" data-date-format="yyyy-mm-dd" placeholder="Hasta" value="">-->
                                       </div>
                                   </div>
-
+                                  */ ?>
                                   <!--<div class="form-group">
                                       <label class="col-md-4 control-label" for="val-username">Estatus</label>
                                       <div class="col-md-7">

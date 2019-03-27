@@ -29,7 +29,7 @@ $combustibles = $conexion2 -> query('select
                                       from movimiento_bancario mb inner join tipo_movimiento_bancario tmb on mb.id_tipo_movimiento = tmb.id_tipo_movimiento_bancario
                                       '.$whereCombus.'
                                       and
-                                      tmb.id_tipo_movimiento_bancario in(19, 20, 21, 24)
+                                      tmb.id_tipo_movimiento_bancario in(20, 21)
                                       and
                                       mb.mb_stat in(1)
                                       group by
@@ -46,7 +46,7 @@ $combustibles = $conexion2 -> query('select
                                       from movimiento_bancario mb inner join tipo_movimiento_bancario tmb on mb.id_tipo_movimiento = tmb.id_tipo_movimiento_bancario
                                       '.$whereCombus.'
                                       and
-                                      tmb.id_tipo_movimiento_bancario in(19, 20, 21, 24)
+                                      tmb.id_tipo_movimiento_bancario in(20, 21)
                                       and
                                       mb.mb_stat in(1)
                                       order by 1');
