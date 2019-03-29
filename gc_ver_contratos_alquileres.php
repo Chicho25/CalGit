@@ -125,14 +125,11 @@
 
 <?php if(isset($_POST['precio'],
                        $_POST['id_venta'])){ ?>
-<?php $sql_update_inmueble = mysqli_query($conexion2, "update maestro_ventas set mv_precio_venta = '".$_POST['precio']."',
-                                                                                 termino = '".$_POST['termino']."',
-                                                                                 fecha_vencimiento = '".$_POST['fecha_vencimiento']."'
-                                                                                 where
-                                                                                 id_venta = '".$_POST['id_venta']."'");
-                           /*if($_POST['estado'] == 5555){
-                               $sql_devolver_inmueble = $conexion2 -> query("update maestro_inmuebles set mi_status = 1 where id_inmueble = '".$_POST['id_inmueble']."'");
-                           }*/
+<?php $sql_update_inmueble = $conexion2 -> query("update maestro_ventas set mv_precio_venta = '".$_POST['precio']."',
+                                                                             termino = '".$_POST['termino']."',
+                                                                             fecha_vencimiento = '".$_POST['fecha_vencimiento']."'
+                                                                             where
+                                                                             id_venta = '".$_POST['id_venta']."'");
                         } ?>
 
 <?php require 'inc/config.php'; ?>
@@ -446,8 +443,8 @@
                                                               <div class="col-xs-12">
                                                                 <select name="termino" class="js-select2 form-control" required>
                                                                   <option value="">Seleccionar</option>
-                                                                  <option value="1" <?php if($lista_todos_contratos_ventas['termino'] = 1){ echo 'selected';} ?>> Transito</option>
-                                                                  <option value="2" <?php if($lista_todos_contratos_ventas['termino'] = 2){ echo 'selected';} ?>>Permanente</option>
+                                                                  <option value="1" <?php if($lista_todos_contratos_ventas['termino'] == 1){ echo 'selected';} ?>> Transito</option>
+                                                                  <option value="2" <?php if($lista_todos_contratos_ventas['termino'] == 2){ echo 'selected';} ?>>Permanente</option>
                                                                 </select>
                                                               </div>
                                                             </div>
