@@ -81,7 +81,7 @@ $html='
         <th class="service"><b>NOMBRE PARTIDA</b></th>
         <th class="desc"><b>PROVEEDOR</b></th>
         <th class="desc"><b>FECHA ABONO</b></th>
-        <th class="desc"><b>MONOTO ABONO</b></th>
+        <th class="desc"><b>MONTO ABONO</b></th>
         <th class="desc"><b>DESCRIPCION ABONO</b></th>
       </tr>
     </thead>
