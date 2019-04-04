@@ -103,7 +103,8 @@
                                                   'precio_venta'=>$_POST['precio_venta'],
                                                   'id_cliente'=>$_POST['id_cliente'],
                                                   'descripcion'=>$_POST['descripcion'],
-                                                  'reserva'=>$_POST['reserva']);
+                                                  'reserva'=>$_POST['reserva'],
+                                                  'fecha_vencimiento'=>$_POST['fecha_vencimiento']);
 
                     $_SESSION['session_ventas_reserva'] = $session_ventas_reserva; }
 
@@ -325,7 +326,7 @@ function dependencia_ciudad()
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-password">Fecha de Vencimiento <span class="text-danger">*</span></label>
                             <div class="col-md-3 input-daterange doc">
-                              <input type="text" class="js-datepicker form-control fechas1" name="fecha_vencimiento" placeholder="Fecha de Vencimiento" autocomplete="off">
+                              <input type="text" class="js-datepicker form-control fechas1" name="fecha_vencimiento" placeholder="Fecha de Vencimiento" autocomplete="off" value="<?php if(isset($_SESSION['session_ventas']['fecha_vencimiento'])){ echo $_SESSION['session_ventas']['fecha_vencimiento']; } ?>">
                             </div>
                         </div>
 
