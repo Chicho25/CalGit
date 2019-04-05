@@ -2332,7 +2332,7 @@ function reporte_2($conexion, $id_proyecto){
 				if($desde != '' && $hasta != ''){$condicion4 = " AND mbo.mb_fecha BETWEEN '".$desde."' AND '".$hasta."'";}else{$condicion4 = "";}
 				if($anulado != 0){$condicion5 = " AND mbo.mb_stat = 12";}else{$condicion5 = "";}
 				if($cheque_directo != 0){$condicion6 = " AND mbo.cheque_directo = '".$cheque_directo."'";}else{$condicion6 = "";}
-				if($referencia != ""){ $condicion7 =" AND mbo.id_movimiento_bancario =".$referencia; }else{$condicion7 =""; }
+				if($referencia != ""){ $condicion7 =" AND mbo.mb_referencia_numero =".$referencia; }else{$condicion7 =""; }
 
 				$condicion = $condicion1.$condicion2.$condicion3.$condicion4.$condicion5.$condicion6.$condicion7;
 

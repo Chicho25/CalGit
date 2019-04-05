@@ -88,6 +88,7 @@
                 <tbody>
                     <?php if(isset($_POST['anulado'])){$anulado = $_POST['anulado'];}else{$anulado=0;} ?>
                     <?php if(isset($_POST['cheque_directo'])){$cheque_directo = $_POST['cheque_directo'];}else{$cheque_directo=0;} ?>
+                    <?php if(!isset($_POST['id_tipo_movimiento_bancario'])){ $tipo_movimiento = "";}else{$tipo_movimiento =$_POST['id_tipo_movimiento_bancario'];} ?>
                     <?php if(isset($_POST['id_cuenta'],
                                     $_POST['tipo'],
                                          $_POST['numero'],
@@ -95,7 +96,7 @@
                                             $_POST['hasta'],
                                               $anulado,
                                                 $cheque_directo)){
-                                                  /*echo $_POST['desde'].' | '.$_POST['hasta'];
+                                                /*  echo $_POST['desde'].' | '.$_POST['hasta'];
                                                   echo " Esta pasando<br>";
                                                   echo $_POST['id_cuenta'].'<br>';
                                                   echo $_POST['tipo'].'<br>';
@@ -105,8 +106,6 @@
                                                   echo $_POST['hasta'].'<br>';
                                                   echo $anulado.'<br>';
                                                   echo $cheque_directo.'<br>';*/
-
-                          if(!isset($_POST['id_tipo_movimiento_bancario'])){ $tipo_movimiento = "";}else{$tipo_movimiento =$_POST['id_tipo_movimiento_bancario'];}
 
                           $todos_movimeintos = ver_movimientos_bancarios_filtrados($conexion2,
                                                                                       $_POST['id_cuenta'],
