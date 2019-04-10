@@ -22,6 +22,13 @@
 
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
+<?php function diferenciaDias($inicio, $fin){
+    $inicio = strtotime($inicio);
+    $fin = strtotime($fin);
+    $dif = $fin - $inicio;
+    $diasFalt = (( ( $dif / 60 ) / 60 ) / 24);
+    return ceil($diasFalt);
+} ?>
 <!-- Page JS Plugins CSS -->
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2-bootstrap.min.css">
@@ -112,7 +119,8 @@
 </script>
 <?php $m1 = $conexion2 -> query("SELECT
                                   *,
-                                  count(*)
+                                  count(*),
+                                  (select count(*) from maestro_cuota_abono where mca_id_inmueble = mi.id_inmueble) as contar_pagos
                                   FROM
                                   maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                   WHERE
@@ -133,7 +141,8 @@
                                   group by mi_nombre"); ?>
 <?php $m3l = $conexion2 -> query("SELECT
                                   *,
-                                  count(*)
+                                  count(*),
+                                  (select count(*) from maestro_cuota_abono where mca_id_inmueble = mi.id_inmueble) as contar_pagos
                                   FROM
                                   maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                   WHERE
@@ -146,7 +155,8 @@
 
 <?php $m3r = $conexion2 -> query("SELECT
                                   *,
-                                  count(*)
+                                  count(*),
+                                  (select count(*) from maestro_cuota_abono where mca_id_inmueble = mi.id_inmueble) as contar_pagos
                                   FROM
                                   maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                   WHERE
@@ -159,7 +169,8 @@
 
 <?php $m4 = $conexion2 -> query("SELECT
                                   *,
-                                  count(*)
+                                  count(*),
+                                  (select count(*) from maestro_cuota_abono where mca_id_inmueble = mi.id_inmueble) as contar_pagos
                                   FROM
                                   maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                   WHERE
@@ -530,7 +541,13 @@ $('#pieM4').highcharts({
                                                  $slips['fecha_vencimiento'] != '0000-00-00 00:00:00'){
                                                  echo 'style="background-color:red;"';
                                                  }elseif($slips['id_inmueble'] != '')
-                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                                                 { if($slips['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                   $contar_dias = diferenciaDias(date("Y-m-d"), $slips['fecha_vencimiento']);
+                                                   if($contar_dias <= 30){ echo 'style="background-color:#FDC467; color:white; text-decoration: none;"'; }}
+                                                   if($slips['contar_pagos'] == 0){
+                                                   echo 'style="background-color:blue; color:white; text-decoration: none;"';
+                                                 }
+                                                   echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
                       <a <?php if($slips['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips['id_inmueble']; ?>" <?php } ?> > <?php echo $slips['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -571,7 +588,14 @@ $('#pieM4').highcharts({
                                                  $slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
                                                  echo 'style="background-color:red;"';
                                                  }elseif($slips3['id_inmueble'] != '')
-                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                                                 { if($slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                   $contar_dias = diferenciaDias(date("Y-m-d"), $slips3['fecha_vencimiento']);
+                                                   if($contar_dias <= 30){ echo 'style="background-color:#FDC467; color:white; text-decoration: none;"'; }}
+                                                   if($slips3['contar_pagos'] == 0){
+                                                   echo 'style="background-color:blue; color:white; text-decoration: none;"';
+                                                 }
+                                                   echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';
+                                                 } ?> >
                       <a <?php if($slips3['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips3['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips3['id_inmueble']; ?>" <?php } ?> > <?php echo $slips3['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips3['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -597,7 +621,14 @@ $('#pieM4').highcharts({
                                                  $slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
                                                  echo 'style="background-color:red;"';
                                                  }elseif($slips3['id_inmueble'] != '')
-                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                                                 {
+                                                   if($slips3['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                     $contar_dias = diferenciaDias(date("Y-m-d"), $slips3['fecha_vencimiento']);
+                                                     if($contar_dias <= 30){ echo 'style="background-color:#FDC467; color:white; text-decoration: none;"'; }}
+                                                   if($slips3['contar_pagos'] == 0){
+                                                   echo 'style="background-color:blue; color:white; text-decoration: none;"';
+                                                 }
+                                                   echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
                       <a <?php if($slips3['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips3['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips3['id_inmueble']; ?>" <?php } ?> > <?php echo $slips3['mi_nombre']; ?></a>
                     </div>
                     <div class="modal fade" id="modal-popin<?php echo $slips3['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -627,7 +658,15 @@ $('#pieM4').highcharts({
                                                  $slips4['fecha_vencimiento'] != '0000-00-00 00:00:00'){
                                                  echo 'style="background-color:red;"';
                                                  }elseif($slips4['id_inmueble'] != '')
-                                                 { echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?>>
+                                                 {
+                                                   if($slips4['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                     $contar_dias = diferenciaDias(date("Y-m-d"), $slips4['fecha_vencimiento']);
+                                                     if($contar_dias <= 30){ echo 'style="background-color:#FDC467; color:white; text-decoration: none;"'; }}
+
+                                                   if($slips4['contar_pagos'] == 0){
+                                                   echo 'style="background-color:blue; color:white; text-decoration: none;"';
+                                                 }
+                                                   echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?>>
                       <a <?php if($slips4['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips4['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips4['id_inmueble']; ?>" <?php } ?> >
                       <?php echo $slips4['mi_nombre']; ?></a>
                     </div>

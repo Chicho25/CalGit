@@ -1,15 +1,12 @@
 
 
 
-!M                                                                    0 6  0  9   2 0  1  8
+!M                                                                    1 0  0  4   2 0  1  9
 
 
-M                     APARICIO Y COMPA�IA, S.A. 
-M                                                                           **200.00**
-M                   **DOSCIENTOS**
-
-
-
+M                     EDEMET
+M                                                                           **5,000.00**
+M                   **CINCO MIL**
 
 
 
@@ -23,13 +20,16 @@
 
 
 
-M      BENEFICIARIO: APARICIO Y COMPA�IA, S.A. 
+
+
+
+M      BENEFICIARIO: EDEMET
 
 M       ID             DETALLE                                          MONTO
 M   _____________________________________________________________________________________________
-M     726      MANO DE OBRA DE DOS MEDIDORES EN MUELLE 4   200.00
-M     1654      VISTA MAR MARINA/MANTENIMIENTO/EXTRAS/
-M     1883      Total-----> 200.00
+M     933      ELECTRICIDAD MUELLE 4 FEB Y ABONO MARZ 19   5,000.00
+M     2427      VISTA MAR MARINA 2019/ELECTRICIDAD/ELECT
+M     2258   ICIDAD MUELLES/   Total-----> 5,000.00
 
 
 
