@@ -60,6 +60,9 @@ mca.id = ".$_GET['id']);?>
 ?>
 
 <?php $html='
+ <table>
+ 	<tr>
+		<td style="text-align: center;">
 <header class="clearfix">
   <div id="logo">
     <img src="../logos/'.$imagen.'" width="250">
@@ -94,6 +97,47 @@ $html .='
   </main>
 <footer>
   Grupo Calpe 1.0 © 2015-19.
-</footer>'; ?>
+</footer>
+</td>
+<td style="text-align: center;">
+<header class="clearfix">
+  <div id="logo">
+    <img src="../logos/'.$imagen.'" width="250">
+  </div>
+  <h1>RECIBO</h1>
+  <div id="project" style="font-size:18px;">
+    '.$nombre_grupo.'
+  </div>
+  <div style="text-align: right">
+    <b>Fecha del Recibo: '.date('d/m/Y').'</b><br>
+       Fecha de Pago: '.$fecha.'
+  </div>
+</header>
+<main>';
+
+$html .='
+    <div style="font-size:28px; text-align: center; padding:10px;">
+      N. Recibo: '.$_GET['id'].'
+    </div>
+    <div style="font-size:28px; text-align: center; center; padding:10px;">
+      Descripcion: '.$descrip.'
+    </div>
+    <div style="font-size:28px; text-align: center; padding:10px;">
+      Monto: '.$monto.'
+    </div>
+    <div style="font-size:28px; text-align: center; padding:10px;">
+      Inmueble: '.$inmueble.'
+    </div>
+    <div style="font-size:28px; text-align: center; padding:10px;">
+      Cliente: '.$cliente.'
+    </div>
+  </main>
+<footer>
+  Grupo Calpe 1.0 © 2015-19.
+</footer>
+</td>
+</tr>
+</table>
+'; ?>
 <?php $mpdf->writeHTML($html); ?>
 <?php $mpdf->Output('reporte_2.pdf', 'I'); ?>
