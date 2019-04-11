@@ -379,6 +379,7 @@ function reporte_4($conexion, $id_proyecto){
 				$where1 = "where (1=1)";
 				$where2 = "where (1=1)";
 				$where3 = "where (1=1)";
+				$where4 = "where (1=1)";
 
 				/* Primer Query */
 				if ($fecha1 != ''){ $where1 .=" and mc.mc_fecha_vencimiento >= '".date('Y-m-d',strtotime($fecha1))."'"; }else{  $where1 .=""; }
@@ -391,6 +392,10 @@ function reporte_4($conexion, $id_proyecto){
 				/* Tercer Query */
 				if ($fecha1!=''){ $where3 .=" and s.date_time >= '".date('Y-m-d',strtotime($fecha1))."'"; }else{  $where3 .=""; }
 				if ($fecha2!=''){ $where3 .=" and s.date_time <= '".date('Y-m-d',strtotime($fecha2))."'"; }else{  $where3 .=""; }
+
+				/* Cuarto Query */
+				if ($fecha1!=''){ $where4 .=" and mb.mb_fecha >= '".date('Y-m-d',strtotime($fecha1))."'"; }else{  $where3 .=""; }
+				if ($fecha2!=''){ $where4 .=" and mb.mb_fecha <= '".date('Y-m-d',strtotime($fecha2))."'"; }else{  $where3 .=""; }
 
 				$sql_edo_cuenta_client = $conexion -> query("(select
 																id_cuota as id,
@@ -465,6 +470,31 @@ function reporte_4($conexion, $id_proyecto){
 																and
 																s.stat not in(2)
 																)
+
+																UNION
+
+																(select
+																	s.id,
+																	'RECIBO' as concepto,
+																	'SERVICIO' as tipo,
+																	'-' as numero,
+																	mi.mi_codigo_imueble as inmueble,
+																	mb.mb_fecha as emision,
+																	'-' as vencimiento,
+																	mb.mb_descripcion as descripcion,
+																	mb.mb_monto as debito,
+																	'0' as credito,
+																	mb.mb_monto as saldo
+																	from movimiento_bancario mb inner join servicios s on mb.id_cuota = s.id
+																								inner join maestro_ventas mv on mb.id_contrato_venta = mv.id_venta
+																								inner join maestro_inmuebles mi on mi.id_inmueble = mv.id_inmueble
+																	$where4
+																	and
+																	mb.id_cliente = '".$id_cliente."'
+																	and
+																	mb.id_tipo_movimiento = 25
+																	and
+																	mb.mb_stat = 1)
 																order by 6 asc");
 				return $sql_edo_cuenta_client;
 
