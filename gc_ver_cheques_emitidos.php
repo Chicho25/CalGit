@@ -87,6 +87,7 @@
                         <th class="hidden-xs" style="width: 10%;">TIPO DE MOVIMIENTO</th>
                         <th class="hidden-xs" style="width: 10%;">FECHA</th>
                         <th class="text-center" style="width: 10%;">EDITAR</th>
+                        <th class="text-center" style="width: 10%;">ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,7 +100,7 @@
                         <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['mb_monto']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['mb_referencia_numero']; ?></td>
-                        <td class="hidden-xs"><?php echo $lista_movimiento['numero_cheque']; ?></td>  
+                        <td class="hidden-xs"><?php echo $lista_movimiento['numero_cheque']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['st_nombre']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['tmb_nombre']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['mb_fecha']; ?></td>
@@ -112,9 +113,22 @@
                           });
                         </script>
 
+                        <script type="text/javascript">
+                          $(document).ready(function() {
+                            $("#eliminar<?php echo $lista_movimiento['id_movimiento_bancario']; ?>").click(function(event) {
+                              $("#capa<?php echo $lista_movimiento['id_movimiento_bancario'].'eli'; ?>").load('cargas_paginas/eliminar_cheques_emitidos.php?id=<?php echo $lista_movimiento['id_movimiento_bancario']; ?>');
+                            });
+                          });
+                        </script>
+
                         <td class="text-center">
                             <div class="btn-group">
-                                <button id="boton<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popin<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" type="button"><i class="fa fa-pencil"></i></button>
+                                <?php /* ?><button id="boton<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popin<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" type="button"><i class="fa fa-pencil"></i></button> */ ?>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button id="eliminar<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popin<?php echo $lista_movimiento['id_movimiento_bancario'].'eli'; ?>" type="button"><i class="fa fa-trash"></i></button>
                             </div>
                         </td>
 
@@ -124,6 +138,15 @@
                             <div class="modal fade" id="modal-popin<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-popin">
                                     <div id="capa<?php echo $lista_movimiento['id_movimiento_bancario']; ?>" class="modal-content">
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div class="modal fade" id="modal-popin<?php echo $lista_movimiento['id_movimiento_bancario'].'eli'; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-popin">
+                                    <div id="capa<?php echo $lista_movimiento['id_movimiento_bancario'].'eli'; ?>" class="modal-content">
 
                                     </div>
                                 </div>

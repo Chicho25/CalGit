@@ -20,12 +20,10 @@ if ($_POST["elegido"]==2) {
                                               where
                                               tmb_stat = 1
                                               AND
-                                              id_tipo_movimiento_bancario in(13, 2, 3, 5, 7, 19, 20, 21, 22, 24)");
+                                              id_tipo_movimiento_bancario in(13, 2, 3, 5, 7, 19, 20, 21, 22, 24, 27, 28)");
     ?> <option value=""></option><?php
     while($lo = $sql_tipo_movimiento -> fetch_array()){ ?>
-
           <option value="<?php echo $lo['id_tipo_movimiento_bancario']; ?>" ><?php echo $lo['tmb_nombre']; ?></option>
-
   <?php }
 
 } ?>

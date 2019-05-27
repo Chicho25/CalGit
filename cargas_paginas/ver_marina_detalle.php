@@ -99,7 +99,7 @@
                                                             order by mi_nombre desc");
 
                              ?>
-                               <select name="slipt_position" class="form-control" style="width:400px;">
+                               <select name="slipt_position" class="form-control" style="width:400px;" required>
                                  <option value="">Seleccionar</option>
                                  <?php while ($lista = $puestos -> fetch_array()) {
                                    if($lista['id_inmueble'] != ''){ continue; }else{  } ?>
