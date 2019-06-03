@@ -131,14 +131,16 @@
                                   order by mi_nombre desc"); ?>
 <?php $m2 = $conexion2 -> query("SELECT
                                   *,
-                                  count(*)
+                                  count(*),
+                                  (select count(*) from maestro_cuota_abono where mca_id_inmueble = mi.id_inmueble) as contar_pagos
                                   FROM
                                   maestro_inmuebles mi left join maestro_ventas mv on mi.id_inmueble = mv.id_inmueble
                                   WHERE
-                                  mi_nombre like '%M2%'
+                                  mi_nombre like '%AS-%'
                                   and
                                   mi_status not in(17)
                                   group by mi_nombre"); ?>
+
 <?php $m3l = $conexion2 -> query("SELECT
                                   *,
                                   count(*),
@@ -561,13 +563,36 @@ $('#pieM4').highcharts({
                   </div>
 
                   <div class="muelle2">
-                    M2 <br>
-                    49 Plazas | 42 Plazas
+                    ASTILLEROS <br>
+                    10 Plazas
                     <?php while ($slips2 = $m2 -> fetch_array()) { ?>
-                    <div class="slipM1">
-                      <?php echo $slips2['mi_nombre']; ?>
+                      <script type="text/javascript">
+                        $(document).ready(function() {
+                          $("#slipm1<?php echo $slips2['id_inmueble']; ?>").click(function(event) {
+                          $("#descripcionslipm1<?php echo $slips2['id_inmueble']; ?>").load('cargas_paginas/ver_marina_detalle.php?id=<?php echo $slips2['id_inmueble']; ?>');
+                          });
+                        });
+                      </script>
+                    <div class="slipM1" <?php if($slips2['id_inmueble'] != '' &&
+                                                 $slips2['fecha_vencimiento'] <= date("Y-m-d") &&
+                                                 $slips2['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                 echo 'style="background-color:red;"';
+                                               }elseif($slips2['id_inmueble'] != '')
+                                                 { if($slips2['fecha_vencimiento'] != '0000-00-00 00:00:00'){
+                                                   $contar_dias = diferenciaDias(date("Y-m-d"), $slips2['fecha_vencimiento']);
+                                                   if($contar_dias <= 30){ echo 'style="background-color:#FDC467; color:white; text-decoration: none;"'; }}
+                                                   if($slips2['contar_pagos'] == 0){
+                                                   echo 'style="background-color:blue; color:white; text-decoration: none;"';
+                                                 }
+                                                   echo 'style="background-color:#5EAB3B; color:white; text-decoration: none;"';} ?> >
+                      <a <?php if($slips2['id_inmueble'] != ''){ ?> id="slipm1<?php echo $slips2['id_inmueble']; ?>" style="text-decoration: none;" data-toggle="modal" data-target="#modal-popin<?php echo $slips2['id_inmueble']; ?>" <?php } ?> > <?php echo $slips2['mi_nombre']; ?></a>
                     </div>
-                    <div class="descriptionSlip">
+                    <div class="modal fade" id="modal-popin<?php echo $slips2['id_inmueble']; ?>" tabindex="-1" role="dialog" aria-hidden="true" >
+                        <div class="modal-dialog modal-dialog-popin">
+                            <div id="descripcionslipm1<?php echo $slips2['id_inmueble']; ?>" class="modal-content" style="width:800px;">
+
+                            </div>
+                        </div>
                     </div>
                     <?php } ?>
                   </div>

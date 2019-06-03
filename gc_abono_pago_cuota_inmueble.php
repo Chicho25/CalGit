@@ -257,7 +257,7 @@ $(document).ready(function() {
                               <span class="text-danger">*</span></label>
                             <div class="col-md-7">
                                 <select class="form-control" id="val-skill" name="val-skill">
-                                    <option value="">Cuenta Receptora</option>
+                                    <option value="">Cuenta Receptora <?php echo $id_proyecto; ?></option>
                                     <?php   $sql_cuenta_receptora = cuenta_receptora($conexion2, $id_proyecto); ?>
                                     <?php   while($lista_cuenta_receptora = $sql_cuenta_receptora ->fetch_array()){ ?>
                                     <option value="<?php echo $lista_cuenta_receptora['id_cuenta_bancaria']; ?>"
