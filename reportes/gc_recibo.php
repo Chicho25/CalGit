@@ -16,7 +16,18 @@ gi.gi_nombre_grupo_inmueble,
 gi.id_grupo_inmuebles,
 mi.mi_nombre,
 mc.cl_nombre,
-mc.cl_apellido
+mc.cl_apellido,
+(select
+	empre_ruc
+	from
+	maestro_empresa
+ where
+ 	id_empresa = (select
+								id_empresa
+								from
+								maestro_proyectos
+								where
+								id_proyecto = mca.mca_id_proyecto)) as rut
 from maestro_cuota_abono mca inner join grupo_inmuebles gi on mca.mca_id_grupo_inmueble = gi.id_grupo_inmuebles
 							               inner join maestro_inmuebles mi on mi.id_inmueble = mca.mca_id_inmueble
                              inner join maestro_clientes mc on mc.id_cliente = mca.mca_id_cliente
@@ -33,6 +44,7 @@ mca.id = ".$_GET['id']);?>
         $inmueble = $l['mi_nombre'];
         $cliente = $l['cl_nombre'].' '.$l['cl_apellido'];
         $id_proyecto = $l['mca_id_proyecto'];
+				$ruc = $l['rut'];
       }
       if ($id_proyecto==8) {
         $imagen = '8.jpg';
@@ -56,6 +68,8 @@ mca.id = ".$_GET['id']);?>
         $imagen = '30.jpg';
       }elseif ($id_proyecto == 31) {
         $imagen = '31.jpg';
+      }elseif ($id_proyecto == 37) {
+        $imagen = '35.jpg';
       }
 ?>
 
@@ -72,6 +86,7 @@ mca.id = ".$_GET['id']);?>
     '.$nombre_grupo.'
   </div>
   <div style="text-align: right">
+		<b>RUT: '.$ruc.'</b>
     <b>Fecha del Recibo: '.date('d/m/Y').'</b><br>
        Fecha de Pago: '.$fecha.'
   </div>
