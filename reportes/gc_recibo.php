@@ -86,7 +86,7 @@ mca.id = ".$_GET['id']);?>
     '.$nombre_grupo.'
   </div>
   <div style="text-align: right">
-		<b>RUT: '.$ruc.'</b>
+		<b>RUT: '.$ruc.'</b><br>
     <b>Fecha del Recibo: '.date('d/m/Y').'</b><br>
        Fecha de Pago: '.$fecha.'
   </div>
@@ -124,6 +124,7 @@ $html .='
     '.$nombre_grupo.'
   </div>
   <div style="text-align: right">
+	<b>RUT: '.$ruc.'</b><br>
     <b>Fecha del Recibo: '.date('d/m/Y').'</b><br>
        Fecha de Pago: '.$fecha.'
   </div>
