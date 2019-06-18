@@ -91,7 +91,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
               }
 
       $html .='<tr>
-                  <td style="padding: 0" colspan="3" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" colspan="4" class="desc"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($vendido, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($reservado, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($por_vender, 2, ".", ",").'</b></td>
