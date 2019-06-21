@@ -365,6 +365,14 @@ $one->main_nav                     = array(
                     array(
                         'name'  => 'Inmuebles/Slips',
                         'url'   => 'gc_ver_slips.php'
+                    ),
+                    array(
+                        'name'  => 'Reg. Factura',
+                        'url'   => 'gc_reg_factura.php'
+                    ),
+                    array(
+                        'name'  => 'Ver Facturas',
+                        'url'   => 'gc_ver_facturas.php'
                     )
                 )
             ),
