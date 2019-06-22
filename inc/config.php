@@ -367,12 +367,8 @@ $one->main_nav                     = array(
                         'url'   => 'gc_ver_slips.php'
                     ),
                     array(
-                        'name'  => 'Reg. Factura',
+                        'name'  => 'Facturas',
                         'url'   => 'gc_reg_factura.php'
-                    ),
-                    array(
-                        'name'  => 'Ver Facturas',
-                        'url'   => 'gc_ver_facturas.php'
                     )
                 )
             ),
