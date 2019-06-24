@@ -9,6 +9,75 @@
 $eliminar_detalle  = $conexion2 -> query("delete from factura_detalle where id_factura = '".$_POST['eliminar']."'");
 $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POST['eliminar']."'");
  } ?>
+<?php if (isset($_POST['reg_factura'])) {
+
+$resgitrar_factura = $conexion2-> query("INSERT INTO factura(id_cliente, fecha, stat, id_user)VALUES('".$_POST['id_cliente']."',
+                                                                                                     '".$_POST['fecha']."',
+                                                                                                      1,
+                                                                                                      '".$_SESSION['session_gc']['usua_id']."')");
+
+} ?>
+
+<?php if (isset($_POST['pagar_factura'])) {
+
+    $todos_factura = $conexion2 -> query("SELECT * FROM factura WHERE id = '".$_POST['id']."'");
+    while ($factura = $todos_factura -> fetch_array()){
+
+         $monto_factura = $factura['monto'];
+         $monto_pagado = $factura['monto_pagado'];
+         $id_cliente = $factura['id_cliente'];
+       }
+
+       $monto_por_pagar = $monto_factura - $_POST['monto'];
+       $monto_pagado_total = $monto_pagado + $_POST['monto'];
+
+     $update_factura = $conexion2 -> query("UPDATE factura SET monto = '".$monto_por_pagar."',
+                                                               monto_pagado = '".$monto_pagado_total."',
+                                                               stat = 3
+                                                               WHERE
+                                                               id = '".$_POST['id']."'");
+
+/* Insertar en las tablas de facturas */
+$pagar_factura = $conexion2-> query("INSERT INTO factura_pago(id_cliente, id_factura, monto, fecha, id_user)
+                                                            VALUES
+                                                            ('".$id_cliente."',
+                                                              '".$_POST['id']."',
+                                                              '".$_POST['monto']."',
+                                                              '".date('d/m/Y')."',
+                                                              '".$_SESSION['session_gc']['usua_id']."')");
+/* Movimiento bancario */
+$pagar_movimiento = $conexion2-> query("INSERT INTO movimiento_bancario(id_tipo_movimiento,
+                                                            mb_fecha,
+                                                            mb_monto,
+                                                            mb_descripcion,
+                                                            mb_stat,
+                                                            id_cliente)
+                                                            VALUES
+                                                            (29,
+                                                             '".date('d/m/Y')."',
+                                                             '".$_POST['monto']."',
+                                                             'PAGO A FACTURA DE LA MARINA',
+                                                              1,
+                                                             '".$id_cliente."')");
+
+/* Comprobar si se pago la factura */
+
+$todos_factura = $conexion2 -> query("SELECT * FROM factura WHERE id = '".$_POST['id']."'");
+while ($factura = $todos_factura -> fetch_array()){
+     $monto_factura = $factura['monto'];
+   }
+
+if ($monto_factura == 0) {
+
+  $update_factura_pagada = $conexion2 -> query("UPDATE factura SET stat = 4
+                                                            WHERE
+                                                            id = '".$_POST['id']."'");
+
+}
+
+
+} ?>
+
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
 <!-- Page JS Plugins CSS -->
@@ -21,12 +90,12 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
 <div class="content bg-gray-lighter">
     <div class="row items-push">
 
-      <?php if(isset($sql_insert_cuota)){ ?>
+      <?php if(isset($resgitrar_factura)){ ?>
               <!-- Success Alert -->
               <div class="alert alert-success alert-dismissable">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h3 class="font-w300 push-15">Servicio  Registrado</h3>
-                  <p><a class="alert-link" href="javascript:void(0)">El Servicio</a> Fue Registrado!</p>
+                  <h3 class="font-w300 push-15">Factura  Registrada</h3>
+                  <p><a class="alert-link" href="javascript:void(0)">La Factura</a> Fue Registrada!</p>
               </div>
               <!-- END Success Alert -->
       <?php } ?>
@@ -37,12 +106,12 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
           <p><a class="alert-link" href="javascript:void(0)">La Factura</a> Fue Eliminada!</p>
       </div>
       <?php } ?>
-      <?php if(isset($pagar_servicio)){ ?>
+      <?php if(isset($pagar_factura)){ ?>
               <!-- Success Alert -->
               <div class="alert alert-success alert-dismissable">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h3 class="font-w300 push-15">Servicio Pagado</h3>
-                  <p><a class="alert-link" href="javascript:void(0)">El Servicio</a> Fue Pagado!</p>
+                  <h3 class="font-w300 push-15">Factura Pagada</h3>
+                  <p><a class="alert-link" href="javascript:void(0)">La factura</a> Fue Pagada!</p>
               </div>
               <!-- END Success Alert -->
       <?php } ?>
@@ -70,7 +139,7 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
               });
             });
           </script>
-             <button id="boton_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" type="button">Nueva Factura</button>
+             <button id="boton_n" class="btn btn-primary" data-toggle="modal" data-target="#modal-popin_n" type="button">Nueva Factura</button>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -79,7 +148,8 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
                         <th class="text-center">FACTURA</th>
                         <th class="text-center">ELEMENTOS</th>
                         <th class="hidden-xs" >ITBMS</th>
-                        <th class="hidden-xs" >TOTAL</th>
+                        <th class="hidden-xs" >TOTAL POR PAGAR</th>
+                        <th class="hidden-xs" >TOTAL PAGADO</th>
                         <th class="hidden-xs" >ESTADO</th>
                         <th class="hidden-xs" >PAGAR</th>
                         <th class="hidden-xs" >PDF</th>
@@ -93,6 +163,8 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
                                                                           factura.monto,
                                                                           factura.fecha,
                                                                           factura.stat,
+                                                                          factura.itbms,
+                                                                          factura.monto_pagado,
                                                                           maestro_clientes.cl_nombre,
                                                                           maestro_clientes.cl_apellido,
                                                                         (select count(*)
@@ -106,28 +178,39 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id']; ?></td>
                         <td class="font-w600"><?php echo $lista_todos_contratos_ventas['cl_nombre'].' '.$lista_todos_contratos_ventas['cl_apellido']; ?></td>
                         <td class="text-center"><?php echo date("d-m-Y", strtotime($lista_todos_contratos_ventas['fecha'])); ?></td>
-                        <td class="text-center"><?php echo $lista_todos_contratos_ventas['contar']; ?></td>
+                        <td class="text-center">
+                          <?php if($lista_todos_contratos_ventas['stat'] == 3 || $lista_todos_contratos_ventas['stat'] == 4){echo $lista_todos_contratos_ventas['contar']; }else{  ?>
+                          <form class="" action="agregar_detalle_factura.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>" method="post">
+                            <button class="btn btn-primary"><?php echo $lista_todos_contratos_ventas['contar']; ?></button>
+                          </form>
+                          <?php } ?>
+                        </td>
                         <td class="font-w600"><?php echo number_format($lista_todos_contratos_ventas['itbms'], 2, '.',','); ?></td>
                         <td class="hidden-xs"><?php echo number_format($lista_todos_contratos_ventas['monto'], 2, '.',','); ?></td>
-                        <td class="hidden-xs"><?php if($lista_todos_contratos_ventas['contar'] == 1){ echo 'Sin detalle'; }
-                                                      elseif($lista_todos_contratos_ventas['contar'] == 2){ echo 'Pendiente Por Pagar';}
-                                                        elseif($lista_todos_contratos_ventas['contar'] == 3){ echo 'Abonado';}
-                                                          elseif($lista_todos_contratos_ventas['contar'] == 4){ echo 'Pagada';} ?></td>
+                        <td class="hidden-xs"><?php echo number_format($lista_todos_contratos_ventas['monto_pagado'], 2, '.',','); ?></td>
+                        <td class="hidden-xs"><?php if($lista_todos_contratos_ventas['stat'] == 1){ echo 'Sin detalle'; }
+                                                      elseif($lista_todos_contratos_ventas['stat'] == 2){ echo 'Pendiente Por Pagar';}
+                                                        elseif($lista_todos_contratos_ventas['stat'] == 3){ echo 'Abonado';}
+                                                          elseif($lista_todos_contratos_ventas['stat'] == 4){ echo 'Pagada';} ?></td>
                         <td class="hidden-xs">
                           <div class="btn-group">
                             <script type="text/javascript">
                               $(document).ready(function() {
                                 $("#boton_p<?php echo $lista_todos_contratos_ventas['id']; ?>").click(function(event) {
-                                $("#capa_p<?php echo $lista_todos_contratos_ventas['id']; ?>").load('cargas_paginas/Pagar factura.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>');
+                                $("#capa_p<?php echo $lista_todos_contratos_ventas['id']; ?>").load('cargas_paginas/pagar_factura.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>&monto_max=<?php echo $lista_todos_contratos_ventas['monto']; ?>');
                                 });
                               });
                             </script>
+                                <?php if($lista_todos_contratos_ventas['stat'] == 1 || $lista_todos_contratos_ventas['stat'] == 4){ }else{  ?>
                                <button id="boton_p<?php echo $lista_todos_contratos_ventas['id']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popin<?php echo $lista_todos_contratos_ventas['id']; ?>" type="button"><i class="fa fa-dollar"></i></button>
+                                <?php } ?>
                           </div>
                         </td>
                         <td class="hidden-xs">
                           <div class="btn-group">
-                               <button class="btn btn-default" type="button"><i class="fa fa-file"></i></button>
+                            <?php if($lista_todos_contratos_ventas['stat'] == 1){ }else{  ?>
+                               <a class="btn btn-default" href="reportes/gc_factura.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>" target="_blank" type="button"><i class="fa fa-file"></i></a>
+                            <?php } ?>
                           </div>
                         </td>
                         <td class="hidden-xs">
@@ -135,45 +218,46 @@ $eliminar_factura = $conexion2 -> query("delete from factura where id = '".$_POS
                             <script type="text/javascript">
                               $(document).ready(function() {
                                 $("#boton_d<?php echo $lista_todos_contratos_ventas['id']; ?>").click(function(event) {
-                                $("#capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>").load('cargas_paginas/elininar_inmueble.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>');
+                                $("#capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>").load('cargas_paginas/elininar_factura.php?id=<?php echo $lista_todos_contratos_ventas['id']; ?>');
                                 });
                               });
                             </script>
-                               <button id="boton_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" type="button"><i class="fa fa-trash-o"></i></button>
+                               <button id="boton_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="btn btn-default" data-toggle="modal" data-target="#modal-popind<?php echo $lista_todos_contratos_ventas['id']; ?>"><i class="fa fa-trash-o"></i></button>
                           </div>
                         </td>
                     </tr>
+                    <!-- Pagar -->
+                    <div class="modal fade" id="modal-popin<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-popin">
+                        <div id="capa_p<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
+
+                        </div>
+                     </div>
+                   </div>
+                   <!-- Borrar -->
+                   <div class="modal fade" id="modal-popind<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                     <div class="modal-dialog modal-dialog-popin">
+                       <div id="capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
+
+                       </div>
+                    </div>
+                  </div>
+                  <!-- Detalle -->
+                  <div class="modal fade" id="modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-popin">
+                      <div id="capa_<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
+
+                      </div>
+                   </div>
+                 </div>
                   <?php } ?>
                 </tbody>
             </table>
-            <!-- Pagar -->
-            <div class="modal fade" id="modal-popin<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-popin">
-                <div id="capa_p<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
 
-                </div>
-             </div>
-           </div>
-           <!-- Borrar -->
-           <div class="modal fade" id="modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-             <div class="modal-dialog modal-dialog-popin">
-               <div id="capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
-
-               </div>
-            </div>
-          </div>
-          <!-- Detalle -->
-          <div class="modal fade" id="modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-popin">
-              <div id="capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
-
-              </div>
-           </div>
-         </div>
          <!-- Nueva Factura -->
-         <div class="modal fade" id="modal-popina<?php echo $lista_todos_contratos_ventas['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal fade" id="modal-popin_n" tabindex="-1" role="dialog" aria-hidden="true">
            <div class="modal-dialog modal-dialog-popin">
-             <div id="capa_d<?php echo $lista_todos_contratos_ventas['id']; ?>" class="modal-content">
+             <div id="capa_n" class="modal-content">
 
              </div>
           </div>

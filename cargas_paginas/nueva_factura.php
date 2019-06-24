@@ -1,4 +1,5 @@
-
+<?php include('../conexion/conexion2.php'); ?>
+<?php include('../funciones/funciones.php'); ?>
 <form action="" method="post">
 
 <div class="block block-themed block-transparent remove-margin-b">
@@ -12,82 +13,36 @@
     </div>
     <div class="block-content">
               <!-- Bootstrap Register -->
-              <div class="block block-themed">
-                  <div class="block-content">
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">ID</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" id="register1-username" name="id_movimiento" readonly="readonly" value="<?php echo $lista_movimiento['id_movimiento_bancario']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">NOMBRE DEL PROYECTO</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" id="register1-username" readonly="readonly" value="<?php echo $lista_movimiento['proy_nombre_proyecto']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">BANCO</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" id="register1-username" readonly="readonly" value="<?php echo $lista_movimiento['banc_nombre_banco']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">CUENTA</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" id="register1-username" readonly="readonly" value="<?php echo $lista_movimiento['cta_numero_cuenta']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">FECHA</label>
-                              <div class="col-xs-12">
-                                  <input class="js-datepicker form-control" readonly="readonly" type="text" id="example-datepicker1" data-date-format="yy-mm-dd" name="fecha" value="<?php echo $lista_movimiento['mb_fecha']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">REFERENCIA</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" readonly="readonly" id="register1-username" name="referencia" value="<?php echo $lista_movimiento['mb_referencia_numero']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">MONTO</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" readonly="readonly" id="register1-username" name="monto" value="<?php echo $lista_movimiento['mb_monto']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">DESCRIPCION</label>
-                              <div class="col-xs-12">
-                                  <textarea class="form-control" readonly="readonly" type="text" id="register1-username" name="descripcion"><?php echo $lista_movimiento['mb_descripcion']; ?></textarea>
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username">TIPO TRANSFERENCIA</label>
-                              <div class="col-xs-12">
-                                  <input class="form-control" type="text" id="register1-username" readonly="readonly" value="<?php echo $lista_movimiento['tmb_nombre']; ?>">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-xs-12" for="register1-username"></label>
-                              <div class="col-xs-12">
-
-                              </div>
-                          </div>
-                              <div class="form-group">
-                                  <label class="col-md-4 control-label" >ANULAR CHEQUE</label>
-                                  <div class="col-md-7">
-                                      <label class="rad-inline" for="example-inline-checkbox1">
-                                          <input type="radio" id="example-inline-checkbox1" name="stat" value="12" <?php if($lista_movimiento['mb_stat'] == 1){ echo 'checked';}  ?> > SI
-                                      </label>
-                                      <label class="rad-inline" for="example-inline-checkbox1">
-                                          <input type="radio" id="example-inline-checkbox2" name="stat" value="11" <?php if($lista_movimiento['mb_stat'] == 0){ echo 'checked';}  ?> > NO
-                                      </label>
-                                  </div>
-                              </div>
+        <div class="block block-themed">
+            <div class="block-content">
+                <div class="form-group">
+                    <label class="col-xs-12" for="register1-username">Cliente</label>
+                    <div class="col-xs-12">
+                      <select class="js-select2 form-control" name="id_cliente" style="width: 100%;" require="require" data-placeholder="Seleccionar un Cliente">
+                          <option value=""> Selecciona un Cliente</option>
+                          <?php
+                                  $result = todos_clientes_activos($conexion2);
+                                  $opciones = '<option value=""> Elige un Cliente </option>';
+                                  while($fila = $result->fetch_array()){ ?>
+                                    <option value="<?php echo $fila['id_cliente']; ?>"><?php echo $fila['cl_nombre'].' '.$fila['cl_apellido']; ?></option>
+                          <?php  } ?>
+                      </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12" for="register1-username">Fecha</label>
+                    <div class="col-xs-12">
+                        <input class="form-control" type="date" name="fecha" required value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12" for="register1-username"></label>
+                    <div class="col-xs-12">
+                    </div>
+                </div>
           <div class="modal-footer">
               <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancelar</button>
-              <button class="btn btn-sm btn-primary" type="submit" >Guardar cambios</button>
+              <button class="btn btn-sm btn-primary" name="reg_factura" type="submit" >Guardar</button>
           </div>
         </div>
     </div>
