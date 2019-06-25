@@ -549,6 +549,10 @@ $one->main_nav                     = array(
                             'url'   => 'gc_report_combustible_excel_busqueda.php'
                         ),
                         array(
+                            'name'  => 'Rep. Ingresos & Egresos',
+                            'url'   => 'gc_reporte_ingreso_egresos.php'
+                        ),
+                        array(
                             'name'  => 'Historial de Alquileres',
                             'url'   => 'gc_reporte_alquileres.php'
                         )
