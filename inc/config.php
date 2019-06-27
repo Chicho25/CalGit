@@ -549,7 +549,7 @@ $one->main_nav                     = array(
                             'url'   => 'gc_report_combustible_excel_busqueda.php'
                         ),
                         array(
-                            'name'  => 'Rep. Ingresos & Egresos',
+                            'name'  => 'Rep. Egresos Marina',
                             'url'   => 'gc_reporte_ingreso_egresos.php'
                         ),
                         array(
