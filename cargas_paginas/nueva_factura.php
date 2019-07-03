@@ -49,3 +49,50 @@
   </div>
 </div>
 </form>
+
+<?php require 'inc/views/base_footer.php'; ?>
+<?php require 'inc/views/template_footer_start.php'; ?>
+
+<!-- Page JS Plugins -->
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.full.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- Page JS Code -->
+<script>
+    jQuery(function(){
+        // Init page helpers (Select2 plugin)
+        App.initHelpers('select2');
+    });
+</script>
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_forms_validation.js"></script>
+<!-- Page JS Plugins -->
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="<?php echo $one->assets_folder; ?>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- Page JS Code -->
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_ui_activity.js"></script>
+<script>
+    jQuery(function(){
+        // Init page helpers (BS Notify Plugin)
+        App.initHelpers('notify');
+    });
+</script>
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_forms_pickers_more.js"></script>
+<script>
+    jQuery(function(){
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider',]); // 'masked-inputs',  'tags-inputs'
+    });
+    function init()
+    {
+      $(".doc").datepicker({
+        input: $(".fechas1"),
+        format: 'yyyy-mm-dd'
+      });
+      $(".venc").datepicker({
+        input: $(".fechas2"),
+        format: 'yyyy-mm-dd'
+      });
+    }
+    window.onload = init;
+</script>

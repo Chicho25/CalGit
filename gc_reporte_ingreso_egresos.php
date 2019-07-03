@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                       <label class="col-md-4 control-label" for="val-username">Proyecto</label>
                                       <div class="col-md-7">
-                                        <?php $sql = $conexion2 -> query("select * from maestro_proyectos where id_proyecto = 36"); ?>
+                                        <?php $sql = $conexion2 -> query("select * from maestro_proyectos where id_proyecto in(13,36)"); ?>
                                         <select class="form-control" style="width: 100%;" name="id_proyecto">
                                             <option value="">Seleccionar Proyecto</option>
                                             <?php while($q=$sql->fetch_array()){ ?>

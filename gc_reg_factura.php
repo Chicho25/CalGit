@@ -135,7 +135,7 @@ if ($monto_factura == 0) {
           <script type="text/javascript">
             $(document).ready(function() {
               $("#boton_n").click(function(event) {
-              $("#capa_n").load('cargas_paginas/nueva_factura.php');
+              $("#capa_n").load('nueva_factura.php');
               });
             });
           </script>

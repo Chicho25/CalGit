@@ -240,11 +240,11 @@ function dependencia_ciudad()
                                             $opciones = '<option value=""> Elige un Cliente </option>';
                                             while($fila = $result->fetch_array()){ ?>
                                                     <option value="<?php echo $fila['id_cliente']; ?>" <?php if(isset($_SESSION['session_ventas_reserva']['id_cliente'])){
-                                                                                                                    if($_SESSION['session_ventas_reserva']['id_cliente'] == $fila['id_cliente']){
-                                                                                                                        echo 'selected';}}
-                                                                                                                elseif(isset($_SESSION['session_ventas']['id_cliente'])){
-                                                                                                                    if($_SESSION['session_ventas']['id_cliente'] == $fila['id_cliente']){
-                                                                                                                        echo 'selected';}} ?> ><?php echo $fila['cl_nombre'].' '.$fila['cl_apellido']; ?></option>
+                                                      if($_SESSION['session_ventas_reserva']['id_cliente'] == $fila['id_cliente']){
+                                                          echo 'selected';}}
+                                                  elseif(isset($_SESSION['session_ventas']['id_cliente'])){
+                                                      if($_SESSION['session_ventas']['id_cliente'] == $fila['id_cliente']){
+                                                          echo 'selected';}} ?> ><?php echo $fila['cl_nombre'].' '.$fila['cl_apellido']; ?></option>
                                     <?php  } ?>
                                 </select>
                             </div>

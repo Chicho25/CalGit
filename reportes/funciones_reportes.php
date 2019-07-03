@@ -376,10 +376,10 @@ function reporte_4($conexion, $id_proyecto){
 
 <?php 	function reporte_edo_cliente($conexion, $id_cliente, $fecha1, $fecha2){
 
-				$where1 = "where (1=1) and mi.mi_status not in(17) and mc.mc_status not in(17)";
-				$where2 = "where (1=1) and mi.mi_status not in(17)";
-				$where3 = "where (1=1) and mi.mi_status not in(17)";
-				$where4 = "where (1=1) and mi.mi_status not in(17)";
+				$where1 = "where (1=1)"; //and mi.mi_status not in(17) and mc.mc_status not in(17)";
+				$where2 = "where (1=1)"; // and mi.mi_status not in(17)";
+				$where3 = "where (1=1)"; // and mi.mi_status not in(17)";
+				$where4 = "where (1=1)"; // and mi.mi_status not in(17)";
 
 				/* Primer Query */
 				if ($fecha1 != ''){ $where1 .=" and mc.mc_fecha_vencimiento >= '".date('Y-m-d',strtotime($fecha1))."'"; }else{  $where1 .=""; }
