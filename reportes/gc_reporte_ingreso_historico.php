@@ -116,7 +116,7 @@ $servicios = $conexion2 -> query('select
   <h1>REPORTE DE INGRESOS</h1>
 
   <div id="project" style="font-size:18px;">
-    VISTA MAR MARINA
+    MARINA VISTA MAR
   </div>
   <div id="project" style="font-size:18px;">';
 
@@ -134,11 +134,17 @@ $servicios = $conexion2 -> query('select
 
   if(isset($_POST['id_termino']) && $_POST['id_termino'] == 1){
   $html .= '<h2>Marina</h2>
-             <table border="1">
+             <table >
               <thead>
                 <tr>
+                  <th>'.(count($li) - 1).'</th>
+                </tr>
+                <tr>
                   <th class="service">GRUPO INMUEBLE</th>
-                  <th class="desc">TOTAL </th>
+                  <th class="desc">TOTAL CUOTAS</th>
+                  <th class="desc">TOTAL COBRADO</th>
+                  <th class="desc">POR COBRAR</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>';
@@ -147,89 +153,199 @@ $servicios = $conexion2 -> query('select
     $t_abonado = 0;
     $t_por_cobrar = 0;
     $t_diario = 0;
-    $gran_total = 0;
 
     foreach($li as $l){
-      if($l['total_abonado'] == 0){ continue; }
       $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['gi_nombre_grupo_inmueble'].'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total_cuota'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['total_abonado'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total_por_cobrar'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format(($l['total_abonado']/$contar_dias), 2, ".", ",").'</td>
                 </tr>';
                 $t_cuotas += $l['total_cuota'];
                 $t_abonado += $l['total_abonado'];
                 $t_por_cobrar += $l['total_por_cobrar'];
                 $t_diario += $l['total_abonado']/$contar_dias;
-                $gran_total += $l['total_abonado'];
               }
-###########
+      $html .='<tr>
+                  <td style="padding: 0" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_cuotas, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_abonado, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_por_cobrar, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario, 2, ".", ",").'</b></td>
+                </tr>';
+      $html .= '
+    </tbody>
+  </table>';
 
+  $html .= '<h2>Rampa & Muelle</h2>
+            <table >
+              <thead>
+                <tr>
+                  <th>'.(count($co) - 1).'</th>
+                </tr>
+                <tr>
+                  <th class="service">GRUPO</th>
+                  <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
+                </tr>
+              </thead>
+              <tbody>';
 
-$t_combus = 0;
-$t_diario_combus = 0;
-foreach($co as $l){
-$html .='<tr>
-          <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
-          <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
-        </tr>';
-    $t_combus += $l['total'];
-    $t_diario_combus += $l['total']/$contar_dias;
-  }
+    $t_combus = 0;
+    $t_diario_combus = 0;
+    foreach($co as $l){
+      $html .='<tr>
+                  <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total']/$contar_dias, 2, ".", ",").'</td>
+                </tr>';
+                $t_combus += $l['total'];
+                $t_diario_combus += $l['total']/$contar_dias;
+              }
+      $html .='<tr>
+                  <td style="padding: 0" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_combus, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_combus, 2, ".", ",").'</b></td>
+                </tr>';
+      $html .= '
+    </tbody>
+  </table>';
+
+  $html .= '<br><br><br><br><h2>Servicios</h2>
+            <table >
+              <thead>
+                <tr>
+                  <th>'.(count($co) - 1).'</th>
+                </tr>
+                <tr>
+                  <th class="service">GRUPO</th>
+                  <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
+                </tr>
+              </thead>
+              <tbody>';
+
     $t_servi = 0;
     $t_diario_s = 0;
     foreach($se as $l){
       $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['nombre'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total']/$contar_dias, 2, ".", ",").'</td>
                 </tr>';
                 $t_servi += $l['total'];
-                $gran_total += $l['total']; 
                 $t_diario_s += $l['total']/$contar_dias;
               }
-
-  
-      $t_cintillo = 0;
-      $t_diario_cintillo = 0;
-      foreach($co as $l){
-        if ($l['id_tipo_movimiento_bancario'] != 27) {
-          continue;
-        }
-        $html .='<tr>
-                    <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
-                    <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
-                  </tr>';
-                  $t_cintillo += $l['total'];
-                  $gran_total += $l['total'];
-                  $t_diario_cintillo += $l['total']/$contar_dias;
-                }
-
-        $t_ele = 0;
-        $t_diario_ele = 0;
-        foreach($co as $l){
-          if ($l['id_tipo_movimiento_bancario'] != 28) {
-            continue;
-          }
-          $html .='<tr>
-                      <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
-                      <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
-                    </tr>';
-                    $t_ele += $l['total'];
-                    $gran_total += $l['total'];
-                    $t_diario_ele += $l['total']/$contar_dias;
-                  }    
-
-###########
       $html .='<tr>
                   <td style="padding: 0" class="desc"><b>Totales</b></td>
-                  <td style="padding: 0" class="desc"><b>'.number_format($gran_total, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_servi, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_s, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
   </table>';
 
+  $html .= '<h2>Cintillos</h2>
+            <table >
+              <thead>
+                <tr>
+                  <th>'.(count($co) - 1).'</th>
+                </tr>
+                <tr>
+                  <th class="service">GRUPO</th>
+                  <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
+                </tr>
+              </thead>
+              <tbody>';
+
+    $t_cintillo = 0;
+    $t_diario_cintillo = 0;
+    foreach($co as $l){
+      if ($l['id_tipo_movimiento_bancario'] != 27) {
+        continue;
+      }
+      $html .='<tr>
+                  <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total']/$contar_dias, 2, ".", ",").'</td>
+                </tr>';
+                $t_cintillo += $l['total'];
+                $t_diario_cintillo += $l['total']/$contar_dias;
+              }
+      $html .='<tr>
+                  <td style="padding: 0" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_cintillo, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_cintillo, 2, ".", ",").'</b></td>
+                </tr>';
+      $html .= '
+    </tbody>
+  </table>';
+
+  $html .= '<h2>Electricidad</h2>
+            <table >
+              <thead>
+                <tr>
+                  <th>'.(count($co) - 1).'</th>
+                </tr>
+                <tr>
+                  <th class="service">GRUPO</th>
+                  <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
+                </tr>
+              </thead>
+              <tbody>';
+
+    $t_ele = 0;
+    $t_diario_ele = 0;
+    foreach($co as $l){
+      if ($l['id_tipo_movimiento_bancario'] != 28) {
+        continue;
+      }
+      $html .='<tr>
+                  <td style="padding: 0" class="desc">'.$l['tmb_nombre'].'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total']/$contar_dias, 2, ".", ",").'</td>
+                </tr>';
+                $t_ele += $l['total'];
+                $t_diario_ele += $l['total']/$contar_dias;
+              }
+      $html .='<tr>
+                  <td style="padding: 0" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_ele, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_ele, 2, ".", ",").'</b></td>
+                </tr>';
+      $html .= '
+    </tbody>
+  </table>';
+
+  $total_global = $t_servi + $t_abonado + $t_combus + $t_cintillo + $t_ele;
+  $total_global_diario = $t_diario_s + $t_diario + $t_diario_combus + $t_diario_cintillo + $t_diario_ele;
+
+  $html .= '<h2>Total Global</h2>
+            <table >
+              <thead>
+                <tr>
+                  <th>1</th>
+                </tr>
+                <tr>
+                  <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 0" class="desc">'.number_format($total_global, 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($total_global_diario, 2, ".", ",").'</td>
+                </tr>
+            </tbody>
+          </table>';
+
 }else{
 
   $html .= '<h2>Marina</h2>
-  <table border="1">
+  <table >
     <thead>
       <tr>
         <th>'.(count($li) - 1).'</th>
@@ -237,7 +353,10 @@ $html .='<tr>
       <tr>
         <th class="service">GRUPO INMUEBLE</th>
         <th class="desc">INMUEBLE</th>
+        <th class="desc">TOTAL CUOTAS</th>
         <th class="desc">TOTAL COBRADO</th>
+        <th class="desc">POR COBRAR</th>
+        <th class="desc">DIARIO</th>
       </tr>
     </thead>
     <tbody>';
@@ -251,7 +370,10 @@ $html .='<tr>
       $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['gi_nombre_grupo_inmueble'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mi_nombre'].'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total_cuota'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['total_abonado'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['total_por_cobrar'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format(($l['total_abonado']/$contar_dias), 2, ".", ",").'</td>
                 </tr>';
                 $t_cuotas += $l['total_cuota'];
                 $t_abonado += $l['total_abonado'];
@@ -261,14 +383,17 @@ $html .='<tr>
       $html .='<tr>
                   <td style="padding: 0" class="desc"></td>
                   <td style="padding: 0" class="desc"><b>Totales</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_cuotas, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($t_abonado, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_por_cobrar, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
   </table>';
 
   $html .= '<h2>Rampa & Muelle</h2>
-            <table border="1">
+            <table >
               <thead>
                 <tr>
                   <th>'.(count($co) - 1).'</th>
@@ -279,6 +404,7 @@ $html .='<tr>
                   <th class="desc">FECHA</th>
                   <th class="service">DESCRIPCION</th>
                   <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>';
@@ -293,6 +419,7 @@ $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['mb_fecha'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mb_descripcion'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
                 </tr>';
                 $t_combus += $l['mb_monto'];
                 $t_diario_combus += $l['mb_monto']/$contar_dias;
@@ -300,13 +427,14 @@ $html .='<tr>
       $html .='<tr>
                   <td style="padding: 0" class="desc" colspan="4"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($t_combus, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_combus, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
   </table>';
 
   $html .= '<h2>Cintillo</h2>
-            <table border="1">
+            <table >
               <thead>
                 <tr>
                   <th>'.(count($co) - 1).'</th>
@@ -317,6 +445,7 @@ $html .='<tr>
                   <th class="desc">FECHA</th>
                   <th class="service">DESCRIPCION</th>
                   <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>';
@@ -334,6 +463,7 @@ $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['mb_fecha'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mb_descripcion'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
                 </tr>';
                 $t_cintillo += $l['mb_monto'];
                 $t_diario_cintillo += $l['mb_monto']/$contar_dias;
@@ -341,13 +471,14 @@ $html .='<tr>
       $html .='<tr>
                   <td style="padding: 0" class="desc" colspan="4"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($t_cintillo, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_cintillo, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
   </table>';
 
   $html .= '<h2>Electricidad</h2>
-            <table border="1">
+            <table >
               <thead>
                 <tr>
                   <th>'.(count($co) - 1).'</th>
@@ -358,6 +489,7 @@ $html .='<tr>
                   <th class="desc">FECHA</th>
                   <th class="service">DESCRIPCION</th>
                   <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>';
@@ -375,6 +507,7 @@ $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['mb_fecha'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mb_descripcion'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['mb_monto'], 2, ".", ",").'</td>
                 </tr>';
                 $t_elec += $l['mb_monto'];
                 $t_diario_elec += $l['mb_monto']/$contar_dias;
@@ -382,13 +515,14 @@ $html .='<tr>
       $html .='<tr>
                   <td style="padding: 0" class="desc" colspan="4"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($t_elec, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_elec, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
   </table>';
 
   $html .= '<h2>Servicios</h2>
-            <table border="1">
+            <table >
               <thead>
                 <tr>
                   <th>'.(count($co) - 1).'</th>
@@ -398,6 +532,7 @@ $html .='<tr>
                   <th class="desc">DESCRIPCION</th>
                   <th class="desc">FECHA</th>
                   <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>';
@@ -410,6 +545,7 @@ $html .='<tr>
                   <td style="padding: 0" class="desc">'.$l['descripcion'].'</td>
                   <td style="padding: 0" class="desc">'.$l['date_time'].'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['monto'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['monto'], 2, ".", ",").'</td>
                 </tr>';
                 $t_servi += $l['monto'];
                 $t_diario_s += $l['monto']/$contar_dias;
@@ -419,6 +555,7 @@ $html .='<tr>
                   <td style="padding: 0" class="desc"></td>
                   <td style="padding: 0" class="desc"><b>Totales</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($t_servi, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($t_diario_s, 2, ".", ",").'</b></td>
                 </tr>';
       $html .= '
     </tbody>
@@ -428,18 +565,20 @@ $html .='<tr>
   $total_global_diario = $t_diario_s + $t_diario + $t_diario_combus + $t_diario_cintillo + $t_diario_elec;
 
   $html .= '<h2>Total Global</h2>
-            <table border="1">
+            <table >
               <thead>
                 <tr>
                   <th>1</th>
                 </tr>
                 <tr>
                   <th class="desc">TOTAL</th>
+                  <th class="desc">DIARIO</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td style="padding: 0" class="desc">'.number_format($total_global, 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($total_global_diario, 2, ".", ",").'</td>
                 </tr>
             </tbody>
           </table>';
@@ -450,16 +589,6 @@ $html .='
 </main>
 <footer>
   Grupo Calpe 1.0 © 2015-16.
-</footer>';
-
-if($_POST['id_formato'] == 1 ){
- $mpdf->writeHTML($html); 
- $mpdf->Output('reporte_2.pdf', 'I'); 
-
-}else{
-
-header('Content-Type: application/xls');
-header('Content-Disposition: attachment; filename='.date('d-m-Y').'-ReporteIngreso.xls');
-echo $html;
-
- } ?>
+</footer>'; ?>
+<?php $mpdf->writeHTML($html); ?>
+<?php $mpdf->Output('reporte_2.pdf', 'I'); ?>

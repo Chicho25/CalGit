@@ -32,7 +32,7 @@ $excelPrint = '
     <thead>
       <tr>
         <th class="service"><b>NOMBRE PARTIDA</b></th>
-        <th class="desc"><b>MONOTO ABONO</b></th>
+        <th class="desc"><b>MONTO ABONO</b></th>
       </tr>
     </thead>
     <tbody>';
