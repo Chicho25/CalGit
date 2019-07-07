@@ -65,6 +65,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
 
     foreach($li as $l){
       if($l['mi_codigo_imueble']==''){continue;}
+      if($l['nombre']==''){continue;}
       /*if($l['monto_vendido'] == 0 && $l['monto_restante'] == 0 && $l['monto_cobrado'] == 0 && $l['monto_restante'] == 0 && $l['monto_vencido'] == 0){
       $html .='';
     }else{*/
@@ -72,7 +73,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
                   <td style="padding: 0" class="desc">'.$l['mi_codigo_imueble'].'</td>
                   <td style="padding: 0" class="desc">'.$l['mi_nombre'].'</td>
                   <td style="padding: 0" class="desc">'.$l['nombre'].'</td>
-                  <td style="padding: 0" class="desc">'.number_format($l['monto_vendido'], 2, ".", ",").'</td>
+                  <td style="padding: 0" class="desc">'.number_format($l['monto_cobrado'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['monto_reservado'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['por_vender'], 2, ".", ",").'</td>
                   <td style="padding: 0" class="desc">'.number_format($l['monto_cobrado'], 2, ".", ",").'</td>
@@ -90,7 +91,7 @@ if($_POST['tipo_reporte'] == 2 and $_POST['grupo_inmueble'] ==""){}else{
 
       $html .='<tr>
                   <td style="padding: 0" colspan="3" class="desc"><b>Totales</b></td>
-                  <td style="padding: 0" class="desc"><b>'.number_format($vendido, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($monto_cobrado, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($reservado, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($por_vender, 2, ".", ",").'</b></td>
                   <td style="padding: 0" class="desc"><b>'.number_format($monto_cobrado, 2, ".", ",").'</b></td>
@@ -119,31 +120,42 @@ $html .= '  <table>
       </tr>
     </thead>
     <tbody>';
-
+    $cobrado = 0;
+    $reservado = 0;
+    $por_vender = 0;
+    $restante = 0;
+    $vencido = 0;
     foreach($lg as $lgg){
-      if($lgg['gi_nombre_grupo_inmueble']==''){continue;}
+      if($lgg['gi_nombre_grupo_inmueble']=='' || $lgg['gi_nombre_grupo_inmueble'] == 'DIQUE SECO'){continue;}
+      if($lgg['monto_cobrado']==''){continue;}
       /*if($l['monto_vendido'] == 0 && $l['monto_restante'] == 0 && $l['monto_cobrado'] == 0 && $l['monto_restante'] == 0 && $l['monto_vencido'] == 0){
       $html .='';
     }else{*/
+
       $html .='<tr>
                   <td style="padding: 0" class="desc">'.$lgg['gi_nombre_grupo_inmueble'].'</td>
-                  <td style="padding: 0" class="desc">'.$lgg['monto_vendido'].'</td>
+                  <td style="padding: 0" class="desc">'.$lgg['monto_cobrado'].'</td>
                   <td style="padding: 0" class="desc">'.$lgg['monto_reservado'].'</td>
                   <td style="padding: 0" class="desc">'.$lgg['por_vender'].'</td>
                   <td style="padding: 0" class="desc">'.$lgg['monto_cobrado'].'</td>
                   <td style="padding: 0" class="desc">'.$lgg['monto_restante'].'</td>
                   <td style="padding: 0" class="desc">'.$lgg['monto_vencido'].'</td>
                 </tr>';
+                $cobrado += $lgg['monto_cobrado'];
+                $reservado += $lgg['monto_reservado'];
+                $por_vender += $lgg['por_vender'];
+                $restante += $lgg['monto_restante'];
+                $vencido += $lgg['monto_vencido'];
               }
 
       $html .='<tr>
                   <td style="padding: 0" class="desc"><b>Totales</b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
-                  <td style="padding: 0" class="desc"><b></b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($cobrado, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.$reservado.'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.$por_vender.'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.number_format($cobrado, 2, ".", ",").'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.$restante.'</b></td>
+                  <td style="padding: 0" class="desc"><b>'.$vencido.'</b></td>
                 </tr>';
 
 $html .='

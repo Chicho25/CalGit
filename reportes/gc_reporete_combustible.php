@@ -81,7 +81,7 @@ $combustibles = $conexion2 -> query('select
   if(isset($_POST['id_termino']) && $_POST['id_termino'] == 1){
 
   $html .= '<h2>Combustibles</h2>
-            <table >
+            <table border="1">
               <thead>
                 <tr>
                   <th>'.(count($co) - 1).'</th>
@@ -163,5 +163,11 @@ $html .='
 <footer>
   Grupo Calpe 1.0 © 2015-16.
 </footer>'; ?>
+<?php if ($_POST['id_formato'] == 1){ ?>
 <?php $mpdf->writeHTML($html); ?>
 <?php $mpdf->Output('reporte_2.pdf', 'I'); ?>
+<?php }else{
+header('Content-Type: application/xls');
+header('Content-Disposition: attachment; filename='.date('d-m-Y').'-ReporteEgresos.xls');
+echo $html;
+} ?>

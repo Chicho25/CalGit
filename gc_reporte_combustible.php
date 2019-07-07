@@ -50,6 +50,20 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-2 control-label" for="val-username">Formato <span class="text-danger"></span></label>
+                            <div class="col-md-9">
+                                <select class="form-control"
+                                        id="modelo"
+                                        name="id_formato"
+                                        style="width: 100%;"
+                                        data-placeholder="Seleccionar Formato">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">PDF</option>
+                                    <option value="2">Excel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-2 control-label">Fecha</label>
                             <div class="col-md-9">
                               <div class="input-group input-daterange gcreacion">

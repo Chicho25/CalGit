@@ -525,13 +525,13 @@ $one->main_nav                     = array(
                             'url'   => 'gc_reporte_2_ventas_inmuebles.php'
                         ),
                         array(
-                            'name'  => 'Reporte de Egresos',
+                            'name'  => 'Reporte de Egresos Por Partidas',
                             'url'   => 'gc_report_partidas_por_mes.php'
                         ),
-                        array(
+                        /*array(
                             'name'  => 'Reporte de Egresos Excel',
                             'url'   => 'gc_report_partidas_por_mes_excel.php'
-                        ),
+                        ),*/
                         array(
                             'name'  => 'Rep. Ingresos',
                             'url'   => 'gc_reporte_ingresos.php'
@@ -544,10 +544,10 @@ $one->main_nav                     = array(
                             'name'  => 'Rep. Combustible',
                             'url'   => 'gc_reporte_combustible.php'
                         ),
-                        array(
+                        /*array(
                             'name'  => 'Rep. Combustible Excel',
                             'url'   => 'gc_report_combustible_excel_busqueda.php'
-                        ),
+                        ),*/
                         array(
                             'name'  => 'Rep. Egresos Marina',
                             'url'   => 'gc_reporte_ingreso_egresos.php'

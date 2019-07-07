@@ -1,9 +1,10 @@
-<?php //require_once('../lib_pdf/mpdf.php'); ?>
+<?php require_once('../lib_pdf/mpdf.php'); ?>
 <?php require_once('funciones_reportes.php'); ?>
 <?php require_once('../conexion/conexion.php'); ?>
-<?php //$mpdf = new mPDF('c', 'A4-L'); ?>
-<?php //$css = file_get_contents('css/style.css'); ?>
-<?php //$mpdf->writeHTML($css, 1);
+<?php $mpdf = new mPDF('c', 'A4-L'); ?>
+<?php $css = file_get_contents('css/style.css'); ?>
+<?php $mpdf->writeHTML($css, 1);
+
       $where = "where";
       if ($_POST['id_proyecto'] != "") {
         $where .= " pda.id_proyecto = ".$_POST['id_proyecto']."";
@@ -134,6 +135,14 @@ order by mp.id, pda.id_sup_padre");
 
             }
 
+if($_POST['id_formato'] == 1 ){
+$mpdf->writeHTML($excelPrint);
+$mpdf->Output('reporte_egresos.pdf', 'I');
+
+}else{
+
 header('Content-Type: application/xls');
-header('Content-Disposition: attachment; filename='.date('d-m-Y').'-ReporteIngreso.xls');
+header('Content-Disposition: attachment; filename='.date('d-m-Y').'-ReporteEngreso.xls');
 echo $excelPrint;
+
+} ?>
