@@ -81,10 +81,11 @@ if ($monto_factura == 0) {
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
 <!-- Page JS Plugins CSS -->
+<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2.min.css">
 <link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/select2/select2-bootstrap.min.css">
-<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/datatables/jquery.dataTables.min.css">
+<link rel="stylesheet" href="<?php echo $one->assets_folder; ?>/js/plugins/sweetalert/sweetalert.min.css">
+<script type="text/javascript" src="select_anidado3/js/jquery-1.3.2.min.js"></script>
 <?php require 'inc/views/template_head_end.php'; ?>
 <?php require 'inc/views/base_head.php'; ?>
 
@@ -134,7 +135,62 @@ if ($monto_factura == 0) {
             <h3 class="block-title">FACTURAS</h3>
         </div>
         <div class="block-content">
-             <button class="btn btn-primary" data-toggle="modal" data-target="#modal-popin_n" type="button">Nueva Factura</button>
+             <button class="btn btn-primary" style="float:left;" data-toggle="modal" data-target="#modal-popin" type="button">Nueva Factura</button>
+             <div class="modal fade" id="modal-popin" role="dialog" aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-popin">
+                     <div class="modal-content">
+                         <form action="" method="post" enctype="multipart/form-data">
+                             <div class="block block-themed block-transparent remove-margin-b">
+                                 <div class="block-header bg-primary-dark">
+                                     <ul class="block-options">
+                                         <li>
+                                             <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                         </li>
+                                     </ul>
+                                     <h3 class="block-title">Registrar Cliente</h3>
+                                 </div>
+                                 <div class="block-content">
+                                     <!-- Bootstrap Register -->
+                                     <div class="block block-themed">
+                                         <div class="block-content">
+                                         <div class="form-group">
+                                         <label class="col-xs-12" for="register1-username">Cliente</label>
+                                             <div class="col-xs-12">
+                                                <select class="js-select2 form-control" name="id_cliente" style="width: 100%;" data-placeholder="Seleccionar un pais" required="required">
+                                                     <option value="0"> Selecciona un pais</option>
+                                                     <?php
+                                                     $result = todos_clientes_activos($conexion2);
+                                                     $opciones = '<option value=""> Elige un Cliente </option>';
+                                                     while($fila = $result->fetch_array()){ ?>
+                                                       <option value="<?php echo $fila['id_cliente']; ?>"><?php echo $fila['cl_nombre'].' '.$fila['cl_apellido']; ?></option>
+                                                     <?php  } ?>
+                                                 </select>
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-xs-12" for="register1-username">Fecha</label>
+                                             <div class="col-xs-12">
+                                                 <input class="form-control" type="date" name="fecha" required value="">
+                                             </div>
+                                         </div>
+                                         <div class="form-group">
+                                             <label class="col-xs-12" for="register1-username"></label>
+                                             <div class="col-xs-12">
+                                             </div>
+                                         </div>
+                                         <div class="modal-footer">
+                                             <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Cancelar</button>
+                                             <button class="btn btn-sm btn-primary" name="reg_factura" type="submit" >Guardar</button>
+                                         </div>
+                                 </div>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+           </div>
+           </div>
+
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -312,6 +368,7 @@ if ($monto_factura == 0) {
     <!-- END Dynamic Table Simple -->
 </div>
 <!-- END Page Content -->
+
 <?php require 'inc/views/base_footer.php'; ?>
 <?php require 'inc/views/template_footer_start.php'; ?>
 
@@ -339,11 +396,28 @@ if ($monto_factura == 0) {
         App.initHelpers('notify');
     });
 </script>
+<script src="<?php echo $one->assets_folder; ?>/js/pages/base_forms_pickers_more.js"></script>
+<script>
+    jQuery(function(){
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datetimepicker', 'colorpicker', 'maxlength', 'select2', 'rangeslider',]); // 'masked-inputs',  'tags-inputs'
+    });
+    function init()
+    {
+      $(".doc").datepicker({
+        input: $(".fechas1"),
+        format: 'yyyy-mm-dd'
+      });
+      $(".venc").datepicker({
+        input: $(".fechas2"),
+        format: 'yyyy-mm-dd'
+      });
+    }
+    window.onload = init;
+</script>
 <?php require 'inc/views/template_footer_end.php'; ?>
 <?php }else{ ?>
-
         <script type="text/javascript">
             window.location="salir.php";
         </script>
-
 <?php } ?>
