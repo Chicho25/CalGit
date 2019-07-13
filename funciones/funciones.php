@@ -1167,25 +1167,20 @@
 <?php 	function ver_movimientos_bancarios($conexion){
 
 				$sql_ver_movimiento = $conexion -> query("select
-																									cb.id_cuenta_bancaria,
-																									mp.proy_nombre_proyecto,
-																									mb.banc_nombre_banco,
-																									cb.cta_numero_cuenta,
-																									mbo.mb_fecha,
-																									mbo.mb_monto,
-																									mbo.mb_descripcion,
-																									mbo.mb_stat,
-																									mbo.mb_referencia_numero,
-																									mbo.id_tipo_movimiento,
-																									mbo.id_movimiento_bancario,
-																								  tmb.tmb_nombre,
-																									mbo.movimiento_directo
-																								 from maestro_empresa me
-																								  inner join maestro_proyectos mp on me.id_empresa = mp.id_empresa
-																								  inner join cuentas_bancarias cb on me.id_empresa = cb.cta_id_empresa
-																								  inner join maestro_bancos mb on cb.cta_id_banco = mb.id_bancos
-																								  inner join movimiento_bancario mbo on cb.id_cuenta_bancaria = mbo.id_cuenta
-																								  inner join tipo_movimiento_bancario tmb on mbo.id_tipo_movimiento = tmb.id_tipo_movimiento_bancario");
+																										mbo.id_movimiento_bancario,
+																										mbo.mb_monto,
+																										mbo.mb_fecha,
+																										mbo.mb_descripcion,
+																										mbo.id_tipo_movimiento,
+																										(select
+																											tmb_nombre
+																											from
+																											tipo_movimiento_bancario
+																											where
+																											id_tipo_movimiento_bancario = mbo.id_tipo_movimiento) as tipo_movimiento
+																										from movimiento_bancario mbo
+																										where
+																										(1=1)");
 
 				return $sql_ver_movimiento;
 
