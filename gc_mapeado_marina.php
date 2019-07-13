@@ -517,6 +517,7 @@ $('#pieM4').highcharts({
                 <div class="block-header">
                     <ul class="block-options">
                         <li>
+
                         </li>
                     </ul>
                     <h3 class="block-title">Mapeado de la Marina</h3>
@@ -524,9 +525,33 @@ $('#pieM4').highcharts({
                     <div id="pieM1" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
                     <div id="pieM3" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
                     <div id="pieM4" style="min-width: 310px; height: 300px; max-width: 400px; margin: 0 auto; float:left;"></div>
+                    <?php /* banco disponible. azul sin pagos, naranja, en menos de 30 dia se vence, rojo vencido */ ?>
+
                 </div>
                 <div class="block-content block-content-narrow" style="background-color:white;">
-
+                    <div style="border: solid 2px black; padding: 5px; margin: 5px; background-color: white; width:20px; height:10px;">
+                    </div>
+                    <label style="margin-left: 25px; top:-20px; position: relative; width:100%;">
+                      Disponible
+                    </label>
+                    <div style="border: solid 2px black; padding: 5px; margin: 5px; background-color: blue; width:20px; height:10px;">
+                    </div>
+                    <label style="margin-left: 25px; top:-20px; position: relative; width:100%;">
+                      Sin pagos
+                    </label>
+                    <div style="border: solid 2px black; padding: 5px; margin: 5px; background-color: orange; width:20px; height:10px;">
+                    </div>
+                    <label style="margin-left: 25px; top:-20px; position: relative;">
+                      30 dias o menos para su vencimiento.
+                    </label>
+                    <div style="border: solid 2px black; padding: 5px; margin: 5px; background-color: red; width:20px; height:10px;">
+                    </div>
+                    <label style="margin-left: 25px; top:-20px; position: relative;">
+                      Vencido
+                    </label>
+                    <br>
+                    <br>
+                    <br>
                   <div class="muelle1">
                     M1 <br>
                     54 Plazas

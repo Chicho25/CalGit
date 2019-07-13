@@ -39,10 +39,10 @@
 
       $sql_report_fac_abo = $conexion2 -> query("select
 												 mp.p_nombre,
-						(select sum(monto) from partida_documento_abono where id_sup_padre = mp.id $where ) as monto
-from maestro_partidas mp
-where
-mp.id_padre = $id_partida_padre");
+						             (select sum(monto) from partida_documento_abono where id_sup_padre = mp.id $where ) as monto
+                         from maestro_partidas mp
+                         where
+                         mp.id_padre = $id_partida_padre");
 
 
 while($li[] = $sql_report_fac_abo -> fetch_array());
@@ -81,15 +81,14 @@ $excelPrint .='<tr>
 
 $sql_report_fac_abo = $conexion2 -> query("select
 mp.p_nombre as nombre_partida,
-pd.pd_fecha_vencimiento as fecha_vencimiento_factura,
-pd.pd_descripcion as descripcion_factura,
 pda.fecha as fecha_creacion_abono,
 pda.monto as monto_abono,
 pda.descricion as descripcion_abono,
 pda.id_sup_padre,
+pda.numero_cheque,
 (select pro_nombre_comercial from maestro_proveedores where id_proveedores = pda.id_proveedor) as nombre_proveedor
-from partida_documento pd inner join partida_documento_abono pda on pd.id = pda.id_partida_documento
-inner join maestro_partidas mp on pd.id_partida = mp.id
+from partida_documento_abono pda
+inner join maestro_partidas mp on pda.id_partida = mp.id
 $where
 order by mp.id, pda.id_sup_padre");
 
@@ -104,6 +103,7 @@ order by mp.id, pda.id_sup_padre");
                 <th class="service"><b>NOMBRE PARTIDA</b></th>
                 <th class="desc"><b>PROVEEDOR</b></th>
                 <th class="desc"><b>FECHA ABONO</b></th>
+                <th class="desc"><b>N# CHEQUE</b></th>
                 <th class="desc"><b>MONTO ABONO</b></th>
                 <th class="desc"><b>DESCRIPCION ABONO</b></th>
               </tr>
@@ -118,6 +118,7 @@ order by mp.id, pda.id_sup_padre");
                           <td style="padding: 0" class="desc">'.utf8_encode($l['nombre_partida']).'</td>
                           <td style="padding: 0" class="desc">'.utf8_encode($l['nombre_proveedor']).'</td>
                           <td style="padding: 0" class="desc">'.$l['fecha_creacion_abono'].'</td>
+                          <td style="padding: 0" class="desc">'.$l['numero_cheque'].'</td>
                           <td style="padding: 0" class="desc">'.number_format($l['monto_abono'], 2, ".", ",").'</td>
                           <td style="padding: 0" class="desc">'.utf8_encode($l['descripcion_abono']).'</td>
                         </tr>';
@@ -126,7 +127,7 @@ order by mp.id, pda.id_sup_padre");
                       }
 
         $excelPrint .='<tr>
-                          <td style="padding: 0" colspan="3" class="desc"><b>Totales</b></td>
+                          <td style="padding: 0" colspan="4" class="desc"><b>Totales</b></td>
                           <td style="padding: 0" class="desc"><b>'.number_format($monto_abono, 2, ".", ",").'</b></td>
                           <td style="padding: 0" class="desc"><b></b></td>
                         </tr>

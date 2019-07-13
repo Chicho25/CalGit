@@ -79,6 +79,7 @@
                         <th class="hidden-xs" style="width: 10%;">CUENTA</th>
                         <th class="hidden-xs" style="width: 10%;">NUMERO</th>-->
                         <th class="hidden-xs" style="width: 10%;">TIPO DE MOVIMIENTO</th>
+                        <th class="hidden-xs" style="width: 10%;">DESCRIPCION</th>
                         <th class="hidden-xs" style="width: 10%;">FECHA</th>
                         <th class="hidden-xs" style="width: 10%;">MONTO</th>
                         <th class="text-center" style="width: 10%;">EDITAR</th>
@@ -127,7 +128,8 @@
                         <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td>
                         <td class="hidden-xs"><?php echo $lista_movimiento['cta_numero_cuenta']; ?></td> <?php */ ?>
 
-                        <td class="hidden-xs"><?php echo $lista_movimiento['tmb_nombre']; ?></td>
+                        <td class="hidden-xs"><?php echo $lista_movimiento['tipo_movimiento']; ?></td>
+                        <td class="hidden-xs"><?php echo $lista_movimiento['mb_descripcion']; ?></td>
                         <td class="hidden-xs"><?php echo date("d-m-Y", strtotime($lista_movimiento['mb_fecha'])); ?></td>
                         <td class="hidden-xs"><?php echo number_format($lista_movimiento['mb_monto'], 2, ',','.'); ?></td>
                         <script type="text/javascript">

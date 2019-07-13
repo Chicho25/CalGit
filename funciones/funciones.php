@@ -2330,7 +2330,7 @@ function reporte_2($conexion, $id_proyecto){
 
 <?php 	function ver_movimientos_bancarios_filtrados($conexion, $id_cuenta, $tipo, $id_tipo_movimiento, $numero, $desde, $hasta, $anulado, $cheque_directo, $referencia){
 
-				if($id_cuenta != 0){$condicion1 = "id_cuenta_bancaria = '".$id_cuenta."'";}else{$condicion1 = "";}
+				if($id_cuenta != 0){$condicion1 = "and mbo.id_cuenta = '".$id_cuenta."'";}else{$condicion1 = "";}
 				if($id_tipo_movimiento != 0){$condicion2 = " AND mbo.id_tipo_movimiento = '".$id_tipo_movimiento."'";}else{$condicion2 = "";}
 				if($numero != 0){$condicion3 = " AND mbo.mb_referencia_numero = '".$numero."'";}else{$condicion3 = "";}
 				if($desde != '' && $hasta != ''){$condicion4 = " AND mbo.mb_fecha BETWEEN '".$desde."' AND '".$hasta."'";}else{$condicion4 = "";}
@@ -2341,26 +2341,21 @@ function reporte_2($conexion, $id_proyecto){
 				$condicion = $condicion1.$condicion2.$condicion3.$condicion4.$condicion5.$condicion6.$condicion7;
 
 				$sql_ver_movimiento_filtro = $conexion -> query("select
-																									cb.id_cuenta_bancaria,
-																									mp.proy_nombre_proyecto,
-																									mb.banc_nombre_banco,
-																									cb.cta_numero_cuenta,
-																									mbo.mb_fecha,
-																									mbo.mb_monto,
-																									mbo.mb_descripcion,
-																									mbo.mb_stat,
-																									mbo.mb_referencia_numero,
-																									mbo.id_tipo_movimiento,
-																									mbo.id_movimiento_bancario,
-																								  tmb.tmb_nombre
-																								 from maestro_empresa me
-																								  inner join maestro_proyectos mp on me.id_empresa = mp.id_empresa
-																								  inner join cuentas_bancarias cb on me.id_empresa = cb.cta_id_empresa
-																								  inner join maestro_bancos mb on cb.cta_id_banco = mb.id_bancos
-																								  inner join movimiento_bancario mbo on cb.id_cuenta_bancaria = mbo.id_cuenta
-																								  inner join tipo_movimiento_bancario tmb on mbo.id_tipo_movimiento = tmb.id_tipo_movimiento_bancario
-																									where
-																									$condicion");
+																													mbo.id_movimiento_bancario,
+																													mbo.mb_monto,
+																													mbo.mb_fecha,
+																													mbo.mb_descripcion,
+																													mbo.id_tipo_movimiento,
+																													(select
+																														tmb_nombre
+																														from
+																														tipo_movimiento_bancario
+																														where
+																														id_tipo_movimiento_bancario = mbo.id_tipo_movimiento) as tipo_movimiento
+																													from movimiento_bancario mbo
+																													where
+																													(1=1)
+																													$condicion");
 
 				return $sql_ver_movimiento_filtro;
 
