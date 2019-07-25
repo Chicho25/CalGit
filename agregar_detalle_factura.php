@@ -152,7 +152,7 @@ if (isset($_POST['id_delete'])) {
                             </tr>
                           <?php } ?>
                             <tr>
-                              
+
                             </tr>
                         </tbody>
                     </table>
@@ -189,9 +189,27 @@ if (isset($_POST['id_delete'])) {
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-4 control-label" for="val-username">Monto Excento <span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                          <input id="exento" type="number" name="exento" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="val-username">Gravable <span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                          <input id="gravable" type="number" name="monto" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="val-username">ITBMS <span class="text-danger">*</span></label>
+                        <div class="col-md-7">
+                          <input id="itbms" readonly type="number" name="itbms" value="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">Monto <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input type="number" name="monto" value="" class="form-control">
+                          <input id="monto_total" type="number" readonly name="monto" value="" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -206,6 +224,17 @@ if (isset($_POST['id_delete'])) {
         </div>
       </div>
     </div>
+<script type="text/javascript">
+  function excento(){
+    document.querySelector("#monto_total").value = document.querySelector("#exento").value;
+    document.querySelector("#itbms").value = 0;
+  }
+
+  function gravable(){
+    document.querySelector("#monto_total").value = document.querySelector("#gravable").value + (document.querySelector("#gravable").value * 7 /100);
+    document.querySelector("#itbms").value = document.querySelector("#gravable").value * 7 /100;
+  }
+</script>
 <?php require 'inc/views/base_footer.php'; ?>
 <?php require 'inc/views/template_footer_start.php'; ?>
 
