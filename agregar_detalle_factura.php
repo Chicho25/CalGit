@@ -9,10 +9,10 @@
 } ?>
 <?php if (isset($_POST['guardar_detalle'])){
 
-  $monto = $_POST['monto'];
+  $monto = $_POST['gravable'] + $_POST['exento'];
   $cantidad = $_POST['cantidad'];
-  $itbms = (($monto * $cantidad) * 7)/100;
-  $total = ($monto * $cantidad) + $itbms;
+  $itbms = $_POST['itbms'];
+  $total = $_POST['total'];
 
   $insertar_detalle = $conexion2 -> query("INSERT INTO factura_detalle(id_factura,
                                                                        monto,
@@ -35,6 +35,7 @@ $monto_factura = 0;
  while ($factura = $todos_factura -> fetch_array()){
       $itbms_factura = $factura['itbms'];
       $monto_factura = $factura['monto'];
+
     }
 
     $monto_up = $monto_factura + $total;
@@ -185,31 +186,31 @@ if (isset($_POST['id_delete'])) {
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">Cantidad <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input type="number" name="cantidad" value="" class="form-control">
+                          <input id="cantidad" type="number" name="cantidad" value="" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">Monto Excento <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input id="exento" type="number" name="exento" value="" class="form-control">
+                          <input id="exento" onkeyup="excento();" type="number" name="exento" value="0" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">Gravable <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input id="gravable" type="number" name="monto" value="" class="form-control">
+                          <input id="gravable" onkeyup="gravables();" type="number" name="gravable" value="0" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">ITBMS <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input id="itbms" readonly type="number" name="itbms" value="" class="form-control">
+                          <input id="itbms" readonly type="number" name="itbms" value="0" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="val-username">Monto <span class="text-danger">*</span></label>
                         <div class="col-md-7">
-                          <input id="monto_total" type="number" readonly name="monto" value="" class="form-control">
+                          <input id="monto_total" type="number" readonly name="total" value="" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -226,13 +227,22 @@ if (isset($_POST['id_delete'])) {
     </div>
 <script type="text/javascript">
   function excento(){
-    document.querySelector("#monto_total").value = document.querySelector("#exento").value;
-    document.querySelector("#itbms").value = 0;
-  }
+    var exento = parseFloat(document.querySelector("#exento").value);
+    var gravable = parseFloat(document.querySelector("#gravable").value);
+    var itbms = parseFloat(document.querySelector("#gravable").value) * 7/100;
+    var cantidad = parseFloat(document.querySelector("#cantidad").value);
 
-  function gravable(){
-    document.querySelector("#monto_total").value = document.querySelector("#gravable").value + (document.querySelector("#gravable").value * 7 /100);
-    document.querySelector("#itbms").value = document.querySelector("#gravable").value * 7 /100;
+    document.querySelector("#monto_total").value = (gravable + itbms + exento) * cantidad;
+    document.querySelector("#itbms").value = itbms * cantidad;
+  };
+
+  function gravables(){
+    var exento = parseFloat(document.querySelector("#exento").value);
+    var gravable = parseFloat(document.querySelector("#gravable").value);
+    var itbms = parseFloat(document.querySelector("#gravable").value) * 7/100;
+    var cantidad = parseFloat(document.querySelector("#cantidad").value);
+    document.querySelector("#monto_total").value = (gravable + itbms + exento) * cantidad;
+    document.querySelector("#itbms").value = itbms * cantidad;
   }
 </script>
 <?php require 'inc/views/base_footer.php'; ?>
