@@ -23,40 +23,6 @@
 
 <?php if(isset($_POST['liberar'])){
 
-        //$update1_cuotas_hijas = $conexion2 ->query("update maestro_cuota_abono set where mca_id_documento_venta = '".$_POST['liberar']."'");
-        /*$select_cliente = $conexion2 ->query("SELECT * FROM maestro_ventas WHERE id_venta = '".$_POST['liberar']."'");
-        while($cli[] = $select_cliente->fetch_array());
-        foreach ($cli as $key => $value) {
-          $id_cliente = $value['id_cliente'];
-
-          $insertar_inmueble = $conexion2 -> query("INSERT INTO maestro_clientes(cl_nombre,
-                                                                                  cl_apellido,
-                                                                                  cl_identificacion,
-                                                                                  cl_pais,
-                                                                                  cl_direccion,
-                                                                                  cl_telefono_1,
-                                                                                  cl_telefono_2,
-                                                                                  cl_status,
-                                                                                  cl_email,
-                                                                                  cl_referencia
-                                                                                   )VALUES(
-                                                                                   '".$value['cl_nombre']."',
-                                                                                   '".$value['cl_apellido']."',
-                                                                                   '".$value['cl_identificacion']."',
-                                                                                   '".$value['cl_pais']."',
-                                                                                   '".$value['cl_direccion']."',
-                                                                                   '".$value['cl_telefono_1']."',
-                                                                                   '".$value['cl_telefono_2']."',
-                                                                                   1,
-                                                                                   '".$value['cl_email']."',
-                                                                                   '".$value['cl_referencia']."')");
-
-
-          $update1_facturas_cuotas = $conexion2 ->query("update maestro_clientes set cl_status = 17 where id_cliente = '".$id_cliente."'");
-
-          break;*/
-
-
         $update1_facturas_cuotas = $conexion2 ->query("update maestro_cuotas set mc_status = 17 where id_contrato_venta = '".$_POST['liberar']."'");
         //$update1_comisiones = $conexion2 ->query("update comisiones_vendedores set where id_contrato_venta = '".$_POST['liberar']."'");
         $update1_contrato = $conexion2 ->query("update maestro_ventas set mv_status = 17 where id_venta = '".$_POST['liberar']."'");
@@ -112,26 +78,13 @@
 <?php $nombre_pagina = "Contrato de venta"; ?>
 <?php if(isset($_POST['precio'],
                     $_POST['estado'],
-                        $_POST['id_reserva'])){ ?>
-<?php /*$sql_update_inmueble = mysqli_query($conexion2, "update inmueble_rv set rv_precio_venta = '".$_POST['precio']."',
-                                                                              rv_precio_reserva = '".$_POST['precio_reserva']."',
-                                                                              rv_status = '".$_POST['estado']."'
-                                                                              where
-                                                                              id_rv_inmueble = '".$_POST['id_reserva']."'");
-                            if($_POST['estado'] == 0){
-                                $sql_devolver_inmueble = $conexion2 -> query("update maestro_inmuebles set mi_status = 1 where id_inmueble = '".$_POST['id_inmueble']."'");
-                            }*/
-                         } ?>
+                        $_POST['id_reserva'])){ } ?>
 
 <?php if(isset($_POST['precio'],
                        $_POST['id_venta'])){ ?>
 <?php $sql_update_inmueble = mysqli_query($conexion2, "update maestro_ventas set mv_precio_venta = '".$_POST['precio']."'
                                                                                  where
-                                                                                 id_venta = '".$_POST['id_venta']."'");
-                           /*if($_POST['estado'] == 5555){
-                               $sql_devolver_inmueble = $conexion2 -> query("update maestro_inmuebles set mi_status = 1 where id_inmueble = '".$_POST['id_inmueble']."'");
-                           }*/
-                        } ?>
+                                                                                 id_venta = '".$_POST['id_venta']."'"); } ?>
 
 <?php require 'inc/config.php'; ?>
 <?php require 'inc/views/template_head_start.php'; ?>
@@ -170,6 +123,21 @@
             <h3 class="block-title">Tabla de <?php echo $nombre_pagina; ?> del sistema <small>todos los <?php echo $nombre_pagina; ?></small></h3>
         </div>
         <div class="block-content">
+          <form class="" action="" method="post">
+            <div class="form-group col-sm-3">
+              <select class="form-control" name="id_proyecto">
+                  <option value="">Seleccionar Proyectos</option>
+                  <option value="todos">Todos</option>
+                  <?php $proyecto_unico  = todos_proyectos($conexion2); ?>
+                  <?php while ($listado = $proyecto_unico -> fetch_array()) { ?>
+                    <option value="<?php echo $listado['id_proyecto']; ?>"><?php echo $listado['proy_nombre_proyecto']; ?></option>
+                  <?php } ?>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <input type="submit" class="btn btn-primary" name="buscar_proyecto" value="Buscar">
+            </div>
+          </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <table class="table table-bordered table-striped js-dataTable-full">
                 <thead>
@@ -188,7 +156,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php //$todos_contratos_ventas = ver_contratos_ventas($conexion2); ?>
+                    <?php $where =""; ?>
+                    <?php
+                          if(isset($_POST['id_proyecto']) && $_POST['id_proyecto'] != 'todos'){
+                            $_SESSION['id_proyecto'] = $_POST['id_proyecto'];
+                            $where = " and mp.id_proyecto = '".$_POST['id_proyecto']."'";
+                          }elseif(isset($_POST['id_proyecto']) && $_POST['id_proyecto'] == 'todos'){
+                            $where ="";
+                          }elseif(isset($_SESSION['id_proyecto'])){
+                            $where = "and mp.id_proyecto = '".$_SESSION['id_proyecto']."'";
+                          } ?>
                     <?php $todos_contratos_ventas = $conexion2 -> query("select
             																													  mp.proy_nombre_proyecto,
             																												    mv.id_proyecto,
@@ -213,7 +190,10 @@
             																											                      inner join maestro_inmuebles mi on mv.id_inmueble = mi.id_inmueble
             																											                      inner join maestro_clientes mc on mv.id_cliente = mc.id_cliente
                                                                     where
-                                                                      mp.id_proyecto not in (13)"); ?>
+                                                                      mp.id_proyecto not in (13)
+                                                                      and
+                                                                      mv.mv_status not in(17)
+                                                                      $where"); ?>
                     <?php while($lista_todos_contratos_ventas = mysqli_fetch_array($todos_contratos_ventas)){ ?>
                     <tr <?php if ($lista_todos_contratos_ventas['mv_status']==17) { echo "style='Background-color:#D50434; color:white;'"; } ?>>
                         <td class="text-center"><?php echo $lista_todos_contratos_ventas['id_venta']; ?></td>
